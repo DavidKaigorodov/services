@@ -6,16 +6,17 @@ import EditButton from "../../components/tables/buttons/EditButton.vue";
 import DeleteButton from "../../components/tables/buttons/DeleteButton.vue";
 
 const users = [
-    { id: 1, name: "Анна", email: "anna@example.com", role: "aboba" },
-    { id: 2, name: "Борис", email: "boris@example.com", role: "popa" },
-    { id: 3, name: "Виктория", email: "vika@example.com", role: "pipa" },
+    {  name: "Анна", email: "anna@example.com", role: "aboba", division: "1"  },
+    {  name: "Борис", email: "boris@example.com", role: "popa", division: "2" },
+    {  name: "Виктория", email: "vika@example.com", role: "pipa", division: "3" },
+
 ];
 
 const columns = [
-    { key: "id", label: "ID" },
     { key: "name", label: "Имя" },
     { key: "email", label: "Email" },
     { key: "role", label: "Роль" },
+    { key: "division", label: "Подраделение" },
     { key: "actions", label: "" },
 ];
 
