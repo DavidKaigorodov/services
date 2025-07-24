@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { router } from "@inertiajs/vue3";
 import VerticalForm from "../../components/forms/VerticalForm.vue";
-import GuestLayout from "../../components/layouts/GuestLayout.vue";
+import GuestLayout from "../../layouts/GuestLayout.vue";
 import StringInput from "../../components/forms/inputs/StringInput.vue";
 
 const form = ref({
