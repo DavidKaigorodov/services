@@ -12,7 +12,7 @@ const form = ref({
 
 function onSubmit(e) {
     e.preventDefault();
-    console.log(form.value);
+
     router.post(('auhtificate'), form.value)
 }
 </script>
