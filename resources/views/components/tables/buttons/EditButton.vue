@@ -1,8 +1,15 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
+defineProps({
+    href: {
+        type: String,
+        required: true,
+    },
+});
 </script>
+
 <template>
-    <Link href="href" class="button blue-button" v-bind="$attrs">
+    <Link :href="href" class="button blue-button" v-bind="$attrs">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"

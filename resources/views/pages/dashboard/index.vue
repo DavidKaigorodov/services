@@ -1,15 +1,18 @@
 <script setup>
-import { usePage } from "@inertiajs/vue3";
 import AuthenticatedLayout from "../../components/layouts/AuthenticatedLayout.vue";
 import Table from "../../components/tables/Table.vue";
 import EditButton from "../../components/tables/buttons/EditButton.vue";
 import DeleteButton from "../../components/tables/buttons/DeleteButton.vue";
 
 const users = [
-    {  name: "Анна", email: "anna@example.com", role: "aboba", division: "1"  },
-    {  name: "Борис", email: "boris@example.com", role: "popa", division: "2" },
-    {  name: "Виктория", email: "vika@example.com", role: "pipa", division: "3" },
-
+    { name: "Анна", email: "anna@example.com", role: "aboba", division: "1" },
+    { name: "Борис", email: "boris@example.com", role: "popa", division: "2" },
+    {
+        name: "Виктория",
+        email: "vika@example.com",
+        role: "pipa",
+        division: "3",
+    },
 ];
 
 const columns = [
@@ -22,15 +25,12 @@ const columns = [
 
 const editUser = (user) => {
     console.log("Редактировать:", user);
-    //убрать и передать роут в саму кнопку
 };
 
-const deleteUser = (id) => {
-    console.log("Удалить пользователя:", id);
-    // убрать и передать роут в саму кнопку
+const deleteUser = (user) => {
+    console.log("Удалить пользователя:", user);
 };
 
-// const user = usePage().props.users
 </script>
 <template>
     <AuthenticatedLayout>
@@ -38,8 +38,14 @@ const deleteUser = (id) => {
             <Table :data="users" :columns="columns" header="Пользователи">
                 <template #actions="{ row }">
                     <div class="table-actions">
-                        <EditButton @click="editUser(row)" />
-                        <DeleteButton @click="deleteUser(row.id)" />
+                        <EditButton
+                            @click="editUser(row)"
+                            href="Тут должна быть ссылка"
+                        />
+                        <DeleteButton
+                            @click="deleteUser(row)"
+                            href="Тут должна быть ссылка"
+                        />
                     </div>
                 </template>
 
