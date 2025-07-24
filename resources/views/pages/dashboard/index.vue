@@ -1,5 +1,5 @@
 <script setup>
-import AuthenticatedLayout from "../../components/layouts/AuthenticatedLayout.vue";
+import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
 import Table from "../../components/tables/Table.vue";
 import EditButton from "../../components/tables/buttons/EditButton.vue";
 import DeleteButton from "../../components/tables/buttons/DeleteButton.vue";
