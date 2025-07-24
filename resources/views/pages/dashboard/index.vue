@@ -1,8 +1,8 @@
 <script setup>
 import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
-import Table from "../../components/tables/Table.vue";
-import EditButton from "../../components/tables/buttons/EditButton.vue";
-import DeleteButton from "../../components/tables/buttons/DeleteButton.vue";
+import Table from "../../components/table/Table.vue";
+import EditButton from "../../components/table/buttons/EditButton.vue";
+import DeleteButton from "../../components/table/buttons/DeleteButton.vue";
 
 const users = [
     {
