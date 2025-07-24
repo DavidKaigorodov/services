@@ -5,9 +5,22 @@ import EditButton from "../../components/tables/buttons/EditButton.vue";
 import DeleteButton from "../../components/tables/buttons/DeleteButton.vue";
 
 const users = [
-    { name: "Анна", email: "anna@example.com", role: "aboba", division: "1" },
-    { name: "Борис", email: "boris@example.com", role: "popa", division: "2" },
     {
+        id: 1,
+        name: "Анна",
+        email: "anna@example.com",
+        role: "aboba",
+        division: "1",
+    },
+    {
+        id: 2,
+        name: "Борис",
+        email: "boris@example.com",
+        role: "popa",
+        division: "2",
+    },
+    {
+        id: 3,
         name: "Виктория",
         email: "vika@example.com",
         role: "pipa",
@@ -19,48 +32,22 @@ const columns = [
     { key: "name", label: "Имя" },
     { key: "email", label: "Email" },
     { key: "role", label: "Роль" },
-    { key: "division", label: "Подраделение" },
+    { key: "division", label: "Подразделение" },
     { key: "actions", label: "" },
 ];
-
-const editUser = (user) => {
-    console.log("Редактировать:", user);
-};
-
-const deleteUser = (user) => {
-    console.log("Удалить пользователя:", user);
-};
-
 </script>
+
 <template>
     <AuthenticatedLayout>
-        <div>
-            <Table :data="users" :columns="columns" header="Пользователи">
-                <template #actions="{ row }">
-                    <div class="table-actions">
-                        <EditButton
-                            @click="editUser(row)"
-                            href="Тут должна быть ссылка"
-                        />
-                        <DeleteButton
-                            @click="deleteUser(row)"
-                            href="Тут должна быть ссылка"
-                        />
-                    </div>
-                </template>
+        <Table :data="users" :columns="columns" header="Пользователи">
+            <template #name="{ value }">
+                {{ value }}
+            </template>
 
-                <template #name="{ value }">
-                    {{ value }}
-                </template>
-            </Table>
-        </div>
+            <template #actions="{ row }">
+                <EditButton href="Ссылка" />
+                <DeleteButton href="Ссылка" />
+            </template>
+        </Table>
     </AuthenticatedLayout>
 </template>
-
-<style scoped>
-.table-actions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-</style>
