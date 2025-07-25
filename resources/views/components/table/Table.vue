@@ -1,4 +1,6 @@
 <script setup>
+import Search from "./Search.vue";
+
 defineProps({
     data: Array,
     columns: Array,
@@ -12,7 +14,7 @@ defineProps({
 
         <div class="table-toolbar">
             <div class="toolbar-left">
-                <slot name="toolbar-left" />
+                <Search />
             </div>
             <div class="toolbar-right">
                 <slot name="toolbar-right" />

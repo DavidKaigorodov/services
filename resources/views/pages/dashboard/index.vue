@@ -145,15 +145,6 @@ const columns = [
 <template>
     <AuthenticatedLayout>
         <Table :data="users" :columns="columns" header="Пользователи">
-            <template #toolbar-left>
-                <input
-                    v-model="search"
-                    type="text"
-                    placeholder="Поиск по пользователям..."
-                    class="search-input"
-                />
-            </template>
-
             <template #toolbar-right>
                 <button class="button blue-button">+</button>
             </template>
