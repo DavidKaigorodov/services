@@ -145,13 +145,22 @@ const columns = [
 <template>
     <AuthenticatedLayout>
         <Table :data="users" :columns="columns" header="Пользователи">
-            <template #name="{ value }">
-                {{ value }}
+            <template #toolbar-left>
+                <input
+                    v-model="search"
+                    type="text"
+                    placeholder="Поиск по пользователям..."
+                    class="search-input"
+                />
+            </template>
+
+            <template #toolbar-right>
+                <button class="button blue-button">+</button>
             </template>
 
             <template #actions="{ row }">
-                <EditButton href="Ссылка" />
-                <DeleteButton href="Ссылка" />
+                <EditButton :href="`/users/${row.id}/edit`" />
+                <DeleteButton :href="`/users/${row.id}`" />
             </template>
         </Table>
     </AuthenticatedLayout>

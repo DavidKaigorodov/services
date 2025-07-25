@@ -1,15 +1,37 @@
+@use '../../abstracts/mixins' as *
+
 .table-container
-  background: white
-  border-radius: 16px
-  padding: 24px
+    background: white
+    border-radius: 16px
+    padding: 24px
 
 .table-header
-  font-size: 1.5rem
-  font-weight: 700
-  color: #2c3e50
-  margin-bottom: 1.5rem
-  font-family: "Inter", -apple-system, sans-serif
+    font-size: 1.5rem
+    font-weight: 700
+    color: #2c3e50
+    margin-bottom: 1.5rem
+    font-family: "Inter", -apple-system, sans-serif
 
+.table-toolbar
+    display: flex
+    justify-content: space-between
+    align-items: center
+    gap: 16px
+    margin-bottom: 0.5rem
+    flex-wrap: wrap
+    z-index: 11
+    background: white
+
+    .toolbar-left
+        flex: 1 1 300px
+        display: flex
+        align-items: center
+    .toolbar-right
+        padding-right: 5px
+        flex: 0 0 auto
+        display: flex
+        gap: 8px
+        flex-wrap: wrap
 .table
   width: 100%
   border-collapse: separate
@@ -30,7 +52,7 @@
     padding: 16px 8px !important
     min-width: 0
 
-  thead
+  &-thead
     tr
       th
         background: #4a6cf7
@@ -41,7 +63,7 @@
         position: sticky
         top: 0
         border-right: 1px solid rgba(255, 255, 255, 0.2)
-        z-index: 1
+        z-index: 10
 
         &:first-child
           border-top-left-radius: 12px
@@ -50,7 +72,7 @@
           border-top-right-radius: 12px
           border-right: none
 
-  tbody
+  &-tbody
     tr
       opacity: 0
       animation: fadeIn 0.3s ease forwards
@@ -97,6 +119,16 @@
           align-items: center
           justify-content: center
           margin: 0 auto
+.table-wrapper
+  max-height: 75vh
+  overflow-y: auto
+  overflow-x: hidden
+  border-radius: 0 0 12px 12px
+  box-sizing: content-box
+  @include scroll
+
+  table
+    border-bottom: none
 
 @keyframes fadeIn
   from
@@ -105,3 +137,4 @@
   to
     opacity: 1
     transform: translateY(0)
+
