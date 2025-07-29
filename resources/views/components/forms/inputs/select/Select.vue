@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import FormGroup from "../../FormGroup.vue";
+import FormItem from "../../FormItem.vue";
 import Label from "../../Label.vue";
 import SelectInput from "./SelectInput.vue";
 import SelectList from "./SelectList.vue";
@@ -53,7 +53,7 @@ document.addEventListener("click", handleClickOutside);
 </script>
 
 <template>
-    <FormGroup :name="name">
+    <FormItem :name="name">
         <Label :labelText="label" />
         <div
             ref="selectWrapper"
@@ -76,5 +76,5 @@ document.addEventListener("click", handleClickOutside);
         </div>
 
         <input type="hidden" :name="name" :value="modelValue" v-if="name" />
-    </FormGroup>
+    </FormItem>
 </template>

@@ -1,5 +1,5 @@
 <script setup>
-import FormGroup from "../FormGroup.vue";
+import FormItem from "../FormItem.vue";
 import Label from "../Label.vue";
 
 const props = defineProps({
@@ -36,7 +36,7 @@ const placeholderText = props.placeholder ?? "";
 </script>
 
 <template>
-    <FormGroup :name="name">
+    <FormItem :name="name">
         <Label :labelText="label"/>
         <input
             :type="type"
@@ -48,5 +48,5 @@ const placeholderText = props.placeholder ?? "";
             :disabled="disabled"
             :autocomplete="autocomplete"
         />
-    </FormGroup>
+    </FormItem>
 </template>
