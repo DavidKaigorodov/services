@@ -10,4 +10,4 @@ Route::group([], [
     base_path('routes/web/division.php')
 ]);
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('home');
+Route::get('/glossary', [DashboardController::class, 'index'])->name('home');

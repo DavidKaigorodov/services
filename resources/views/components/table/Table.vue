@@ -1,6 +1,4 @@
 <script setup>
-import Search from "./Search.vue";
-
 defineProps({
     data: Array,
     columns: Array,
@@ -14,25 +12,22 @@ defineProps({
 
         <div class="table-toolbar">
             <div class="toolbar-left">
-                <Search />
+                <slot name="toolbar-left" />
             </div>
             <div class="toolbar-right">
                 <slot name="toolbar-right" />
             </div>
         </div>
 
-        <table class="table table-thead">
-            <thead>
-                <tr>
-                    <th v-for="{ key, label } in columns" :key="key">
-                        {{ label }}
-                    </th>
-                </tr>
-            </thead>
-        </table>
-
         <div class="table-wrapper">
-            <table class="table table-tbody">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th v-for="{ key, label } in columns" :key="key">
+                            {{ label }}
+                        </th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr v-for="(row, index) in data" :key="index">
                         <td v-for="{ key } in columns" :key="key">
