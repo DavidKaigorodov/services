@@ -5,7 +5,7 @@ import VerticalForm from "../../components/forms/VerticalForm.vue";
 import StringInput from "../../components/forms/inputs/StringInput.vue";
 import Select from "../../components/forms/inputs/select/Select.vue";
 import WorkSchedule from "../../components/forms/inputs/WorkSchedule.vue";
-import Label from "../../components/forms/Label.vue";
+// import Label from "../../components/forms/Label.vue";
 import FormGroup from "../../components/forms/FormGroup.vue";
 
 const form = ref({
