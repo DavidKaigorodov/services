@@ -1,0 +1,42 @@
+@use '../../abstracts' as *
+
+.horizontal-form-box
+    display: flex
+    justify-content: center
+    align-items: start
+.horizontal-form
+    min-width: 500px
+    padding: 25px
+    margin-top: 40px
+
+    display: flex
+    flex-direction: column
+    gap: 10px
+
+    border-radius: 7px
+    box-shadow: 4px 4px 32px 16px #eee
+    .form-header
+        text-align: center
+        padding-bottom: 20px
+        color: var(--text-color)
+        font-weight: bold
+        font-size: 23px
+
+    .form-content
+        gap: 15px
+
+    .form-group
+        display: flex
+        align-items: center
+        gap: 15px
+
+    .form-label
+        min-width: 150px
+        text-align: right
+        margin: 0
+        font-weight: 500
+    .form-buttons
+        display: flex
+        justify-content: end
+        align-items: center
+        gap: 10px
