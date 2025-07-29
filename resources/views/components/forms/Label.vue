@@ -6,7 +6,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <label :htmlFor="name" class="label">
+    <label :htmlFor="name" :class="'label '+ name">
         {{ labelText }}
     </label>
 </template>

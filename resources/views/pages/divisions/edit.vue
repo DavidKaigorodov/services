@@ -40,8 +40,7 @@ const cities = [
 <template>
     <AuthenticatedLayout>
         <VerticalForm header="Организации" sbm="Отправить">
-            <Label labelText=" Информация об организации" />
-            <FormGroup class="organization">
+            <FormGroup name="organization" label="Информация об организации">
                 <StringInput
                     label="Наименование"
                     name="name"
@@ -64,13 +63,16 @@ const cities = [
                     placeholder="Выберите город"
                 />
             </FormGroup>
-            <WorkSchedule
-                header="График работы"
-                v-model="form.work"
-                name="work"
-            />
-            <Label labelText="Ответственное лицо" />
-            <FormGroup class="responsible">
+
+            <FormGroup name="work" label="График работы">
+                <WorkSchedule
+                    header="График работы"
+                    v-model="form.work"
+                    name="work"
+                />
+            </FormGroup>
+
+            <FormGroup name="responsible" label="Ответственное лицо">
                 <StringInput
                     label="Имя"
                     name="responsible_name"
@@ -96,11 +98,3 @@ const cities = [
         </VerticalForm>
     </AuthenticatedLayout>
 </template>
-
-<style lang="sass" scoped>
-.responsible, .organization
-    border: 1px solid var(--input-border-color)
-    border-radius: 7px
-    padding: 20px
-    background-color: #fffcfc
-</style>
