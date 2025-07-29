@@ -8,8 +8,10 @@ const props = defineProps({
 </script>
 
 <template>
-    <Label :name="name" :labelText="label" />
-    <div :class="['form-group', name]">
-        <slot />
+    <div class="form-group-container">
+        <Label name="group" :labelText="label"/>
+        <div :class="['form-group', name]">
+            <slot />
+        </div>
     </div>
 </template>

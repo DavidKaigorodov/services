@@ -22,7 +22,6 @@ const updateDay = (dayKey, value) => {
 </script>
 
 <template>
-    <Label :labelText="header" />
     <div class="work-schedule-section">
         <div class="time-range-wrapper">
             <TimeInput
