@@ -1,5 +1,5 @@
 <script setup>
-import FormGroup from "../FormGroup.vue";
+import FormItem from "../FormItem.vue";
 import Label from "../Label.vue";
 
 const props = defineProps({
@@ -38,7 +38,7 @@ const updateEnd = (value) => {
 </script>
 
 <template>
-    <FormGroup :name="name" class="time-input-wrapper">
+    <FormItem :name="name" class="time-input-wrapper">
         <div class="time-input-container">
             <Label :labelText="label" class="time-input-label" />
             <div class="time-range" :class="{ 'is-disabled': disabled }">
@@ -74,6 +74,6 @@ const updateEnd = (value) => {
             :value="modelValue.date_end"
             v-if="name"
         />
-    </FormGroup>
+    </FormItem>
 </template>
 
