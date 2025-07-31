@@ -1,158 +1,184 @@
 <script setup>
+import EventCalendar from "../../components/calendar/EventCalendar.vue";
 import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
-import Table from "../../components/table/Table.vue";
-import EditButton from "../../components/table/buttons/EditButton.vue";
-import DeleteButton from "../../components/table/buttons/DeleteButton.vue";
 
-const users = [
+const data = [
     {
-        id: 1,
-        name: "Анна",
-        email: "anna@example.com",
-        role: "aboba",
-        division: "1",
+        date_time: "2025-07-31 08:30:00",
+        records: [],
     },
     {
-        id: 2,
-        name: "Борис",
-        email: "boris@example.com",
-        role: "popa",
-        division: "2",
+        date_time: "2025-07-31 09:00:00",
+        records: [
+            {
+                user: {
+                    first_name: "Бандос",
+                },
+                subscribes: [
+                    {
+                        service: {
+                            name: "Прикол",
+                        },
+                        duration: "01:41:00",
+                        subscribe: {
+                            first_name: "sigma",
+                            start_at: "2025-07-31 09:14:00",
+                        },
+                        shift: (15 / 30) * 100,
+                    },
+                ],
+            },
+        ],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 09:30:00",
+        records: [],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 10:00:00",
+        records: [],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 10:30:00",
+        records: [
+            {
+                user: {
+                    first_name: "Антонио Бандерас",
+                },
+                subscribes: [
+                    {
+                        service: {
+                            name: "Субсидия",
+                        },
+                        duration: "00:32:00",
+                        subscribe: {
+                            first_name: "sigma",
+                            start_at: "2025-07-31 10:15:00",
+                        },
+                        shift: (15 / 30) * 100,
+                    },
+                ],
+            },
+        ],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 11:00:00",
+        records: [],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 11:30:00",
+        records: [
+            {
+                user: {
+                    first_name: "Антонио Бандерас",
+                },
+                subscribes: [
+                    {
+                        service: {
+                            name: "Мия мучо пучо",
+                        },
+                        duration: "00:32:00",
+                        subscribe: {
+                            first_name: "sigma",
+                            start_at: "2025-07-31 11:12:00",
+                        },
+                        shift: (15 / 30) * 100,
+                    },
+                ],
+            },
+        ],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 12:00:00",
+        records: [
+            {
+                user: {
+                    first_name: "Антонио Бандерас",
+                },
+                subscribes: [
+                    {
+                        service: {
+                            name: "Субсидия",
+                        },
+                        duration: "00:32:00",
+                        subscribe: {
+                            first_name: "sigma",
+                            start_at: "2025-07-31 12:15:00",
+                        },
+                        shift: (15 / 30) * 100,
+                    },
+                ],
+            },
+        ],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 12:30:00",
+        records: [],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 13:00:00",
+        records: [],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 13:30:00",
+        records: [],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 14:00:00",
+        records: [],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 14:30:00",
+        records: [
+            {
+                user: {
+                    first_name: "СигмаСигма Бой",
+                },
+                subscribes: [
+                    {
+                        service: {
+                            name: "Тренер по дота 2 на мипо мид",
+                        },
+                        duration: "00:10:00",
+                        subscribe: {
+                            first_name: "sigma",
+                            start_at: "2025-07-31 14:44:00",
+                        },
+                        shift: (14 / 30) * 100,
+                    },
+                ],
+            },
+        ],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 15:00:00",
+        records: [],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 15:30:00",
+        records: [],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 16:00:00",
+        records: [],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 16:30:00",
+        records: [],
     },
     {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
+        date_time: "2025-07-31 17:00:00",
+        records: [],
     },
-];
-
-const columns = [
-    { key: "name", label: "Имя" },
-    { key: "email", label: "Email" },
-    { key: "role", label: "Роль" },
-    { key: "division", label: "Подразделение" },
-    { key: "actions", label: "" },
+    {
+        date_time: "2025-07-31 17:30:00",
+        records: [],
+    },
 ];
 </script>
 
 <template>
     <AuthenticatedLayout>
-        <Table :data="users" :columns="columns" header="Пользователи">
-            <template #toolbar-right>
-                <button class="button blue-button">+</button>
-            </template>
-
-            <template #actions="{ row }">
-                <EditButton :href="`/users/${row.id}/edit`" />
-                <DeleteButton :href="`/users/${row.id}`" />
-            </template>
-        </Table>
+        <EventCalendar :records="data" />
     </AuthenticatedLayout>
 </template>
