@@ -1,5 +1,5 @@
 <script setup>
-defineProps({
+const props = defineProps({
     data: Array,
     columns: Array,
     header: String,
@@ -29,7 +29,7 @@ defineProps({
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(row, index) in data" :key="index">
+                    <tr v-for="(row, index) in data.data" :key="index">
                         <td v-for="{ key } in columns" :key="key">
                             <div v-if="key === 'actions'" class="table-actions">
                                 <slot name="actions" :row="row" />

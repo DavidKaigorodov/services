@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class DashboardController extends Controller
+class DashboardController
 {
     public function index(){
-        return Inertia::render('cities/edit');
+        return Inertia::render('pages/dashboard/index');
     }
 }

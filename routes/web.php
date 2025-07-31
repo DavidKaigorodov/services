@@ -1,13 +1,39 @@
 <?php
 
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DivisionController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\StatisticController;
+use App\Http\Controllers\SubscribeController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::group([], [
-    base_path('routes/web/auth.php'),
-    base_path('routes/web/admin.php'),
-    base_path('routes/web/division.php')
-]);
+Route::controller(SessionController::class)->group(function () {
+    Route::get('/login', 'create')->middleware('guest')->name('login');
+    Route::post('/login', 'store')->middleware('guest')->name('auhtificate');
+    Route::post('/logout', 'destroy')->middleware('auth')->name('logout');
+});
 
-Route::get('/glossary', [DashboardController::class, 'index'])->name('home');
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('dashboard.index');
+    })->name('home');
+
+    Route::resource('dashboard', DashboardController::class)
+        ->only(['index']);
+
+    Route::resource('service', ServiceController::class)
+        ->except(['show']);
+
+    Route::resource('cities', CityController::class)
+        ->except(['show']);
+
+    Route::resource('divisions', DivisionController::class)
+        ->except(['show']);
+
+    Route::resource('subscribes', SubscribeController::class);
+
+    Route::resource('statistic', StatisticController::class)
+        ->only(['index']);
+});

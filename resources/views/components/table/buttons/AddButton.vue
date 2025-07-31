@@ -2,7 +2,7 @@
 import { Link } from "@inertiajs/vue3";
 import PlusIco from "../../icons/PlusIco.vue";
 
-defineProps({
+const props = defineProps({
     href: {
         type: String,
         required: true,
