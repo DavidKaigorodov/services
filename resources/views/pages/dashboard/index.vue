@@ -1,158 +1,28 @@
 <script setup>
+import EventCalendar from "../../components/calendar/EventCalendar.vue";
 import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
-import Table from "../../components/table/Table.vue";
-import EditButton from "../../components/table/buttons/EditButton.vue";
-import DeleteButton from "../../components/table/buttons/DeleteButton.vue";
 
-const users = [
+const records = [
     {
-        id: 1,
-        name: "Анна",
-        email: "anna@example.com",
-        role: "aboba",
-        division: "1",
+        name: "Иванов",
+        "2025-07-30": [
+            { time: "09:15", service: { name: "Стрижка" } },
+            { time: "12:23", service: { name: "Окрашивание" } },
+            { time: "14:32", service: { name: "Укладка" } },
+        ],
     },
     {
-        id: 2,
-        name: "Борис",
-        email: "boris@example.com",
-        role: "popa",
-        division: "2",
+        name: "Петрова",
+        "2025-07-30": [
+            { time: "11:05", service: { name: "Маникюр" } },
+            { time: "15:40", service: { name: "Педикюр" } },
+        ],
     },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-    {
-        id: 3,
-        name: "Виктория",
-        email: "vika@example.com",
-        role: "pipa",
-        division: "3",
-    },
-];
-
-const columns = [
-    { key: "name", label: "Имя" },
-    { key: "email", label: "Email" },
-    { key: "role", label: "Роль" },
-    { key: "division", label: "Подразделение" },
-    { key: "actions", label: "" },
 ];
 </script>
 
 <template>
     <AuthenticatedLayout>
-        <Table :data="users" :columns="columns" header="Пользователи">
-            <template #toolbar-right>
-                <button class="button blue-button">+</button>
-            </template>
-
-            <template #actions="{ row }">
-                <EditButton :href="`/users/${row.id}/edit`" />
-                <DeleteButton :href="`/users/${row.id}`" />
-            </template>
-        </Table>
+        <EventCalendar :records="records" />
     </AuthenticatedLayout>
 </template>
