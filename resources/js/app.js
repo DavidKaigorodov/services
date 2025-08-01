@@ -1,6 +1,7 @@
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 
+
 createInertiaApp({
     progress: {
         delay: 250,
@@ -19,3 +20,4 @@ createInertiaApp({
             .mount(el);
     },
 });
+
