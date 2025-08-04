@@ -1,0 +1,121 @@
+$primary: #6f9aff
+$primary-dark: #5c82ff
+$gray-100: #f9fafb
+$gray-200: #e5e7eb
+$gray-300: #d1d5db
+$gray-500: #6b7280
+$gray-700: #374151
+$gray-800: #1f2937
+$gray-900: #111827
+$font-family: 'Inter', 'Segoe UI', Roboto, sans-serif
+$border-radius: 0.5rem
+$transition: all 0.2s ease
+
+.datepicker-wrapper
+    position: relative
+    display: inline-block
+    font-family: $font-family
+    width: 100%
+    max-width: 300px
+
+#datepicker-input
+    cursor: pointer
+
+.calendar-header
+    background: white
+    border-radius: $border-radius
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)
+    border: 1px solid $gray-200
+    position: absolute
+    left: 0
+    right: 0
+    z-index: 10
+    margin-top: 8px
+    overflow: hidden
+
+.calendar-weekdays
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 0.75rem 1rem
+    background-color: $gray-100
+    font-size: 0.875rem
+    font-weight: 600
+    text-transform: uppercase
+    letter-spacing: 0.05em
+    color: $gray-800
+
+    button
+        background: none
+        border: none
+        font-size: 1.25rem
+        cursor: pointer
+        color: $gray-500
+        padding: 0
+
+    &:hover
+        color: $gray-700
+
+    .month-label
+        grid-column: 2 / -2
+        display: flex
+        align-items: center
+        justify-content: center
+        font-weight: bold
+        color: $gray-900
+        font-size: 1rem
+
+.calendar-days
+    display: grid
+    grid-template-columns: repeat(7, 1fr)
+    gap: 0.25rem
+    padding: 0.5rem
+    background-color: $gray-100
+    border-bottom: 1px solid $gray-200
+    font-size: 0.75rem
+    font-weight: 500
+    color: $gray-500
+    text-align: center
+
+.grid.grid-cols-7
+    display: grid
+    grid-template-columns: repeat(7, 1fr)
+    gap: 0.25rem
+    padding: 0.5rem
+
+.calendar-day
+    height: 2.5rem
+    display: flex
+    align-items: center
+    justify-content: center
+    border-radius: $border-radius
+    font-size: 0.875rem
+    color: $gray-700
+    cursor: pointer
+    transition: $transition
+    border: none
+    background: transparent
+    padding: 0
+
+    &:hover:not(:disabled)
+        background-color: #eff6ff
+        color: $primary
+        font-weight: 500
+
+    &.today
+        background-color: $primary
+        color: white
+        font-weight: 600
+
+    &.selected
+        background-color: $primary-dark
+        color: white
+        font-weight: 700
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
+
+    &:disabled
+        opacity: 0.4
+        background: none
+        cursor: default
+        &:hover
+            background: none
