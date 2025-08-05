@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
 use App\Models\Service;
+use App\Http\Resources\ServiceResorce;
 use Inertia\Inertia;
 
 class ServiceController
@@ -15,7 +16,7 @@ class ServiceController
     public function index()
     {
         return Inertia::render('pages/services/index', [
-            'services' => fn() => getResource(Service::class),
+            'services' => fn() => getResource(Service::class, ServiceResource::class),
         ]);
     }
 

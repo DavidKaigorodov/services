@@ -20,15 +20,15 @@ if (! function_exists('user')) {
     }
 }
 
-if (! function_exists('getResource')) {
-    function getResource(string|Model|Builder $model): ResourceCollection|JsonResource
+if (!function_exists('getResource')) {
+    function getResource(string|Model|Builder $model, string $resourceClass): ResourceCollection|JsonResource
     {
         if ($model instanceof Model)
-            return $model->toResource();
+            return new $resourceClass($model);
 
         if ($model instanceof Builder)
-            return $model->paginate(50)->toResourceCollection();
+            return $resourceClass::collection($model->paginate(50));
 
-        return $model::paginate(50)->toResourceCollection();
+        return $resourceClass::collection($model::paginate(50));
     }
 }

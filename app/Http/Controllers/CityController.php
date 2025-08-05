@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCityRequest;
 use App\Http\Requests\UpdateCityRequest;
 use App\Models\City;
+use App\Http\Resources\CityResource;
 use Inertia\Inertia;
 
 class CityController
@@ -14,7 +15,7 @@ class CityController
      */
     public function index(){
         return Inertia::render('pages/cities/index', [
-            'cities' => fn() => getResource(City::class),
+            'cities' => fn() => getResource(City::class, CityResource::class),
         ]);
     }
 
@@ -39,7 +40,7 @@ class CityController
      */
     public function edit(City $city){
         return Inertia::render('pages/cities/edit', [
-            'city' => fn() => getResource($city),
+            'city' => fn() => getResource(City::class, CityResource::class),
         ]);
     }
 

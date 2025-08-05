@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDivisionRequest;
 use App\Http\Requests\UpdateDivisionRequest;
 use App\Models\Division;
+use App\Http\Resources\Admin\DivisionResource;
 use Inertia\Inertia;
 
 class DivisionController
@@ -13,11 +14,11 @@ class DivisionController
      * Display a listing of the resource.
      */
     public function index()
-    {
-        return Inertia::render('pages/divisions/index', [
-            'divisions' => fn() => getResource(Division::class),
-        ]);
-    }
+{
+    return Inertia::render('pages/divisions/index', [
+        'divisions' => fn() => getResource(Division::class, DivisionResource::class),
+    ]);
+}
 
     /**
      * Show the form for creating a new resource.
@@ -41,11 +42,11 @@ class DivisionController
      * Show the form for editing the specified resource.
      */
     public function edit(Division $division)
-    {
-        return Inertia::render('pages/divisions/edit', [
-            'division' => fn() => getResource($division),
-        ]);
-    }
+{
+    return Inertia::render('pages/divisions/edit', [
+        'division' => fn() => getResource($division, DivisionResource::class),
+    ]);
+}
 
     /**
      * Update the specified resource in storage.
