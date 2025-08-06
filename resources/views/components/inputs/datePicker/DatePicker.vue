@@ -55,6 +55,20 @@ onMounted(() => {
 onBeforeUnmount(() => {
   document.removeEventListener("click", handleClickOutside);
 });
+
+const popupStyles = computed(() => {
+  if (!show.value || !wrapperRef.value) return {};
+
+  const rect = wrapperRef.value.getBoundingClientRect();
+
+  return {
+    position: "absolute",
+    left: `${rect.left}px`,
+    top: `${rect.bottom + window.scrollY}px`,
+    zIndex: "10000",
+    width: `${rect.width}px`,
+  };
+});
 </script>
 
 <template>
@@ -62,15 +76,17 @@ onBeforeUnmount(() => {
     <Label :labelText="label" />
     <div class="datepicker-wrapper" ref="wrapperRef">
       <DateInput :modelValue="formattedValue" @toggle="togglePopup" />
-
-      <component
-        :is="mode === 'time' ? TimePickerPopup : CalendarPopup"
-        v-if="show"
-        :modelValue="modelValue"
-        @update:modelValue="updateValue"
-        @close="handleClose"
-        class="calendar-popup"
-      />
+      <Teleport to="body">
+        <component
+          :is="mode === 'time' ? TimePickerPopup : CalendarPopup"
+          v-if="show"
+          :modelValue="modelValue"
+          @update:modelValue="updateValue"
+          @close="handleClose"
+          class="calendar-popup"
+          :style="popupStyles"
+        />
+      </Teleport>
     </div>
   </FormItem>
 </template>

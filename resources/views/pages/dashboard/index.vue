@@ -1,5 +1,5 @@
 <script setup>
-import EventCalendar from "../../components/calendar/EventCalendar.vue";
+import TimeLine from "../../components/calendar/TimeLine.vue";
 import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
 
 const data = [
@@ -184,6 +184,6 @@ const data = [
 
 <template>
   <AuthenticatedLayout>
-    <EventCalendar header="Записи на прием" :records="data" />
+    <TimeLine header="Записи на прием" :records="data" />
   </AuthenticatedLayout>
 </template>

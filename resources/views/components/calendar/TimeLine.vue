@@ -2,11 +2,17 @@
 import { ref, computed } from "vue";
 import dayjs from "dayjs";
 import { router } from "@inertiajs/vue3";
+
 import BlueButton from "../buttons/BlueButton.vue";
+import DatePicker from "../inputs/datePicker/DatePicker.vue";
 
 const props = defineProps({
   records: Array,
   header: String,
+});
+
+const form = ref({
+  date: "",
 });
 
 const todayDate = dayjs().format("YYYY-MM-DD");
@@ -63,6 +69,7 @@ const durationToMinutes = (d) => {
           :data-date="day.date"
         >
           <div class="time-cell header with-controls">
+            <DatePicker v-model="form.date" />
             <div class="header-title">{{ header }}</div>
             <div class="date-nav-buttons">
               <BlueButton class="nav-btn" @click="goToPreviousDay">←</BlueButton>
