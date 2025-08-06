@@ -4,17 +4,21 @@ import RedButton from "../../buttons/RedButton.vue";
 import TrashIco from "../../icons/TrashIco.vue";
 
 const props = defineProps({
-    href: String,
+  href: {
+    type: String,
+    required: true,
+  },
 });
 
-const href = props.href;
-
 function destroy() {
-    if (confirm("Вы уверены что хотите удалить запись?")) router.delete(href);
+  if (confirm("Вы уверены, что хотите удалить запись?")) {
+    router.delete(props.href);
+  }
 }
 </script>
+
 <template>
-    <RedButton @click="destroy">
-        <TrashIco />
-    </RedButton>
+  <RedButton @click="destroy">
+    <TrashIco />
+  </RedButton>
 </template>

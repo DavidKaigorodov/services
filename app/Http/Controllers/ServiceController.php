@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
 use App\Models\Service;
-use App\Http\Resources\ServiceResorce;
+use App\Http\Resources\ServiceResource;
+
 use Inertia\Inertia;
 
 class ServiceController
@@ -44,7 +45,7 @@ class ServiceController
     public function edit(Service $service)
     {
         return Inertia::render('pages/services/edit', [
-            'services' => fn() => getResource($service),
+            'services' => fn() => getResource($service, ServiceResource::class),
         ]);
     }
 
