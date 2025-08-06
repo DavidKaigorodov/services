@@ -11,7 +11,7 @@ defineEmits(["toggle"]);
   <StringInput
     name="datepicker-input"
     :value="modelValue"
-    readonly="true"
+    :readonly="true"
     @click="$emit('toggle')"
     autocomplete="datepicker-input"
   />

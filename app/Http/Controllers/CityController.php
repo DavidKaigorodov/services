@@ -40,8 +40,9 @@ class CityController
      */
     public function edit(City $city){
         return Inertia::render('pages/cities/edit', [
-            'city' => fn() => getResource(City::class, CityResource::class),
-        ]);
+            'city' => new CityResource($city),
+]);
+
     }
 
     /**
