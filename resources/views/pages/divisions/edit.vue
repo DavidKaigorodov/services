@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import { usePage } from "@inertiajs/vue3";
 
 import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
 
@@ -9,7 +10,6 @@ import HorizontalForm from "../../components/forms/HorizontalForm.vue";
 import StringInput from "../../components/forms/inputs/StringInput.vue";
 import Select from "../../components/forms/inputs/select/Select.vue";
 import WorkSchedule from "../../components/forms/inputs/WorkSchedule.vue";
-import { usePage } from "@inertiajs/vue3";
 import TextArea from "../../components/inputs/TextArea.vue";
 
 const division = usePage().props.division.data;
