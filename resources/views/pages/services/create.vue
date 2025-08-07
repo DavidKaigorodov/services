@@ -5,9 +5,9 @@ import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
 
 import VerticalForm from "../../components/forms/VerticalForm.vue";
 
-import StringInput from "../../components/forms/inputs/StringInput.vue";
 import DatePicker from "../../components/inputs/datePicker/DatePicker.vue";
 import Select from "../../components/forms/inputs/select/Select.vue";
+import TextArea from "../../components/inputs/TextArea.vue";
 
 const form = ref({
   name: "",
@@ -25,12 +25,12 @@ function onSubmit() {
 <template>
   <AuthenticatedLayout>
     <VerticalForm header="Услуги" sbm="Отправить" :handleSubmit="onSubmit">
-      <StringInput
+      <TextArea
         label="Наименование"
         name="name"
         :value="form.name"
         @update:value="(val) => (form.name = val)"
-        autocomplete="current-name"
+        :rows="4"
       />
       <DatePicker
         v-model="form.duration"
@@ -38,7 +38,7 @@ function onSubmit() {
         name="duration"
         label="Продолжительность"
       />
-      <Select :options="[123]" name="user" label="Специалист" />
+      <Select :options="['123']" name="user" label="Специалист" />
     </VerticalForm>
   </AuthenticatedLayout>
 </template>
