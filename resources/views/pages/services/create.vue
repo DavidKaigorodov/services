@@ -38,7 +38,7 @@ function onSubmit() {
         name="duration"
         label="Продолжительность"
       />
-      <Select :options="[123]" name="user" label="Специалист" />
+      <Select :options="['123']" name="user" label="Специалист" />
     </VerticalForm>
   </AuthenticatedLayout>
 </template>
