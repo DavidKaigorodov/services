@@ -43,9 +43,14 @@ const formattedValue = computed(() => {
 });
 
 const handleClickOutside = (event) => {
-  if (!wrapperRef.value?.contains(event.target)) {
-    show.value = false;
+  const wrapper = wrapperRef.value;
+  const popup = event.target.closest(".calendar-popup");
+
+  if (wrapper?.contains(event.target) || popup) {
+    return;
   }
+
+  show.value = false;
 };
 
 onMounted(() => {

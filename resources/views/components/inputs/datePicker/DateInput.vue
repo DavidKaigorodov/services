@@ -1,6 +1,5 @@
 <script setup>
-import StringInput from "../../forms/inputs/StringInput.vue";
-
+import CalendarIco from "../../icons/CalendarIco.vue";
 defineProps({
   modelValue: String,
 });
@@ -8,11 +7,11 @@ defineEmits(["toggle"]);
 </script>
 
 <template>
-  <StringInput
-    name="datepicker-input"
-    :value="modelValue"
-    :readonly="true"
-    @click="$emit('toggle')"
-    autocomplete="datepicker-input"
-  />
+  <div class="input datepicker-input" @click="$emit('toggle')">
+    <span class="input-text">{{ modelValue }}</span>
+    <div class="ico-calendar">
+      <CalendarIco />
+    </div>
+    <input type="hidden" :value="modelValue" />
+  </div>
 </template>
