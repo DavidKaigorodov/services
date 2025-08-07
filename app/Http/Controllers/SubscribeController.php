@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSubscribeRequest;
 use App\Http\Requests\UpdateSubscribeRequest;
+use App\Http\Resources\SubscribeResource;
 use App\Models\Subscribe;
 use Inertia\Inertia;
 
@@ -15,7 +16,7 @@ class SubscribeController
     public function index()
     {
         return Inertia::render('pages/subscribes/index', [
-            'subscribes' => fn() => getResource(Subscribe::class),
+            'subscribes' => fn() => getResource(Subscribe::class, SubscribeResource::class),
         ]);
     }
 
