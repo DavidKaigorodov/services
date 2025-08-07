@@ -1,11 +1,8 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import DateInput from "./DateInput.vue";
-import CalendarPopup from "./CalendarPopup.vue";
-import TimePickerPopup from "./TimePickerPopup.vue";
+import { TimePickerPopup, CalendarPopup, DateInput } from "./";
 import { formatDate } from "./utils";
-import FormItem from "../../forms/FormItem.vue";
-import Label from "../../forms/Label.vue";
+import { Label, FormItem } from "../../../components";
 
 const props = defineProps({
   modelValue: String,

@@ -1,11 +1,10 @@
 <script setup>
 import { ref } from "vue";
-
-import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
-
-import HorizontalForm from "../../components/forms/HorizontalForm.vue";
-import StringInput from "../../components/forms/inputs/StringInput.vue";
 import { usePage } from "@inertiajs/vue3";
+
+import { AuthenticatedLayout } from "../../layouts";
+
+import { HorizontalForm, StringInput } from "../../components";
 
 const city = usePage().props.city.data;
 

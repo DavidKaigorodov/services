@@ -1,41 +1,42 @@
 <script setup>
-    import { ref } from "vue";
-    import { router } from "@inertiajs/vue3";
-    import VerticalForm from "../../components/forms/VerticalForm.vue";
-    import GuestLayout from "../../layouts/GuestLayout.vue";
-    import StringInput from "../../components/forms/inputs/StringInput.vue";
+import { ref } from "vue";
+import { router } from "@inertiajs/vue3";
+
+import { GuestLayout } from "../../layouts";
+
+import { VerticalForm, StringInput } from "../../components";
 
 const form = ref({
-    login: "",
-        password: "",
-    });
+  login: "",
+  password: "",
+});
 
-    function onSubmit(e) {
-        e.preventDefault();
+function onSubmit(e) {
+  e.preventDefault();
 
-        router.post(route('auhtificate'), form.value)
-    }
+  router.post(route("auhtificate"), form.value);
+}
 </script>
 
 <template>
-    <GuestLayout>
-        <VerticalForm header="Вход" sbm="Войти" :handleSubmit="onSubmit">
-            <StringInput
-                label="Логин или Email"
-                name="login"
-                :value="form.login"
-                @update:value="(val) => (form.login = val)"
-                autocomplete="username"
-            />
+  <GuestLayout>
+    <VerticalForm header="Вход" sbm="Войти" :handleSubmit="onSubmit">
+      <StringInput
+        label="Логин или Email"
+        name="login"
+        :value="form.login"
+        @update:value="(val) => (form.login = val)"
+        autocomplete="username"
+      />
 
-            <StringInput
-                label="Пароль"
-                type="password"
-                name="password"
-                :value="form.password"
-                @update:value="(val) => (form.password = val)"
-                autocomplete="current-password"
-            />
-        </VerticalForm>
-    </GuestLayout>
+      <StringInput
+        label="Пароль"
+        type="password"
+        name="password"
+        :value="form.password"
+        @update:value="(val) => (form.password = val)"
+        autocomplete="current-password"
+      />
+    </VerticalForm>
+  </GuestLayout>
 </template>

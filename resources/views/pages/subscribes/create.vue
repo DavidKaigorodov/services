@@ -1,12 +1,9 @@
 <script setup>
 import { ref } from "vue";
-import { usePage } from "@inertiajs/vue3";
 
-import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
+import { AuthenticatedLayout } from "../../layouts";
 
-import VerticalForm from "../../components/forms/VerticalForm.vue";
-import StringInput from "../../components/forms/inputs/StringInput.vue";
-import Select from "../../components/forms/inputs/select/Select.vue";
+import { VerticalForm, StringInput, Select } from "../../components";
 
 const form = ref({
   last_name: "",

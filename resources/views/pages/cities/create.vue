@@ -1,10 +1,9 @@
 <script setup>
 import { ref } from "vue";
 
-import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
+import { AuthenticatedLayout } from "../../layouts";
 
-import HorizontalForm from "../../components/forms/HorizontalForm.vue";
-import StringInput from "../../components/forms/inputs/StringInput.vue";
+import { HorizontalForm, StringInput } from "../../components";
 
 const form = ref({
   name: "",

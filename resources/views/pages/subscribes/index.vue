@@ -1,12 +1,9 @@
 <script setup>
 import { usePage } from "@inertiajs/vue3";
 
-import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
+import { AuthenticatedLayout } from "../../layouts";
 
-import Table from "../../components/table/Table.vue";
-import EditButton from "../../components/table/buttons/EditButton.vue";
-import DeleteButton from "../../components/table/buttons/DeleteButton.vue";
-import AddButton from "../../components/table/buttons/AddButton.vue";
+import { Table, EditButton, DeleteButton, AddButton } from "../../components";
 
 const columns = [
   { key: "last_name", label: "Фамилия" },
