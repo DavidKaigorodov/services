@@ -1,16 +1,17 @@
 <script setup>
+import { usePage } from "@inertiajs/vue3";
+
 import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
+
 import Table from "../../components/table/Table.vue";
 import EditButton from "../../components/table/buttons/EditButton.vue";
 import DeleteButton from "../../components/table/buttons/DeleteButton.vue";
 import AddButton from "../../components/table/buttons/AddButton.vue";
-import { usePage } from "@inertiajs/vue3";
 
 const columns = [
-  { key: "address", label: "Адрес" },
   { key: "name", label: "Наименование" },
+  { key: "address", label: "Адрес" },
   { key: "city_id", label: "Город" },
-  { key: "created_at", label: "Дата создания" },
   { key: "actions", label: "" },
 ];
 </script>
