@@ -53,7 +53,7 @@ class SubscribeController
     public function edit(Subscribe $subscribe)
     {
         return Inertia::render('pages/subscribes/edit', [
-            'subscribe' => fn() => getResource($subscribe),
+            'subscribe' => fn() => getResource($subscribe, SubscribeResource::class),
         ]);
     }
 
