@@ -1,13 +1,9 @@
 <script setup>
 import { ref } from "vue";
 
-import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
+import { AuthenticatedLayout } from "../../layouts";
 
-import VerticalForm from "../../components/forms/VerticalForm.vue";
-
-import DatePicker from "../../components/inputs/datePicker/DatePicker.vue";
-import Select from "../../components/forms/inputs/select/Select.vue";
-import TextArea from "../../components/inputs/TextArea.vue";
+import { VerticalForm, DatePicker, Select, TextArea } from "../../components";
 
 const form = ref({
   name: "",

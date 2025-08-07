@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps({
-  data: Array,
+  data: [Array, Object],
   columns: Array,
   header: String,
 });

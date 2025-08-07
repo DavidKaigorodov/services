@@ -2,15 +2,16 @@
 import { ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
-import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.vue";
+import { AuthenticatedLayout } from "../../layouts";
 
-import FormGroup from "../../components/forms/FormGroup.vue";
-import HorizontalForm from "../../components/forms/HorizontalForm.vue";
-
-import StringInput from "../../components/forms/inputs/StringInput.vue";
-import Select from "../../components/forms/inputs/select/Select.vue";
-import WorkSchedule from "../../components/forms/inputs/WorkSchedule.vue";
-import TextArea from "../../components/inputs/TextArea.vue";
+import {
+  HorizontalForm,
+  FormGroup,
+  StringInput,
+  Select,
+  WorkSchedule,
+  TextArea,
+} from "../../components";
 
 const division = usePage().props.division.data;
 

@@ -1,0 +1,4 @@
+export { default as CalendarIco } from './CalendarIco.vue'
+export { default as PenIco } from './PenIco.vue'
+export { default as PlusIco } from './PlusIco.vue'
+export { default as TrashIco } from './TrashIco.vue'
