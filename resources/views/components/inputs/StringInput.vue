@@ -32,7 +32,8 @@ const props = defineProps({
   readonly: Boolean,
 });
 
-const emit = defineEmits(["click"]);
+const emit = defineEmits(["update:value", "click", "keydown"]);
+
 const inputId = props.id ?? props.name;
 const placeholderText = props.placeholder ?? "";
 </script>
@@ -50,6 +51,7 @@ const placeholderText = props.placeholder ?? "";
       :disabled="disabled"
       :autocomplete="autocomplete"
       :readonly="readonly"
+      @keydown="$emit('keydown', $event)"
       @click="$emit('click', $event)"
       v-bind="$attrs"
     />
