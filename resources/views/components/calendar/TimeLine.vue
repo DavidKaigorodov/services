@@ -48,6 +48,15 @@ const durationToMinutes = (d) => {
   const [h, m, s] = d.split(":").map(Number);
   return h * 60 + m + s / 60;
 };
+setTimeout(() => {
+  const blocks = document.getElementsByClassName("event-content");
+  for (let i = 0; i < blocks.length; i++) {
+    const block = blocks[i];
+    if (block.scrollWidth > block.clientWidth) {
+      block.innerText = "...";
+    }
+  }
+}, 0);
 </script>
 
 <template>
