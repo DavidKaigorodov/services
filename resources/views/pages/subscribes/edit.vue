@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "../../layouts";
@@ -18,11 +18,13 @@ const form = ref({
   service_id: subscribes.service_id,
 });
 
-function onSubmit() {
-  e.preventDefault();
+const rawPhone = ref("");
 
-  put(route("subscribes.update", { subscribe: subscribes.id }), form);
+function onSubmit(e) {
+  e.preventDefault();
+  put(route("subscribes.update", { subscribe: subscribes.id }), form.value);
 }
+
 const division = [
   { value: 1, label: "Крутой" },
   { value: 2, label: "Балдежный" },
@@ -41,6 +43,37 @@ const service = [
   { value: 6, label: "Пудж" },
   { value: 7, label: "ФредиФасбер" },
 ];
+
+function formatPhone(value) {
+  let digits = value.replace(/\D/g, "");
+  if (digits.length > 0) digits = "7" + digits.slice(1);
+
+  let res = "";
+  if (digits.length > 0) res = "+" + digits[0];
+  if (digits.length > 1) res += " (" + digits.slice(1, 4);
+  if (digits.length >= 4) res += ")";
+  if (digits.length > 4) res += " " + digits.slice(4, 7);
+  if (digits.length >= 7) res += "-" + digits.slice(7, 9);
+  if (digits.length >= 9) res += "-" + digits.slice(9, 11);
+  return res;
+}
+
+watch(rawPhone, (v) => {
+  form.value.phone = formatPhone(v);
+});
+
+function onKeyDown(e) {
+  const allowedKeys = ["Backspace", "Delete"];
+
+  if (allowedKeys.includes(e.key) || (/^\d$/.test(e.key) && rawPhone.value.length < 11)) {
+    return;
+  }
+  e.preventDefault();
+}
+
+function onUpdateValue(val) {
+  rawPhone.value = val.replace(/\D/g, "");
+}
 </script>
 
 <template>
@@ -51,35 +84,36 @@ const service = [
         name="last_name"
         :value="form.last_name"
         @update:value="(val) => (form.last_name = val)"
-        autocomplete="current-name"
+        autocomplete="current-last_name"
       />
       <StringInput
         label="Имя"
         name="first_name"
         :value="form.first_name"
         @update:value="(val) => (form.first_name = val)"
-        autocomplete="current-name"
+        autocomplete="current-first_name"
       />
       <StringInput
         label="Отчество"
         name="middle_name"
         :value="form.middle_name"
         @update:value="(val) => (form.middle_name = val)"
-        autocomplete="current-name"
+        autocomplete="current-middle_name"
       />
       <StringInput
         label="Email"
         name="email"
         :value="form.email"
         @update:value="(val) => (form.email = val)"
-        autocomplete="current-name"
+        autocomplete="current-email"
       />
       <StringInput
         label="Телефон"
         name="phone"
         :value="form.phone"
-        @update:value="(val) => (form.phone = val)"
-        autocomplete="current-name"
+        @update:value="onUpdateValue"
+        @keydown="onKeyDown"
+        autocomplete="current-phone"
       />
       <Select
         label="Подразделение"
