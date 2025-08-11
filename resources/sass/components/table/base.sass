@@ -1,16 +1,14 @@
 @use '../../abstracts/mixins' as *
 
 .table-container
-    background: white
     border-radius: 16px
     padding: 24px
 
 .table-header
     font-size: 1.5rem
     font-weight: 700
-    color: #2c3e50
+    color: var(--header-text-color)
     margin-bottom: 0.5rem
-    font-family: "Inter", -apple-system, sans-serif
 
 .table-toolbar
     display: flex
@@ -36,12 +34,11 @@
     width: 100%
     border-collapse: separate
     border-spacing: 0
-    font-family: "Inter", -apple-system, sans-serif
     table-layout: auto
 
     td
         padding: 14px 20px
-        border-right: 1px solid rgba(0, 0, 0, 0.05)
+        border-right: 1px solid #ece9e7
         transition: all 0.2s ease
 
     th:last-child,
@@ -55,14 +52,14 @@
     thead
         tr
             th
-                background: #4a6cf7
+                background: var(--palette-color-4)
                 color: white
                 font-weight: 600
                 padding: 16px 20px
                 text-align: left
                 position: sticky
                 top: 0
-                border-right: 1px solid rgba(255, 255, 255, 0.2)
+                border-right: 1px solid #ece9e7
                 z-index: 10
 
                 &:first-child
@@ -75,11 +72,10 @@
     tbody
         tr
             &:hover td
-                background: rgba(110, 142, 251, 0.08)
-
+                background: #ac9dff36
         &:not(:last-child)
             td
-                border-bottom: 1px solid rgba(0, 0, 0, 0.05)
+                border-bottom: 1px solid #ece9e7
 
         &:last-child
             td
@@ -99,13 +95,4 @@
             align-items: center
             justify-content: center
             margin: 0 auto
-.table-wrapper
-    max-height: 75vh
-    overflow-y: auto
-    overflow-x: hidden
-    border-radius: 0 0 12px 12px
-    box-sizing: content-box
-    @include scroll
 
-    table
-        border-bottom: none
