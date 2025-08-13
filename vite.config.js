@@ -8,7 +8,8 @@ const env = loadEnv('all', process.cwd());
 export default defineConfig({
     resolve: {
         alias: {
-            '@components' : '/resources/views/components'
+            '@components' : '/resources/views/components',
+            '@layouts' : '/resources/views/layouts'
         }
     },
     plugins: [

@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { router } from "@inertiajs/vue3";
 
-import { GuestLayout } from "../../layouts";
+import { GuestLayout } from "@layouts";
 
 import { VerticalForm, StringInput } from "@components";
 
