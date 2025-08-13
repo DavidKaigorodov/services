@@ -49,18 +49,22 @@
     border: 1px solid var(--input-border-color)
     border-top: none
     border-radius: 0 0 7px 7px
-    max-height: 200px
-    overflow-y: auto
+    overflow: hidden
     z-index: 1000
-    list-style: none
-    @include scroll
+    ul
+        overflow-y: auto
+        max-height: 200px
+        @include scroll
 
 .select-option
+    font-size: 0.95rem
     padding: 10px 10px
     cursor: pointer
 
     &:last-child
         border-bottom: none
+    &:hover
+        background: #83adf028
 
 .select-dropdown
     animation: slideDown 0.2s ease

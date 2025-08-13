@@ -52,7 +52,7 @@ function onSubmit() {
 
 <template>
   <AuthenticatedLayout>
-    <HorizontalForm header="Организации" sbm="Отправить" :handleSubmit="onSubmit">
+    <HorizontalForm header="Организации" sbm="Сохранить" :handleSubmit="onSubmit">
       <FormGroup name="organization" label="Информация об организации">
         <TextArea
           label="Наименование"

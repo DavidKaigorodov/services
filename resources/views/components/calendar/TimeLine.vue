@@ -78,7 +78,7 @@ setTimeout(() => {
           :data-date="day.date"
         >
           <div class="time-cell header with-controls">
-            <DatePicker v-model="form.date" />
+            <DatePicker v-model="form.date" label="" />
             <div class="header-title">{{ header }}</div>
             <div class="date-nav-buttons">
               <BlueButton class="nav-btn" @click="goToPreviousDay">←</BlueButton>

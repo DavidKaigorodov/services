@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 import { AuthenticatedLayout } from "../../layouts";
 
-import { HorizontalForm, StringInput } from "../../components";
+import { VerticalForm, StringInput } from "../../components";
 
 const form = ref({
   name: "",
@@ -18,7 +18,7 @@ function onSubmit() {
 
 <template>
   <AuthenticatedLayout>
-    <HorizontalForm header="Город" sbm="Отправить" :handleSubmit="onSubmit">
+    <VerticalForm header="Город" sbm="Отправить" :handleSubmit="onSubmit">
       <StringInput
         label="Наименование"
         name="name"
@@ -26,6 +26,6 @@ function onSubmit() {
         @update:value="(val) => (form.name = val)"
         autocomplete="current-name"
       />
-    </HorizontalForm>
+    </VerticalForm>
   </AuthenticatedLayout>
 </template>

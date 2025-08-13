@@ -23,7 +23,7 @@ function onSubmit() {
 
 <template>
   <AuthenticatedLayout>
-    <VerticalForm header="Услуги" sbm="Отправить" :handleSubmit="onSubmit">
+    <VerticalForm header="Услуги" sbm="Сохранить" :handleSubmit="onSubmit">
       <TextArea
         label="Наименование"
         name="name"

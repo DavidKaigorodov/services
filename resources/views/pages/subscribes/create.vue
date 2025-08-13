@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 import { AuthenticatedLayout } from "../../layouts";
 
-import { VerticalForm, StringInput, Select } from "../../components";
+import { VerticalForm, StringInput, Select } from "@components";
 
 const form = ref({
   last_name: "",
