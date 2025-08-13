@@ -6,6 +6,11 @@ import vue from '@vitejs/plugin-vue'
 const env = loadEnv('all', process.cwd());
 
 export default defineConfig({
+    resolve: {
+        alias: {
+            '@components' : '/resources/views/components'
+        }
+    },
     plugins: [
         laravel({
             input: [

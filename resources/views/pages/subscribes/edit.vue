@@ -78,7 +78,7 @@ function onUpdateValue(val) {
 
 <template>
   <AuthenticatedLayout>
-    <VerticalForm header="Город" sbm="Отправить" :handleSubmit="onSubmit">
+    <VerticalForm header="Город" sbm="Сохранить" :handleSubmit="onSubmit">
       <StringInput
         label="Фамилия"
         name="last_name"

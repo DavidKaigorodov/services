@@ -75,7 +75,7 @@ const popupStyles = computed(() => {
 
 <template>
   <FormItem :name="name">
-    <Label :labelText="label" />
+    <Label v-if="label !== ''" :labelText="label" />
     <div class="datepicker-wrapper" ref="wrapperRef">
       <DateInput :modelValue="formattedValue" @toggle="togglePopup" />
       <Teleport to="body">

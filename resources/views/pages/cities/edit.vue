@@ -4,7 +4,7 @@ import { usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "../../layouts";
 
-import { HorizontalForm, StringInput } from "../../components";
+import { VerticalForm, StringInput } from "../../components";
 
 const city = usePage().props.city.data;
 
@@ -21,7 +21,7 @@ function onSubmit() {
 
 <template>
   <AuthenticatedLayout>
-    <HorizontalForm header="Город" sbm="Отправить" :handleSubmit="onSubmit">
+    <VerticalForm header="Город" sbm="Сохранить" :handleSubmit="onSubmit">
       <StringInput
         label="Наименование"
         name="name"
@@ -29,6 +29,6 @@ function onSubmit() {
         @update:value="(val) => (form.name = val)"
         autocomplete="current-name"
       />
-    </HorizontalForm>
+    </VerticalForm>
   </AuthenticatedLayout>
 </template>
