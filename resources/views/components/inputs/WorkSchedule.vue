@@ -1,6 +1,5 @@
 <script setup>
-import TimeInput from "./TimeInput.vue";
-import Label from "../Label.vue";
+import TimeInput from "@components";
 
 const props = defineProps({
   modelValue: {

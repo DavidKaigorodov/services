@@ -1,9 +1,9 @@
 <script setup>
-import BaseButton from "./BaseButton.vue";
+import BaseButton from "@components";
 </script>
 
 <template>
-    <BaseButton className="red-button" v-bind="$attrs">
-        <slot />
-    </BaseButton>
+  <BaseButton className="red-button" v-bind="$attrs">
+    <slot />
+  </BaseButton>
 </template>

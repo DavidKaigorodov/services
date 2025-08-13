@@ -3,8 +3,7 @@ import { ref, computed } from "vue";
 import dayjs from "dayjs";
 import { router } from "@inertiajs/vue3";
 
-import BlueButton from "../buttons/BlueButton.vue";
-import DatePicker from "../inputs/datePicker/DatePicker.vue";
+import { BlueButton, DatePicker } from "@components";
 
 const props = defineProps({
   records: Array,

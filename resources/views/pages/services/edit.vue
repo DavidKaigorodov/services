@@ -4,7 +4,7 @@ import { usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "../../layouts";
 
-import { VerticalForm, DatePicker, Select, TextArea } from "../../components";
+import { VerticalForm, DatePicker, Select, TextArea } from "@components";
 
 const services = usePage().props.services.data;
 

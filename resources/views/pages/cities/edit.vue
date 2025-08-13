@@ -4,7 +4,7 @@ import { usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "../../layouts";
 
-import { VerticalForm, StringInput } from "../../components";
+import { VerticalForm, StringInput } from "@components";
 
 const city = usePage().props.city.data;
 

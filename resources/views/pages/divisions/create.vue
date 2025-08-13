@@ -10,7 +10,7 @@ import {
   Select,
   WorkSchedule,
   TextArea,
-} from "../../components";
+} from "@components";
 
 const form = ref({
   name: "",

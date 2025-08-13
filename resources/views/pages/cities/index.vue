@@ -3,7 +3,7 @@ import { usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "../../layouts";
 
-import { Table, EditButton, DeleteButton, AddButton } from "../../components";
+import { Table, EditButton, DeleteButton, AddButton } from "@components";
 
 const columns = [
   { key: "name", label: "Наименовение" },

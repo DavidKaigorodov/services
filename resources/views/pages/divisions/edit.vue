@@ -11,7 +11,7 @@ import {
   Select,
   WorkSchedule,
   TextArea,
-} from "../../components";
+} from "@components";
 
 const division = usePage().props.division.data;
 

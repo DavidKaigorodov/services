@@ -1,5 +1,6 @@
 <script setup>
-import CalendarIco from "../../icons/CalendarIco.vue";
+import CalendarIco from "@components";
+
 defineProps({
   modelValue: String,
 });

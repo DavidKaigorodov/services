@@ -1,7 +1,6 @@
 <script setup>
 import { router } from "@inertiajs/vue3";
-import RedButton from "../../buttons/RedButton.vue";
-import TrashIco from "../../icons/TrashIco.vue";
+import { TrashIco, RedButton } from "@components";
 
 const props = defineProps({
   href: {

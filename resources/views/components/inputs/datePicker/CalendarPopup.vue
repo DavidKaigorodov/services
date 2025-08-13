@@ -9,6 +9,7 @@ import { getMonthDays, isSameDay } from "./utils";
 const props = defineProps({
   modelValue: String,
 });
+
 const emit = defineEmits(["update:modelValue"]);
 
 dayjs.locale("ru");

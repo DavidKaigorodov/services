@@ -4,7 +4,7 @@ import { usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "../../layouts";
 
-import { VerticalForm, StringInput, Select } from "../../components";
+import { VerticalForm, StringInput, Select } from "@components";
 
 const subscribes = usePage().props.subscribe.data;
 
