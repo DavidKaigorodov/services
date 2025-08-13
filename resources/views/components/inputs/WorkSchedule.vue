@@ -1,5 +1,5 @@
 <script setup>
-import TimeInput from "@components";
+import { TimeInput } from "@components";
 
 const props = defineProps({
   modelValue: {

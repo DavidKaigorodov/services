@@ -1,5 +1,5 @@
 <script setup>
-import Label from "@components";
+import { Label } from "@components";
 
 const props = defineProps({
   name: String,

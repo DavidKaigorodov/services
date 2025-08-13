@@ -1,5 +1,5 @@
 <script setup>
-import BaseButton from "@components";
+import { BaseButton } from "@components";
 </script>
 
 <template>

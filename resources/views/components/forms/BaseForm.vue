@@ -1,5 +1,5 @@
 <script setup>
-import BlueButton from "@components";
+import { BlueButton } from "@components";
 
 const props = defineProps({
   className: String,

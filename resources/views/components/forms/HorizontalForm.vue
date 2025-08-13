@@ -1,9 +1,9 @@
 <script setup>
-import BaseFrom from "@components";
+import { BaseForm } from "@components";
 </script>
 
 <template>
-  <BaseFrom :header="''" className="horizontal-form">
+  <BaseForm :header="''" className="horizontal-form">
     <slot />
-  </BaseFrom>
+  </BaseForm>
 </template>

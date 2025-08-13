@@ -1,5 +1,5 @@
 <script setup>
-import CalendarIco from "@components";
+import { CalendarIco } from "@components";
 
 defineProps({
   modelValue: String,
