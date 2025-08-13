@@ -1,5 +1,5 @@
 <script setup>
-import { Label, FormItem } from "../../components";
+import { Label, FormItem } from "@components";
 
 const props = defineProps({
   rows: Number,

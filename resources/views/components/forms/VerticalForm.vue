@@ -1,9 +1,9 @@
 <script setup>
-import BaseFrom from "./BaseForm.vue";
+import BaseFrom from "@components";
 </script>
 
 <template>
-    <BaseFrom :header="'123'" className="vertical-form">
-        <slot />
-    </BaseFrom>
+  <BaseFrom :header="'123'" className="vertical-form">
+    <slot />
+  </BaseFrom>
 </template>

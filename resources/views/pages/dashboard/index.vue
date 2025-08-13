@@ -1,5 +1,5 @@
 <script setup>
-import TimeLine from "../../components/calendar/TimeLine.vue";
+import TimeLine from "@components";
 import { AuthenticatedLayout } from "../../layouts";
 
 const data = [

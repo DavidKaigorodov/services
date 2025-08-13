@@ -1,9 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
-import FormItem from "../../FormItem.vue";
-import Label from "../../Label.vue";
-import SelectInput from "./SelectInput.vue";
-import SelectList from "./SelectList.vue";
+
+import { SelectList, SelectInput, Label, FormItem } from "@components";
 
 const props = defineProps({
   modelValue: [String, Number],

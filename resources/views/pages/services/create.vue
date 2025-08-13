@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 import { AuthenticatedLayout } from "../../layouts";
 
-import { VerticalForm, DatePicker, Select, TextArea } from "../../components";
+import { VerticalForm, DatePicker, Select, TextArea } from "@components";
 
 const form = ref({
   name: "",

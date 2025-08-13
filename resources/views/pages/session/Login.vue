@@ -4,7 +4,7 @@ import { router } from "@inertiajs/vue3";
 
 import { GuestLayout } from "../../layouts";
 
-import { VerticalForm, StringInput } from "../../components";
+import { VerticalForm, StringInput } from "@components";
 
 const form = ref({
   login: "",
