@@ -2,7 +2,7 @@
 import { ref, watch } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
-import { AuthenticatedLayout } from "../../layouts";
+import { AuthenticatedLayout } from "@layouts";
 
 import { VerticalForm, StringInput, Select } from "@components";
 

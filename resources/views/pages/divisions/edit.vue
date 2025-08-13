@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
-import { AuthenticatedLayout } from "../../layouts";
+import { AuthenticatedLayout } from "@layouts";
 
 import {
   HorizontalForm,

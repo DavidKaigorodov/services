@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
-import { AuthenticatedLayout } from "../../layouts";
+import { AuthenticatedLayout } from "@layouts";
 
 import { VerticalForm, DatePicker, Select, TextArea } from "@components";
 

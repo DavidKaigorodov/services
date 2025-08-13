@@ -1,7 +1,7 @@
 <script setup>
 import { usePage } from "@inertiajs/vue3";
 
-import { AuthenticatedLayout } from "../../layouts";
+import { AuthenticatedLayout } from "@layouts";
 
 import { Table, EditButton, DeleteButton, AddButton } from "@components";
 

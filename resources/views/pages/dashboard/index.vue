@@ -1,6 +1,6 @@
 <script setup>
 import TimeLine from "@components";
-import { AuthenticatedLayout } from "../../layouts";
+import { AuthenticatedLayout } from "@layouts";
 
 const data = [
   {
