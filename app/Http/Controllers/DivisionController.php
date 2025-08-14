@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDivisionRequest;
 use App\Http\Requests\UpdateDivisionRequest;
+use App\Models\City;
 use App\Models\Division;
-use App\Http\Resources\Admin\DivisionResource;
+use App\Http\Resources\DivisionResource;
 use Inertia\Inertia;
 
 class DivisionController
@@ -25,7 +26,9 @@ class DivisionController
      */
     public function create()
     {
-        return Inertia::render('pages/divisions/create');
+        return Inertia::render('pages/divisions/create', [
+            'cities' => fn() => City::get(['id','name'])
+        ]);
     }
 
     /**
@@ -45,6 +48,7 @@ class DivisionController
 {
     return Inertia::render('pages/divisions/edit', [
         'division' => fn() => getResource($division, DivisionResource::class),
+        'cities' => fn() => City::get(['id','name'])
     ]);
 }
 

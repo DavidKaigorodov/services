@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
 import { VerticalForm, StringInput, Select } from "@components";
 
-const form = ref({
+const form = useForm({
   last_name: "",
   first_name: "",
   middle_name: "",
@@ -15,10 +15,10 @@ const form = ref({
   service_id: "",
 });
 
-function onSubmit() {
+function onSubmit(e) {
   e.preventDefault();
 
-  put(route("subscribes.update"), form);
+  form.post(route("subscribes.update"));
 }
 const division = [
   { value: 1, label: "Крутой" },

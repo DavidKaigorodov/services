@@ -19,9 +19,6 @@ class HandleInertiaRequests extends Middleware
     {
         $shared = parent::share($request);
 
-        if (in_array('auth', $request->route()->middleware()))
-            $shared['current_user'] = CurrentUserResource::make(user());
-
         $shared['flash'] = [];
         if ($request->session()->has('message'))
             $shared['flash']['success'] = $request->session()->get('message');

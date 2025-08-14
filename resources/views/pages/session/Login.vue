@@ -1,12 +1,11 @@
 <script setup>
-import { ref } from "vue";
-import { router } from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 
 import { GuestLayout } from "@layouts";
 
 import { VerticalForm, StringInput } from "@components";
 
-const form = ref({
+const form = useForm({
   login: "",
   password: "",
 });
@@ -14,7 +13,7 @@ const form = ref({
 function onSubmit(e) {
   e.preventDefault();
 
-  router.post(route("auhtificate"), form.value);
+  form.post(route("auhtificate"));
 }
 </script>
 

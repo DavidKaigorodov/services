@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Flash;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CurrentUserResource extends JsonResource
+class DivisionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,6 +14,11 @@ class CurrentUserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'address' => $this->address,
+            'city' => $this->city->toResource(),
+        ];
     }
 }
