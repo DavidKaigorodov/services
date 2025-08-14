@@ -10,7 +10,8 @@ export default defineConfig({
         alias: {
             '@components' : '/resources/views/components',
             '@layouts' : '/resources/views/layouts',
-            '@helpers' : '/resources/js/helpers'
+            '@helpers' : '/resources/js/helpers',
+            '@includes' : '/resources/views/includes',
         }
     },
     plugins: [
