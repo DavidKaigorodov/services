@@ -1,5 +1,5 @@
 <script setup>
-import ItemMenu from "./ItemMenu.vue";
+import { ItemMenu } from "@includes";
 </script>
 
 <template>
