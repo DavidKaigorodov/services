@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { usePage, useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
@@ -8,14 +7,14 @@ import { VerticalForm, StringInput } from "@components";
 
 const city = usePage().props.city.data;
 
-const form = ref({
+const form = useForm({
   name: city.name,
 });
 
-function onSubmit() {
+function onSubmit(e) {
   e.preventDefault();
 
-  put(route("cities.update", { city: city.id }), form);
+  form.put(route("cities.update", { city: city.id }));
 }
 </script>
 

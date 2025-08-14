@@ -1,18 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
 import { VerticalForm, StringInput } from "@components";
 
-const form = ref({
+const form = useForm({
   name: "",
 });
 
-function onSubmit() {
+function onSubmit(e) {
   e.preventDefault();
 
-  post(route("cities.store"), form);
+  form.post(route("cities.store"));
 }
 </script>
 

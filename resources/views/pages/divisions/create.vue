@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from "vue";
+import { computed } from "vue";
+import { useForm, usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
@@ -12,7 +13,9 @@ import {
   TextArea,
 } from "@components";
 
-const form = ref({
+const cities = usePage().props.cities;
+
+const form = useForm({
   name: "",
   adres: "",
   city_id: "",
@@ -30,20 +33,17 @@ const form = ref({
   responsible_password: "",
 });
 
-const cities = [
-  { value: 1, label: "Крутой" },
-  { value: 2, label: "Балдежный" },
-  { value: 3, label: "Чилловый" },
-  { value: 4, label: "Пивной" },
-  { value: 5, label: "Пятничный" },
-  { value: 6, label: "Пудж" },
-  { value: 7, label: "ФредиФасбер" },
-];
+const cityOptions = computed(() => {
+  return Object.entries(cities).map(([id, cityData]) => ({
+    value: id,
+    label: cityData.name,
+  }));
+});
 
-function onSubmit() {
+function onSubmit(e) {
   e.preventDefault();
 
-  post(route("divisions.store"), form);
+  form.post(route("divisions.store"));
 }
 </script>
 
@@ -70,7 +70,7 @@ function onSubmit() {
           label="Город"
           name="city_id"
           v-model="form.city_id"
-          :options="cities"
+          :options="cityOptions"
           placeholder="Выберите город"
         />
       </FormGroup>

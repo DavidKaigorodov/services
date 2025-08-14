@@ -1,20 +1,20 @@
 <script setup>
-import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
 import { VerticalForm, DatePicker, Select, TextArea } from "@components";
 
-const form = ref({
+const form = useForm({
   name: "",
   duration: "",
   user: "",
 });
 
-function onSubmit() {
+function onSubmit(e) {
   e.preventDefault();
 
-  put(route("service.store"), form);
+  form.post(route("service.store"));
 }
 </script>
 

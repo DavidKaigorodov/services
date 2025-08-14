@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
+import { usePage, useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
@@ -14,8 +14,9 @@ import {
 } from "@components";
 
 const division = usePage().props.division.data;
+const cities = usePage().props.cities;
 
-const form = ref({
+const form = useForm({
   name: division.name,
   address: division.address,
   city_id: division.city_id,
@@ -33,20 +34,17 @@ const form = ref({
   responsible_password: "",
 });
 
-const cities = [
-  { value: 1, label: "Крутой" },
-  { value: 2, label: "Балдежный" },
-  { value: 3, label: "Чилловый" },
-  { value: 4, label: "Пивной" },
-  { value: 5, label: "Пятничный" },
-  { value: 6, label: "Пудж" },
-  { value: 7, label: "ФредиФасбер" },
-];
+const cityOptions = computed(() => {
+  return Object.entries(cities).map(([id, cityData]) => ({
+    value: id,
+    label: cityData.name,
+  }));
+});
 
-function onSubmit() {
+function onSubmit(e) {
   e.preventDefault();
 
-  put(route("divisions.update", { division: division.id }), form);
+  form.put(route("divisions.update", { division: division.id }));
 }
 </script>
 
@@ -73,7 +71,7 @@ function onSubmit() {
           label="Город"
           name="city_id"
           v-model="form.city_id"
-          :options="cities"
+          :options="cityOptions"
           placeholder="Выберите город"
         />
       </FormGroup>

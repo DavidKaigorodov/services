@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { usePage, useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
@@ -8,7 +8,7 @@ import { VerticalForm, StringInput, Select } from "@components";
 
 const subscribes = usePage().props.subscribe.data;
 
-const form = ref({
+const form = useForm({
   last_name: subscribes.last_name,
   first_name: subscribes.first_name,
   middle_name: subscribes.middle_name,
@@ -22,7 +22,8 @@ const rawPhone = ref("");
 
 function onSubmit(e) {
   e.preventDefault();
-  put(route("subscribes.update", { subscribe: subscribes.id }), form.value);
+
+  form.put(route("subscribes.update", { subscribe: subscribes.id }));
 }
 
 const division = [

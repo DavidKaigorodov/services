@@ -17,4 +17,5 @@ class City extends Model
         $fillable = [
             'name',
         ];
+
 }

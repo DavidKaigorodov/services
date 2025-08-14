@@ -9,7 +9,8 @@ export default defineConfig({
     resolve: {
         alias: {
             '@components' : '/resources/views/components',
-            '@layouts' : '/resources/views/layouts'
+            '@layouts' : '/resources/views/layouts',
+            '@helpers' : '/resources/js/helpers'
         }
     },
     plugins: [

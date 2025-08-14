@@ -1,4 +1,6 @@
 <script setup>
+import { getObjectValue } from "@helpers";
+
 const props = defineProps({
   data: [Array, Object],
   columns: Array,
@@ -29,14 +31,14 @@ const props = defineProps({
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, index) in data.data" :key="index">
-            <td v-for="{ key } in columns" :key="key">
-              <div v-if="key === 'actions'" class="table-actions">
+          <tr v-for="(row, r_index) in data.data" :key="r_index">
+            <td v-for="(cell, c_index) in columns" :key="c_index">
+              <div v-if="cell.key == 'actions'" class="table-actions">
                 <slot name="actions" :row="row" />
               </div>
-              <slot v-else :name="key" :row="row" :value="row[key]">
-                {{ row[key] }}
-              </slot>
+              <div v-else>
+                {{ getObjectValue(cell.key, row) }}
+              </div>
             </td>
           </tr>
         </tbody>

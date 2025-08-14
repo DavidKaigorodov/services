@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { usePage, useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
@@ -8,16 +7,16 @@ import { VerticalForm, DatePicker, Select, TextArea } from "@components";
 
 const services = usePage().props.services.data;
 
-const form = ref({
+const form = useForm({
   name: services.name,
   duration: services.duration,
   user: services.user,
 });
 
-function onSubmit() {
+function onSubmit(e) {
   e.preventDefault();
 
-  put(route("service.update", { service: services.id }), form);
+  form.put(route("service.update", { service: services.id }));
 }
 </script>
 

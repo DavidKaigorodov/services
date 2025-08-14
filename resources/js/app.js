@@ -1,6 +1,6 @@
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
-
+import * as helpers from './helpers';
 
 createInertiaApp({
     progress: {
@@ -20,4 +20,3 @@ createInertiaApp({
             .mount(el);
     },
 });
-

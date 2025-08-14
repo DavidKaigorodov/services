@@ -6,9 +6,7 @@ const props = defineProps({
   header: String,
   info: [String, Object, null],
   sbm: String,
-  handleSubmit: {
-    type: Function,
-  },
+  handleSubmit: Function,
 });
 
 const boxClassName = props.className ? `${props.className}-box` : "";

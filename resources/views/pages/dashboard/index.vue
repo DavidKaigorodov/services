@@ -184,6 +184,6 @@ const data = [
 
 <template>
   <AuthenticatedLayout>
-    <TimeLine header="Записи на прием" :records="data" />
+    <TimeLine name="asd" header="Записи на прием" :records="data" />
   </AuthenticatedLayout>
 </template>
