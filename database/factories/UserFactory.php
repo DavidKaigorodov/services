@@ -20,7 +20,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->lastName() . ' ' . $this->faker->firstName()[0] . '.' . $this->faker->firstName()[0] . '.',
+            'name' => $this->faker->lastName(),
             'email' => $this->faker->email(),
             'password' => Hash::make($this->faker->word()),
             'division_id' => Division::all()->random()->id,

@@ -17,7 +17,7 @@ class ServiceController
     public function index()
     {
         return Inertia::render('pages/services/index', [
-            'services' => fn() => getResource(Service::class, ServiceResource::class),
+            'services' => fn() => getResource(Service::class),
         ]);
     }
 
@@ -45,7 +45,7 @@ class ServiceController
     public function edit(Service $service)
     {
         return Inertia::render('pages/services/edit', [
-            'services' => fn() => getResource($service, ServiceResource::class),
+            'services' => fn() => getResource($service),
         ]);
     }
 

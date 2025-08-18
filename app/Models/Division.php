@@ -16,6 +16,11 @@ class Division extends Model
     protected
         $table = 'main__divisions';
 
+    protected $fillable = [
+        'name',
+        'address',
+        'city_id',
+    ];
 
     ### Связи
     ##################################################

@@ -21,14 +21,21 @@ if (! function_exists('user')) {
 }
 
 if (!function_exists('getResource')) {
-    function getResource(string|Model|Builder $model, string $resourceClass): ResourceCollection|JsonResource
+    /**
+     * Преобразут модель, запрос или класс в готовый ресурс
+     * Если Возникает ошибка, проверяй существует ли клас ресурса вообще и правильно ли он рассположен
+     *
+     * @param string|Model|Builder $model модель, запрос или класс для преобразования
+     * @return ResourceCollection|JsonResource готовый ресурс
+     */
+    function getResource(string|Model|Builder $model): ResourceCollection|JsonResource
     {
         if ($model instanceof Model)
-            return new $resourceClass($model);
+            return $model->toresource();
 
         if ($model instanceof Builder)
-            return $resourceClass::collection($model->paginate(50));
+            return $model->paginate(50)->toResourceCollection();
 
-        return $resourceClass::collection($model::paginate(50));
+        return $model::paginate(50)->toResourceCollection();
     }
 }

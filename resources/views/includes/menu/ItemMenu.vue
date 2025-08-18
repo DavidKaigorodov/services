@@ -6,11 +6,15 @@ const props = defineProps({
     type: String,
   },
   label: String,
+  params: {
+    type: Object,
+  },
 });
+
 function goto(e) {
   e.preventDefault();
 
-  router.get(route(props.href));
+  router.get(route(props.href, props.params));
 }
 </script>
 

@@ -19,7 +19,7 @@ const cities = usePage().props.cities;
 const form = useForm({
   name: division.name,
   address: division.address,
-  city_id: division.city_id,
+  city_id: division.city.id,
   work: {
     mon: { date_start: "", date_end: "" },
     tue: { date_start: "", date_end: "" },
@@ -35,9 +35,9 @@ const form = useForm({
 });
 
 const cityOptions = computed(() => {
-  return Object.entries(cities).map(([id, cityData]) => ({
-    value: id,
-    label: cityData.name,
+  return cities.map((city) => ({
+    value: city.id,
+    label: city.name,
   }));
 });
 

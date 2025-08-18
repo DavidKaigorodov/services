@@ -12,6 +12,10 @@ const props = defineProps({
   },
   name: String,
   label: String,
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -20,6 +24,7 @@ const show = ref(false);
 const wrapperRef = ref(null);
 
 const togglePopup = () => {
+  if (props.disabled) return;
   show.value = !show.value;
 };
 
@@ -76,7 +81,12 @@ const popupStyles = computed(() => {
   <FormItem :name="name">
     <Label v-if="label !== ''" :labelText="label" />
     <div class="datepicker-wrapper" ref="wrapperRef">
-      <DateInput :modelValue="formattedValue" @toggle="togglePopup" />
+      <DateInput
+        :modelValue="formattedValue"
+        @toggle="togglePopup"
+        :disabled="props.disabled"
+        v-bind="$attrs"
+      />
       <Teleport to="body">
         <component
           :is="mode === 'time' ? TimePickerPopup : CalendarPopup"

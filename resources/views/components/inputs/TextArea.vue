@@ -24,7 +24,7 @@ const props = defineProps({
   label: String,
 });
 
-const emit = defineEmits(["click"]);
+const emit = defineEmits(["click", "update:value"]);
 const inputId = props.id ?? props.name;
 const placeholderText = props.placeholder ?? "";
 </script>

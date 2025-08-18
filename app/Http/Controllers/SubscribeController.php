@@ -16,7 +16,7 @@ class SubscribeController
     public function index()
     {
         return Inertia::render('pages/subscribes/index', [
-            'subscribes' => fn() => getResource(Subscribe::class, SubscribeResource::class),
+            'subscribes' => fn() => getResource(Subscribe::class),
         ]);
     }
 
@@ -53,7 +53,7 @@ class SubscribeController
     public function edit(Subscribe $subscribe)
     {
         return Inertia::render('pages/subscribes/edit', [
-            'subscribe' => fn() => getResource($subscribe, SubscribeResource::class),
+            'subscribe' => fn() => getResource($subscribe),
         ]);
     }
 

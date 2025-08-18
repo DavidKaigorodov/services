@@ -1,5 +1,5 @@
 <script setup>
-import { TimeInput } from "@components";
+import { DatePicker } from "@components";
 
 const props = defineProps({
   modelValue: {
@@ -7,82 +7,121 @@ const props = defineProps({
     required: true,
   },
   name: String,
-  header: String,
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(["update:modelValue"]);
 
-const updateDay = (dayKey, value) => {
+const updateDay = (day, key, value) => {
   emit("update:modelValue", {
     ...props.modelValue,
-    [dayKey]: value,
+    [day]: {
+      ...props.modelValue[day],
+      [key]: value,
+    },
   });
 };
+
+// Чекбокс теперь значит "рабочий день"
+const toggleWorkDay = (day) => {
+  const current = props.modelValue[day]?.is_off || false;
+  updateDay(day, "is_off", current); // current = false значит рабочий день
+  updateDay(day, "is_off", !current); // переключаем
+};
+
+const days = [
+  { key: "mon", label: "Пн" },
+  { key: "tue", label: "Вт" },
+  { key: "wed", label: "Ср" },
+  { key: "thu", label: "Чт" },
+  { key: "fri", label: "Пт" },
+  { key: "sat", label: "Сб" },
+  { key: "sun", label: "Вс" },
+];
 </script>
 
 <template>
-  <div class="work-schedule-section">
-    <div class="time-range-wrapper">
-      <TimeInput
-        label="Пн:"
-        :model-value="modelValue.mon"
-        @update:model-value="(value) => updateDay('mon', value)"
-        :name="`${name}[mon]`"
-      />
-    </div>
+  <div class="work-schedule-time">
+    <div v-for="day in days" :key="day.key" class="day-row">
+      <span class="day-label">{{ day.label }}:</span>
 
-    <div class="time-range-wrapper">
-      <TimeInput
-        label="Вт:"
-        :model-value="modelValue.tue"
-        @update:model-value="(value) => updateDay('tue', value)"
-        :name="`${name}[tue]`"
-      />
-    </div>
+      <!-- Галочка "рабочий день" -->
+      <label class="off-day">
+        <input
+          type="checkbox"
+          :checked="!modelValue[day.key]?.is_off"
+          @change="toggleWorkDay(day.key)"
+          :disabled="disabled"
+        />
+      </label>
 
-    <div class="time-range-wrapper">
-      <TimeInput
-        label="Ср:"
-        :model-value="modelValue.wed"
-        @update:model-value="(value) => updateDay('wed', value)"
-        :name="`${name}[wed]`"
-      />
-    </div>
-
-    <div class="time-range-wrapper">
-      <TimeInput
-        label="Чт:"
-        :model-value="modelValue.thu"
-        @update:model-value="(value) => updateDay('thu', value)"
-        :name="`${name}[thu]`"
-      />
-    </div>
-
-    <div class="time-range-wrapper">
-      <TimeInput
-        label="Пт:"
-        :model-value="modelValue.fri"
-        @update:model-value="(value) => updateDay('fri', value)"
-        :name="`${name}[fri]`"
-      />
-    </div>
-
-    <div class="time-range-wrapper">
-      <TimeInput
-        label="Сб:"
-        :model-value="modelValue.sat"
-        @update:model-value="(value) => updateDay('sat', value)"
-        :name="`${name}[sat]`"
-      />
-    </div>
-
-    <div class="time-range-wrapper">
-      <TimeInput
-        label="Вс:"
-        :model-value="modelValue.sun"
-        @update:model-value="(value) => updateDay('sun', value)"
-        :name="`${name}[sun]`"
-      />
+      <!-- Дата начала и конца показываем только если день рабочий -->
+      <div class="time-picker-block" v-if="!modelValue[day.key]?.is_off">
+        <DatePicker
+          mode="time"
+          :modelValue="modelValue[day.key]?.date_start"
+          @update:modelValue="(val) => updateDay(day.key, 'date_start', val)"
+          :name="`${name}[${day.key}][date_start]`"
+          :disabled="disabled"
+          :label="''"
+        />
+        <DatePicker
+          mode="time"
+          :modelValue="modelValue[day.key]?.date_end"
+          @update:modelValue="(val) => updateDay(day.key, 'date_end', val)"
+          :name="`${name}[${day.key}][date_end]`"
+          :disabled="disabled"
+          :label="''"
+        />
+        <span
+          v-if="!modelValue[day.key]?.date_start || !modelValue[day.key]?.date_end"
+          class="error"
+        >
+          Укажите время начала и конца
+        </span>
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.work-schedule-time {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.day-row {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.day-label {
+  width: 30px;
+  margin-top: 6px;
+}
+
+.off-day {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.time-picker-block {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+</style>

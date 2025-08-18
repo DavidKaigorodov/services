@@ -17,7 +17,7 @@ class DivisionController
     public function index()
 {
     return Inertia::render('pages/divisions/index', [
-        'divisions' => fn() => getResource(Division::class, DivisionResource::class),
+        'divisions' => fn() => getResource(Division::class),
     ]);
 }
 
@@ -41,25 +41,35 @@ class DivisionController
         return redirect()->route('division.index')->with('message', 'Запись успешно добавлена');
     }
 
+    public function show(Division $division){
+        return Inertia::render('pages/divisions/show', [
+                'division'=> fn() => getResource($division),
+                'cities' => fn() => City::get(['id','name']),
+            ]
+        );
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Division $division)
-{
-    return Inertia::render('pages/divisions/edit', [
-        'division' => fn() => getResource($division, DivisionResource::class),
-        'cities' => fn() => City::get(['id','name'])
-    ]);
-}
+    {
+        return Inertia::render('pages/divisions/edit', [
+            'division' => fn() => getResource($division),
+            'cities' => fn() => City::get(['id','name'])
+        ]);
+    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateDivisionRequest $request, Division $division)
     {
-        $division->update($request->only('name', 'city_id'));
+        $division->update($request->only('name','address', 'city_id'));
 
-        return redirect()->route('division.index')->with('message', 'Запись успешно изменена');
+        return user()->hasRole('admin')
+            ? redirect()->route('divisions.index')->with('message', 'Запись успешно изменена')
+            : redirect()->route('divisions.show', compact('division'))->with('message','Запись успешно изменена');
     }
 
     /**

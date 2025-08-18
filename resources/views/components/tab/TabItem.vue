@@ -15,11 +15,15 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  params: {
+    type: Object,
+  },
 });
 
 function goto(e) {
   e.preventDefault();
-  router.get(route(props.href));
+
+  router.get(route(props.href, props.params));
 }
 </script>
 

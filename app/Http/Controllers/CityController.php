@@ -15,7 +15,7 @@ class CityController
      */
     public function index(){
         return Inertia::render('pages/cities/index', [
-            'cities' => fn() => getResource(City::class, CityResource::class),
+            'cities' => fn() => getResource(City::class),
         ]);
     }
 

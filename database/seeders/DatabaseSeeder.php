@@ -13,17 +13,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserRoleSeeder::class);
         $this->call(RootSeeder::class);
+        $this->call(DayOfTheWeekSeeder::class);
 
-        if(in_array(config('app.env'), ['local', 'testing']))
+        if(in_array(config('app.env'), ['local', 'testing'])){
             $this->call(Example\ExampleSeeder::class);
+            $this->call(UserSeeder::class);
+        }
 
-        // $this->call(Sys\SystemConfigurationSeeder::class);
-
-        // $this->call(Admin\CitySeeder::class);
-        // $this->call(Admin\DivisionSeeder::class);
-
-        // $this->call(Division\ServiceSeeder::class);
-
-        // $this->call(User\SubscribeSeeder::class);
     }
 }

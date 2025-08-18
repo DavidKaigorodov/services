@@ -6,6 +6,7 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  params: Object,
 });
 </script>
 
@@ -18,6 +19,7 @@ const props = defineProps({
         :href="tab.href"
         :label="tab.title"
         :active="route().current(tab.href)"
+        :params="props.params"
       />
     </ul>
   </nav>
