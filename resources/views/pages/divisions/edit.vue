@@ -21,13 +21,13 @@ const form = useForm({
   address: division.address,
   city_id: division.city.id,
   work: {
-    mon: { date_start: "", date_end: "" },
-    tue: { date_start: "", date_end: "" },
-    wed: { date_start: "", date_end: "" },
-    thu: { date_start: "", date_end: "" },
-    fri: { date_start: "", date_end: "" },
-    sat: { date_start: "", date_end: "" },
-    sun: { date_start: "", date_end: "" },
+    mon: { date_start: "", date_end: "", is_working: "true" },
+    tue: { date_start: "", date_end: "", is_working: "false" },
+    wed: { date_start: "", date_end: "", is_working: "false" },
+    thu: { date_start: "", date_end: "", is_working: "true" },
+    fri: { date_start: "", date_end: "", is_working: "" },
+    sat: { date_start: "", date_end: "", is_working: "" },
+    sun: { date_start: "", date_end: "", is_working: "" },
   },
   responsible_name: "",
   responsible_email: "",
@@ -77,32 +77,7 @@ function onSubmit(e) {
       </FormGroup>
 
       <FormGroup name="work" label="График работы">
-        <WorkSchedule header="График работы" v-model="form.work" name="work" />
-      </FormGroup>
-
-      <FormGroup name="responsible" label="Ответственное лицо">
-        <StringInput
-          label="Имя"
-          name="responsible_name"
-          :value="form.responsible_name"
-          @update:value="(val) => (form.responsible_name = val)"
-          autocomplete="current-responsible-name"
-        />
-        <StringInput
-          label="Email"
-          name="responsible_email"
-          :value="form.responsible_email"
-          @update:value="(val) => (form.responsible_email = val)"
-          autocomplete="current-responsible-email"
-        />
-        <StringInput
-          label="Пароль"
-          type="password"
-          name="responsible_password"
-          :value="form.responsible_password"
-          @update:value="(val) => (form.responsible_password = val)"
-          autocomplete="current-responsible-passsword"
-        />
+        <WorkSchedule v-model="form.work" name="work" />
       </FormGroup>
     </HorizontalForm>
   </AuthenticatedLayout>

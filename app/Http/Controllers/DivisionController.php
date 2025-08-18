@@ -56,7 +56,7 @@ class DivisionController
     {
         return Inertia::render('pages/divisions/edit', [
             'division' => fn() => getResource($division),
-            'cities' => fn() => City::get(['id','name'])
+            'cities' => fn() => City::get(['id','name']),
         ]);
     }
 
