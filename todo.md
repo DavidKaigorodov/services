@@ -71,6 +71,7 @@
 - [ ] f_54 - Вынести стили tab в sass файл
 - [ ] f_55 - Вынести стили графика работ в sass файл
 - [x] f_56 - Поменять division edit так же как в division show
+- [ ] f_57 - Сделать страничку division-admin create
 
 ### BACK-END
 - [x] b_1 - Настроить роуты
