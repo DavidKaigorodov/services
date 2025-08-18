@@ -59,6 +59,7 @@ const days = [
           @update:modelValue="(val) => updateDay(day.key, 'date_start', val)"
           :name="`${name}[${day.key}][date_start]`"
           :disabled="disabled"
+          :label="''"
         />
         <DatePicker
           mode="time"
@@ -66,6 +67,7 @@ const days = [
           @update:modelValue="(val) => updateDay(day.key, 'date_end', val)"
           :name="`${name}[${day.key}][date_end]`"
           :disabled="disabled"
+          :label="''"
         />
         <span
           v-if="!modelValue[day.key]?.date_start || !modelValue[day.key]?.date_end"

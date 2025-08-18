@@ -70,7 +70,8 @@
 - [ ] f_53 - Создать компонент FullScreenForm
 - [ ] f_54 - Вынести стили tab в sass файл
 - [ ] f_55 - Вынести стили графика работ в sass файл
-- [ ] f_56 - Поменять division edit так же как в division show
+- [x] f_56 - Поменять division edit так же как в division show
+
 ### BACK-END
 - [x] b_1 - Настроить роуты
     - divisions
