@@ -15,13 +15,13 @@ const form = useForm({
   address: division.address,
   city_id: division.city.id,
   work: {
-    mon: { date_start: "", date_end: "" },
-    tue: { date_start: "", date_end: "" },
-    wed: { date_start: "", date_end: "" },
-    thu: { date_start: "", date_end: "" },
-    fri: { date_start: "", date_end: "" },
-    sat: { date_start: "", date_end: "" },
-    sun: { date_start: "", date_end: "" },
+    mon: { date_start: "", date_end: "", is_working: "true" },
+    tue: { date_start: "", date_end: "", is_working: "false" },
+    wed: { date_start: "", date_end: "", is_working: "false" },
+    thu: { date_start: "", date_end: "", is_working: "true" },
+    fri: { date_start: "", date_end: "", is_working: "" },
+    sat: { date_start: "", date_end: "", is_working: "" },
+    sun: { date_start: "", date_end: "", is_working: "" },
   },
 });
 

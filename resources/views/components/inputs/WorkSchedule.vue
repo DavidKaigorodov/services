@@ -1,5 +1,5 @@
 <script setup>
-import { DatePicker } from "@components";
+import { DatePicker, CheckBox } from "@components";
 
 const props = defineProps({
   modelValue: {
@@ -25,13 +25,6 @@ const updateDay = (day, key, value) => {
   });
 };
 
-// Чекбокс теперь значит "рабочий день"
-const toggleWorkDay = (day) => {
-  const current = props.modelValue[day]?.is_off || false;
-  updateDay(day, "is_off", current); // current = false значит рабочий день
-  updateDay(day, "is_off", !current); // переключаем
-};
-
 const days = [
   { key: "mon", label: "Пн" },
   { key: "tue", label: "Вт" },
@@ -48,25 +41,24 @@ const days = [
     <div v-for="day in days" :key="day.key" class="day-row">
       <span class="day-label">{{ day.label }}:</span>
 
-      <!-- Галочка "рабочий день" -->
-      <label class="off-day">
-        <input
-          type="checkbox"
-          :checked="!modelValue[day.key]?.is_off"
-          @change="toggleWorkDay(day.key)"
-          :disabled="disabled"
-        />
-      </label>
+      <CheckBox
+        :modelValue="props.modelValue[day.key]?.is_working !== 'false'"
+        @update:modelValue="
+          (val) => updateDay(day.key, 'is_working', val ? 'true' : 'false')
+        "
+        :disabled="disabled"
+      />
 
-      <!-- Дата начала и конца показываем только если день рабочий -->
-      <div class="time-picker-block" v-if="!modelValue[day.key]?.is_off">
+      <div
+        class="time-picker-block"
+        v-if="props.modelValue[day.key]?.is_working !== 'false'"
+      >
         <DatePicker
           mode="time"
           :modelValue="modelValue[day.key]?.date_start"
           @update:modelValue="(val) => updateDay(day.key, 'date_start', val)"
           :name="`${name}[${day.key}][date_start]`"
           :disabled="disabled"
-          :label="''"
         />
         <DatePicker
           mode="time"
@@ -74,54 +66,14 @@ const days = [
           @update:modelValue="(val) => updateDay(day.key, 'date_end', val)"
           :name="`${name}[${day.key}][date_end]`"
           :disabled="disabled"
-          :label="''"
         />
         <span
           v-if="!modelValue[day.key]?.date_start || !modelValue[day.key]?.date_end"
-          class="error"
+          class="error-message"
         >
-          Укажите время начала и конца
+          *
         </span>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-.work-schedule-time {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.day-row {
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.day-label {
-  width: 30px;
-  margin-top: 6px;
-}
-
-.off-day {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 14px;
-  margin-top: 6px;
-}
-
-.time-picker-block {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.error {
-  color: red;
-  font-size: 12px;
-}
-</style>

@@ -1,0 +1,31 @@
+@use '../../abstracts' as *
+
+.custom-checkbox
+    display: flex
+    align-items: center
+    cursor: pointer
+    user-select: none
+    gap: 8px
+
+    &.disabled
+        cursor: not-allowed
+        opacity: 0.6
+
+.checkbox-box
+    width: 20px
+    height: 20px
+    border: 1px solid var(--input-border-color)
+    border-radius: 7px
+    background: var(--input-background)
+    display: flex
+    align-items: center
+    justify-content: center
+    transition: all 0.2s
+
+    svg
+
+        stroke: var(--text-color)
+
+.checkbox-label
+    font-size: 0.95rem
+    color: var(--text-color)
