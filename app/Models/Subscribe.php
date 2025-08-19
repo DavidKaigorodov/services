@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Subscribe extends Model
 {
@@ -13,5 +14,24 @@ class Subscribe extends Model
     ### Настройки
     ##################################################
     protected
-        $table = 'main__subscribes';
+    $table = 'main__subscribes';
+
+    protected function casts(): array
+    {
+        return [
+            'start_at' => 'datetime',
+        ];
+    }
+
+    ### Связи
+    ##################################################
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(Service::class, 'service_id','id');
+    }
+
+    public function division(): BelongsTo
+    {
+        return $this->belongsTo(Division::class,'division_id','id');
+    }
 }

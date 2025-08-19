@@ -62,8 +62,8 @@ setTimeout(() => {
   <div class="timeline-wrapper">
     <div class="timeline-grid">
       <div class="user-column">
-        <div class="user-cell header"></div>
-        <div class="user-cell header"></div>
+        <div class="user-header-cell"></div>
+        <div class="user-header-cell"></div>
         <div class="user-cell" v-for="user in allUsers" :key="user">
           {{ user }}
         </div>

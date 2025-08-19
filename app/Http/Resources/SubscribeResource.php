@@ -14,6 +14,20 @@ class SubscribeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "first_name" => $this->first_name,
+            "middle_name" => $this->middle_name,
+            "last_name" => $this->last_name,
+            "email" => $this->email,
+            "phone" => $this->phone,
+            "start_at" => $this->start_at->format('d.m.Y H:i'),
+            "service" => [
+                'name' => $this->service->name,
+            ],
+            "division" => [
+                'name' => $this->division->name
+            ],
+        ];
     }
 }
