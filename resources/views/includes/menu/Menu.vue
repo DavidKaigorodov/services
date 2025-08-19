@@ -23,7 +23,7 @@ const user = usePage().props.current_user.data;
         href="divisions.show"
         label="Общая информация"
       />
-      <ItemMenu class="sidebar-link" href="subscribes.index" label="Специалист" />
+      <ItemMenu class="sidebar-link" href="subscribes.index" label="Обращения" />
       <ItemMenu class="sidebar-link" href="dashboard.index" label="Календарь событий" />
     </ul>
   </nav>
