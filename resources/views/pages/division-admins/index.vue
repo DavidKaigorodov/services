@@ -1,7 +1,7 @@
 <script setup>
 import { AuthenticatedLayout } from "@layouts";
 import { DivisionTab } from "@includes";
-import { Table, AddButton } from "@components";
+import { Table, EditButton } from "@components";
 import { usePage } from "@inertiajs/vue3";
 
 const admins = usePage().props.users;
@@ -18,7 +18,9 @@ const columns = [
     <DivisionTab>
       <Table :data="admins" :columns="columns">
         <template #toolbar-right>
-          <AddButton :href="route('division-admins.create', { division: division.id })" />
+          <EditButton
+            :href="route('division-admins.create', { division: division.id })"
+          />
         </template>
       </Table>
     </DivisionTab>

@@ -15,8 +15,23 @@ class SubscribeController
      */
     public function index()
     {
+        // dd(user()->division);
+
         return Inertia::render('pages/subscribes/index', [
-            'subscribes' => fn() => getResource(Subscribe::class),
+            'subscribes' => fn() => getResource(Subscribe::where(function ($query) {
+                if (in_array(user()->role->code, ['admin', 'root']))
+                    return $query;
+
+                $query->where('division_id', user()->division->id);
+
+                if (user()->role->code === 'division_admin')
+                    return $query;
+
+                $query->whereIn('service_id', user()->services->pluck('id'));
+
+                if (user()->role->code === 'division_worker')
+                    return $query;
+            })),
         ]);
     }
 

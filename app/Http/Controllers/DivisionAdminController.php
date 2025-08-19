@@ -34,7 +34,7 @@ class DivisionAdminController
                 User::where('role_id', UserRole::byCode('division_worker')->id)
                     ->where('division_id', $division->id)
             ),
-            "division" => fn() => getResource($division),
+            'division' => $division->only('id'),
         ]);
     }
 
