@@ -4,81 +4,87 @@
     border-radius: 16px
     padding: 24px
 
-.table-header
-    font-size: 1.5rem
-    font-weight: 700
-    color: var(--header-text-color)
-    margin-bottom: 0.5rem
+    .table-header
+        font-size: 1.5rem
+        font-weight: 700
+        color: var(--header-text-color)
+        margin-bottom: 0.5rem
 
-.table-toolbar
-    display: flex
-    justify-content: space-between
-    align-items: center
-    gap: 16px
-    margin-bottom: 1rem
-    flex-wrap: wrap
-    background: white
-    z-index: 11
-
-    .toolbar-left
-        flex: 1 1 300px
+    .table-toolbar
         display: flex
+        justify-content: space-between
         align-items: center
-    .toolbar-right
-        padding-right: 5px
-        flex: 0 0 auto
-        display: flex
-        gap: 8px
+        gap: 16px
+        margin-bottom: 1rem
         flex-wrap: wrap
-.table
-    width: 100%
-    border-collapse: separate
-    border-spacing: 0
-    table-layout: auto
+        background: white
+        z-index: 11
 
-    td
-        padding: 14px 20px
-        border-right: 1px solid #ece9e7
-        transition: all 0.2s ease
+        .toolbar-left
+            flex: 1 1 300px
+            display: flex
+            align-items: center
 
-    th:last-child,
-    td:last-child
-        width: 1%
-        white-space: nowrap
-        text-align: center
-        padding: 16px 8px !important
-        min-width: 0
+        .toolbar-right
+            padding-right: 5px
+            flex: 0 0 auto
+            display: flex
+            gap: 8px
+            flex-wrap: wrap
 
-    thead
-        tr
-            th
-                background: var(--palette-color-4)
-                color: white
-                font-weight: 600
-                padding: 16px 20px
-                text-align: left
-                position: sticky
-                top: 0
-                border-right: 1px solid #ece9e7
-                z-index: 10
+    .table
+        width: 100%
+        border-collapse: separate
+        border-spacing: 0
+        table-layout: auto
 
-                &:first-child
-                    border-top-left-radius: 12px
-
-                &:last-child
-                    border-top-right-radius: 12px
-                    border-right: none
-
-    tbody
-        tr
-            &:hover td
-                background: #83adf03a
-        &:not(:last-child)
-            td
-                border-bottom: 1px solid #ece9e7
         td
-            &:last-child
-                border-right: none
+            padding: 5px 10px
+            border-right: 1px solid #ece9e7
+            transition: all 0.2s ease
+
+        th:last-child,
+        td:last-child
+            width: 1%
+            white-space: nowrap
+            text-align: center
+            padding: 16px 8px !important
+            min-width: 0
+
+        thead
+            tr
+                th
+                    background: var(--palette-color-4)
+                    color: white
+                    font-weight: 600
+                    padding: 16px 20px
+                    text-align: left
+                    position: sticky
+                    top: 0
+                    border-right: 1px solid #ece9e7
+                    z-index: 10
+
+                    &:first-child
+                        border-top-left-radius: 12px
+
+                    &:last-child
+                        border-top-right-radius: 12px
+                        border-right: none
+
+        tbody
+            tr
+                &:hover
+                    td
+                        background:#88a2ff63
+
+                &:not(:last-child)
+                    td
+                        border-bottom: 1px solid #ece9e7
+
+            td
+                    &:last-child
+                        border-right: none
+
 
         .table-actions
             display: flex
@@ -86,4 +92,3 @@
             align-items: center
             justify-content: center
             margin: 0 auto
-

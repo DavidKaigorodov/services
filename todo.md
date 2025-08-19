@@ -72,6 +72,8 @@
 - [ ] f_55 - Вынести стили графика работ в sass файл
 - [x] f_56 - Поменять division edit так же как в division show
 - [x] f_57 - Сделать страничку division-admin create
+- [x] f_58 - Сделать Subscribes
+- [ ] f_59 - Сделать Subscribes show
 
 ### BACK-END
 - [x] b_1 - Настроить роуты

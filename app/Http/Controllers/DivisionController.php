@@ -6,7 +6,6 @@ use App\Http\Requests\StoreDivisionRequest;
 use App\Http\Requests\UpdateDivisionRequest;
 use App\Models\City;
 use App\Models\Division;
-use App\Http\Resources\DivisionResource;
 use Inertia\Inertia;
 
 class DivisionController

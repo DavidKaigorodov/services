@@ -3,7 +3,7 @@ import { usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
-import { Table, EditButton, DeleteButton, AddButton } from "@components";
+import { Table } from "@components";
 
 const columns = [
   { key: "last_name", label: "Фамилия" },
@@ -11,9 +11,9 @@ const columns = [
   { key: "middle_name", label: "Отчество" },
   { key: "email", label: "Email" },
   { key: "phone", label: "Телефон" },
-  { key: "division_id", label: "Подразделение" },
-  { key: "service_id", label: "Услуга" },
-  { key: "actions", label: "" },
+  { key: ["division", "name"], label: "Подразделение" },
+  { key: ["service", "name"], label: "Услуга" },
+  { key: "start_at", label: "Время записи" },
 ];
 </script>
 
@@ -22,16 +22,8 @@ const columns = [
     <Table
       :data="usePage().props.subscribes"
       :columns="columns"
-      header="Информация об организации"
+      header="Список обращений"
     >
-      <template #toolbar-right>
-        <AddButton :href="route('subscribes.create')" />
-      </template>
-
-      <template #actions="{ row }">
-        <EditButton :href="route('subscribes.edit', row)" />
-        <DeleteButton :href="route('subscribes.destroy', row)" />
-      </template>
     </Table>
   </AuthenticatedLayout>
 </template>

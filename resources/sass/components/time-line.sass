@@ -1,14 +1,14 @@
 $header-height: 40px
 $user-row-height: 56px
+$user-row-width: 140px
 $time-slot-height: 55px
 
 .timeline-wrapper
-    border: 1px solid #d4d7ec
+    border: 1px solid #88a2ff
     border-radius: 10px
     background: #fff
     max-width: 100%
     margin: 24px auto
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05)
     overflow: hidden
     display: flex
     flex-direction: column
@@ -23,8 +23,8 @@ $time-slot-height: 55px
 
         .user-column
             flex: 0 0 140px
-            background: #f6f8ff
-            border-right: 1px solid #e0e4fa
+            background: rgb(216, 216, 255)
+            border-right: 1px solid #88a2ff
             position: sticky
             left: 0
             z-index: 20
@@ -34,9 +34,10 @@ $time-slot-height: 55px
             box-sizing: border-box
 
             .user-cell
-                padding: 8px
-                border-bottom: 1px solid #e0e4fa
+                padding: 5px
+                border-bottom: 1px solid #88a2ff
                 height: $user-row-height
+                width: $user-row-width
                 display: flex
                 align-items: center
                 font-weight: 500
@@ -44,22 +45,25 @@ $time-slot-height: 55px
                 white-space: nowrap
                 background: transparent
                 box-sizing: border-box
+                &:last-child
+                    border: none
 
-                &.header
-                    background: #eef1fb
-                    height: $header-height
-                    font-weight: bold
-                    font-size: 13px
-                    position: sticky
-                    top: 0
-                    z-index: 30
-                    border-bottom: 1px solid #e0e4fa
-                    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset
+            .user-header-cell
+                background: rgb(216, 216, 255)
+                height: $header-height
+                font-weight: bold
+                font-size: 13px
+                position: sticky
+                top: 0
+                z-index: 30
+                border-bottom: 1px solid #88a2ff
+                &:first-child
+                    border-bottom: none
 
         .days-wrapper
             flex: 1 1 auto
             min-width: 0
-            overflow-x: auto
+            overflow-x: hidden
             overflow-y: auto
             -webkit-overflow-scrolling: touch
             display: flex
@@ -68,7 +72,7 @@ $time-slot-height: 55px
             box-sizing: border-box
 
             .day-column
-                border-right: 1px solid #e0e4fa
+                border-right: 1px solid #88a2ff
                 display: flex
                 flex-direction: column
                 min-width: max-content
@@ -80,13 +84,12 @@ $time-slot-height: 55px
                     font-size: 16px
                     padding: 8px
                     background: #eef1fb
-                    border-bottom: 1px solid #e0e4fa
+                    border-bottom: 1px solid #88a2ff
                     box-sizing: border-box
 
                     .header-title
                         flex-grow: 1
                         text-align: center
-                        font-weight: bold
                         font-size: 16px
 
                 .time-cell.header.with-controls
@@ -97,8 +100,7 @@ $time-slot-height: 55px
                     position: sticky
                     top: 0
                     z-index: 25
-                    background: #eef1fb
-                    border-bottom: 1px solid #e0e4fa
+                    background: rgb(216, 216, 241)
 
                     .date-nav-buttons
                         display: flex
@@ -106,37 +108,34 @@ $time-slot-height: 55px
 
                 .time-row
                     display: flex
-                    border-bottom: 1px solid #f0f0f5
+                    border-bottom: 1px solid #88a2ff81
                     min-width: max-content
                     box-sizing: border-box
+                    &:last-child
+                        border: none
 
                     &.time-header
-                        background: #f6f8ff
+                        background: rgb(216, 216, 255)
                         font-size: 12px
-                        font-weight: 500
                         text-align: center
                         height: $header-height
                         display: flex
                         align-items: center
-                        border-bottom: 1px solid #e0e4fa
                         position: sticky
                         top: $header-height
                         z-index: 22
-                        box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset
-                        background-clip: padding-box
 
                     .time-slot
-                        width: 80px
+                        width: calc( (100vw - 250px - $user-row-width)/19)
                         height: $time-slot-height
                         position: relative
                         flex-shrink: 0
-                        border-right: 1px solid #f0f0f5
+                        border-right: 1px solid #88a2ff81
                         display: flex
                         justify-content: center
                         align-items: center
                         font-size: 12px
                         box-sizing: border-box
-
 
                         .events-track
                             position: relative
