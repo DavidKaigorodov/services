@@ -9,7 +9,18 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\SubscribeController;
 use App\Http\Controllers\WorkerController;
+use App\Models\UserRole;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    if (Auth::user()) {
+        if (user()->role_id == UserRole::byCode('admin')->id)
+            return redirect()->route('divisions.index');
+
+        return redirect()->route('events.index', ['division' => user()->division->id]);
+    } else
+        return redirect()->route('login');
+})->name('home');
 
 Route::controller(SessionController::class)->group(function () {
     Route::get('/login', 'create')->middleware('guest')->name('login');
@@ -18,10 +29,6 @@ Route::controller(SessionController::class)->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return redirect()->route('dashboard.index');
-    })->name('home');
-
     Route::resource('division/{division}/events', DashboardController::class)
         ->only(['index']);
 

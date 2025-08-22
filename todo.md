@@ -75,6 +75,7 @@
 - [x] f_58 - Сделать Subscribes
 - [x] f_59 - Сделать Subscribes show
 - [ ] f_60 - Сделать worker/create
+- [ ] f_61 - Сделать странички http ошибок
 
 ### BACK-END
 - [x] b_1 - Настроить роуты
