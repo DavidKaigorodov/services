@@ -16,7 +16,7 @@ const form = useForm({
 function onSubmit(e) {
   e.preventDefault();
 
-  form.put(route("service.update", { service: services.id }));
+  form.put(route("services.update", { service: services.id }));
 }
 </script>
 

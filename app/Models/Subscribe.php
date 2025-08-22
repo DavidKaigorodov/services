@@ -27,11 +27,15 @@ class Subscribe extends Model
     ##################################################
     public function service(): BelongsTo
     {
-        return $this->belongsTo(Service::class, 'service_id','id');
+        return $this->belongsTo(Service::class, 'service_id', 'id')->withTrashed();
     }
 
     public function division(): BelongsTo
     {
-        return $this->belongsTo(Division::class,'division_id','id');
+        return $this->belongsTo(Division::class, 'division_id', 'id');
+    }
+    public function worker(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'worker_id', 'id');
     }
 }

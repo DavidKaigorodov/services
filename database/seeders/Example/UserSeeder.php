@@ -1,10 +1,9 @@
 <?php
 
-namespace Database\Seeders;
+namespace Database\Seeders\Example;
 
 use App\Models\Division;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -14,9 +13,8 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-
         Division::all()->each(function (Division $division) {
-            User::factory(2)->create([
+            User::factory(rand(1, 3))->create([
                 'division_id' => $division->id,
             ]);
         });

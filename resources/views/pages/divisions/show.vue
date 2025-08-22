@@ -4,7 +4,6 @@ import { usePage, useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 import { DivisionTab } from "@includes";
-
 import { HorizontalForm, FormGroup, Select, WorkSchedule, TextArea } from "@components";
 
 const division = usePage().props.division.data;
@@ -14,15 +13,7 @@ const form = useForm({
   name: division.name,
   address: division.address,
   city_id: division.city.id,
-  work: {
-    mon: { date_start: "", date_end: "", is_working: "true" },
-    tue: { date_start: "", date_end: "", is_working: "false" },
-    wed: { date_start: "", date_end: "", is_working: "false" },
-    thu: { date_start: "", date_end: "", is_working: "true" },
-    fri: { date_start: "", date_end: "", is_working: "" },
-    sat: { date_start: "", date_end: "", is_working: "" },
-    sun: { date_start: "", date_end: "", is_working: "" },
-  },
+  shedules: division.shedules,
 });
 
 const cityOptions = computed(() => {
@@ -52,7 +43,7 @@ function onSubmit(e) {
 
 <template>
   <AuthenticatedLayout>
-    <DivisionTab>
+    <DivisionTab :division_id="division.id">
       <HorizontalForm
         header="Общая информация"
         :sbm="isEditing ? 'Сохранить' : 'Редактировать'"
@@ -87,7 +78,7 @@ function onSubmit(e) {
         </FormGroup>
 
         <FormGroup name="work" label="График работы">
-          <WorkSchedule v-model="form.work" name="work" :disabled="!isEditing" />
+          <WorkSchedule v-model="form.shedules" name="work" :disabled="!isEditing" />
         </FormGroup>
       </HorizontalForm>
     </DivisionTab>

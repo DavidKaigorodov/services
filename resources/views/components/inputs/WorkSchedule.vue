@@ -25,6 +25,25 @@ const updateDay = (day, key, value) => {
   });
 };
 
+const toggleDay = (day, val) => {
+  const newValue = { ...props.modelValue };
+
+  if (val) {
+    // включаем день, если его ещё нет
+    if (!newValue[day]) {
+      newValue[day] = {
+        date_start: null,
+        date_end: null,
+      };
+    }
+  } else {
+    // выключаем день
+    delete newValue[day];
+  }
+
+  emit("update:modelValue", newValue);
+};
+
 const days = [
   { key: "mon", label: "Пн" },
   { key: "tue", label: "Вт" },
@@ -42,17 +61,12 @@ const days = [
       <span class="day-label">{{ day.label }}:</span>
 
       <CheckBox
-        :modelValue="props.modelValue[day.key]?.is_working !== 'false'"
-        @update:modelValue="
-          (val) => updateDay(day.key, 'is_working', val ? 'true' : 'false')
-        "
+        :modelValue="day.key in modelValue"
+        @update:modelValue="(val) => toggleDay(day.key, val)"
         :disabled="disabled"
       />
 
-      <div
-        class="time-picker-block"
-        v-if="props.modelValue[day.key]?.is_working !== 'false'"
-      >
+      <div v-if="day.key in modelValue" class="time-picker-block">
         <DatePicker
           mode="time"
           :modelValue="modelValue[day.key]?.date_start"

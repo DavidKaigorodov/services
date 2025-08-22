@@ -18,7 +18,18 @@ class DivisionResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'address' => $this->address,
-            'city' => $this->city->toResource(),
+            'city' => [
+                'id' => $this->city?->id,
+                'name' => $this->city?->name,
+            ],
+            'shedules'=> $this->shedules->map(function($shedule){
+                return [
+                    $shedule->dayOfTheWeek->code => [
+                        'date_start' => $shedule->date_start->format('H:i'),
+                        'date_end' => $shedule->date_end->format('H:i'),
+                    ],
+                ];
+            })->collapse(),
         ];
     }
 }

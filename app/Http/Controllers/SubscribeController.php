@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSubscribeRequest;
 use App\Http\Requests\UpdateSubscribeRequest;
 use App\Http\Resources\SubscribeResource;
+use App\Models\Division;
 use App\Models\Subscribe;
 use Inertia\Inertia;
 
@@ -13,25 +14,11 @@ class SubscribeController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Division $division)
     {
-        // dd(user()->division);
-
         return Inertia::render('pages/subscribes/index', [
-            'subscribes' => fn() => getResource(Subscribe::where(function ($query) {
-                if (in_array(user()->role->code, ['admin', 'root']))
-                    return $query;
-
-                $query->where('division_id', user()->division->id);
-
-                if (user()->role->code === 'division_admin')
-                    return $query;
-
-                $query->whereIn('service_id', user()->services->pluck('id'));
-
-                if (user()->role->code === 'division_worker')
-                    return $query;
-            })),
+            'subscribes' => fn() => getResource($division->subscribes()),
+            'division' => fn() => getResource($division),
         ]);
     }
 
@@ -56,12 +43,22 @@ class SubscribeController
             'email',
             'division_id',
             'service_id',
-            'start_at'
+            'start_at',
+            'worker_id',
         ));
 
         return redirect()->route('subscribes.index')->with('message', 'Запись успешно создана');
     }
 
+    /**
+     * Display the specified resource.
+     */
+    public function show(Subscribe $Subscribe)
+    {
+        return Inertia::render("pages/subscribes/show", [
+            'subscribe' => fn() => getResource($Subscribe),
+        ]);
+    }
     /**
      * Show the form for editing the specified resource.
      */

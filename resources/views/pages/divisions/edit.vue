@@ -4,14 +4,7 @@ import { usePage, useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
-import {
-  HorizontalForm,
-  FormGroup,
-  StringInput,
-  Select,
-  WorkSchedule,
-  TextArea,
-} from "@components";
+import { HorizontalForm, FormGroup, Select, WorkSchedule, TextArea } from "@components";
 
 const division = usePage().props.division.data;
 const cities = usePage().props.cities;
@@ -20,15 +13,7 @@ const form = useForm({
   name: division.name,
   address: division.address,
   city_id: division.city.id,
-  work: {
-    mon: { date_start: "", date_end: "", is_working: "true" },
-    tue: { date_start: "", date_end: "", is_working: "false" },
-    wed: { date_start: "", date_end: "", is_working: "false" },
-    thu: { date_start: "", date_end: "", is_working: "true" },
-    fri: { date_start: "", date_end: "", is_working: "" },
-    sat: { date_start: "", date_end: "", is_working: "" },
-    sun: { date_start: "", date_end: "", is_working: "" },
-  },
+  shedules: division.shedules,
   responsible_name: "",
   responsible_email: "",
   responsible_password: "",
@@ -77,7 +62,7 @@ function onSubmit(e) {
       </FormGroup>
 
       <FormGroup name="work" label="График работы">
-        <WorkSchedule v-model="form.work" name="work" />
+        <WorkSchedule v-model="form.shedules" name="work" />
       </FormGroup>
     </HorizontalForm>
   </AuthenticatedLayout>

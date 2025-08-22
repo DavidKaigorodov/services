@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
 
         if(in_array(config('app.env'), ['local', 'testing'])){
             $this->call(Example\ExampleSeeder::class);
-            $this->call(UserSeeder::class);
         }
 
     }

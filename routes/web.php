@@ -22,10 +22,10 @@ Route::middleware('auth')->group(function () {
         return redirect()->route('dashboard.index');
     })->name('home');
 
-    Route::resource('dashboard', DashboardController::class)
+    Route::resource('division/{division}/events', DashboardController::class)
         ->only(['index']);
 
-    Route::resource('service', ServiceController::class)
+    Route::resource('services', ServiceController::class)
         ->except(['show']);
 
     Route::resource('cities', CityController::class)
@@ -33,14 +33,14 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('divisions', DivisionController::class);
 
-    Route::resource('subscribes', SubscribeController::class);
+    Route::resource('division/{division}/subscribes', SubscribeController::class);
 
     Route::resource('statistic', StatisticController::class)
         ->only(['index']);
 
-    Route::resource('{division}/division-admins', DivisionAdminController::class)
-        ->only(['index', 'create', 'store', 'destroy']);
+    Route::resource('divisions/{division}/division-admins', DivisionAdminController::class)
+        ->only(['index', 'create', 'store', 'update', 'destroy']);
 
-    Route::resource('{division}/workers', WorkerController::class)
-        ->only(['index','edit', 'update','destroy']);
+    Route::resource('divisions/{division}/workers', WorkerController::class)
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 });

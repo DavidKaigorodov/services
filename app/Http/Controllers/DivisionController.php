@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDivisionRequest;
 use App\Http\Requests\UpdateDivisionRequest;
 use App\Models\City;
+use App\Models\DayOfTheWeek;
 use App\Models\Division;
 use Inertia\Inertia;
 
@@ -14,11 +15,11 @@ class DivisionController
      * Display a listing of the resource.
      */
     public function index()
-{
-    return Inertia::render('pages/divisions/index', [
-        'divisions' => fn() => getResource(Division::class),
-    ]);
-}
+    {
+        return Inertia::render('pages/divisions/index', [
+            'divisions' => fn() => getResource(Division::class),
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -26,7 +27,7 @@ class DivisionController
     public function create()
     {
         return Inertia::render('pages/divisions/create', [
-            'cities' => fn() => City::get(['id','name'])
+            'cities' => fn() => City::get(['id', 'name'])
         ]);
     }
 
@@ -35,15 +36,25 @@ class DivisionController
      */
     public function store(StoreDivisionRequest $request)
     {
-        Division::create($request->only('name', 'city_id'));
+        $division = Division::create($request->only('name','address', 'city_id'));
 
-        return redirect()->route('division.index')->with('message', 'Запись успешно добавлена');
+        foreach ($request->get('shedules') as $day_code => $shedule) {
+            $division->shedules()->create([
+                'day_of_the_week_id' => DayOfTheWeek::byCode($day_code)->id,
+                'date_start' => $shedule['date_start'],
+                'date_end' => $shedule['date_end'],
+            ]);
+        }
+        return redirect()->route('divisions.index')->with('message', 'Запись успешно добавлена');
     }
 
-    public function show(Division $division){
-        return Inertia::render('pages/divisions/show', [
-                'division'=> fn() => getResource($division),
-                'cities' => fn() => City::get(['id','name']),
+    public function show(Division $division)
+    {
+        return Inertia::render(
+            'pages/divisions/show',
+            [
+                'division' => fn() => getResource($division),
+                'cities' => fn() => City::get(['id', 'name']),
             ]
         );
     }
@@ -55,7 +66,7 @@ class DivisionController
     {
         return Inertia::render('pages/divisions/edit', [
             'division' => fn() => getResource($division),
-            'cities' => fn() => City::get(['id','name']),
+            'cities' => fn() => City::get(['id', 'name']),
         ]);
     }
 
@@ -64,11 +75,20 @@ class DivisionController
      */
     public function update(UpdateDivisionRequest $request, Division $division)
     {
-        $division->update($request->only('name','address', 'city_id'));
+        $division->update($request->only('name', 'address', 'city_id'));
+
+        $division->shedules()->delete();
+        foreach ($request->get('shedules') as $day_code => $shedule) {
+            $division->shedules()->create([
+                'day_of_the_week_id' => DayOfTheWeek::byCode($day_code)->id,
+                'date_start' => $shedule['date_start'],
+                'date_end' => $shedule['date_end'],
+            ]);
+        }
 
         return user()->hasRole('admin')
             ? redirect()->route('divisions.index')->with('message', 'Запись успешно изменена')
-            : redirect()->route('divisions.show', compact('division'))->with('message','Запись успешно изменена');
+            : redirect()->route('divisions.show', compact('division'))->with('message', 'Запись успешно изменена');
     }
 
     /**
@@ -78,6 +98,6 @@ class DivisionController
     {
         $division->delete();
 
-        return redirect()->route('division.index')->with('message', 'Запись удалена');
+        return back()->with('message', 'Запись удалена');
     }
 }

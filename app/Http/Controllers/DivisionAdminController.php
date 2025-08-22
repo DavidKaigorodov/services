@@ -20,7 +20,7 @@ class DivisionAdminController
                 User::where('role_id', UserRole::byCode('division_admin')->id)
                     ->where('division_id', $division->id)
             ),
-            'division' => $division->only('id'),
+            'division' => fn() => getResource($division),
         ]);
     }
 
@@ -30,11 +30,8 @@ class DivisionAdminController
     public function create(Division $division)
     {
         return Inertia::render("pages/division-admins/create", [
-            "users" => fn() => getResource(
-                User::where('role_id', UserRole::byCode('division_worker')->id)
-                    ->where('division_id', $division->id)
-            ),
-            'division' => $division->only('id'),
+            "users" => fn() => getResource($division->users()),
+            'division' => fn() => getResource($division),
         ]);
     }
 
@@ -42,32 +39,23 @@ class DivisionAdminController
      * Store a newly created resource in storage.
      */
     public function store(StoreDivisionAdminRequest $request, Division $division)
-    {
-        foreach($request->ids as $id) {
-            User::whereKey($id)->update(['role_id' => UserRole::byCode('division_admin')]);
-        }
-        return redirect()->route('division-admin.index', compact('division'))
-            ->with('message','Админимстратор(ы) подразделения успешно назначен');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Division $division, User $user)
-    {
-        return Inertia::render("pages/division-admin/show", [
-            'user' => fn() => getResource($user),
-            "division" => fn() => getResource($division),
+     {
+        $division->users()->whereKey($request->user_id)->update([
+            'role_id' => UserRole::byCode('division_admin')->id,
         ]);
+
+        return redirect()
+            ->route('division-admins.create', compact('division'))
+            ->with('message', 'Админимстратор подразделения успешно назначен');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Division $division, User $user)
+    public function destroy(Division $division, User $division_admin)
     {
-        $user->update(["role_id"=> UserRole::byCode("division_worker")]);
+        $division_admin->update(['role_id' => UserRole::byCode('division_worker')->id]);
 
-        return redirect()->route("division-admin.index", compact("division"));
+        return back()->with('message', 'Админимстратор подразделения удален');;
     }
 }

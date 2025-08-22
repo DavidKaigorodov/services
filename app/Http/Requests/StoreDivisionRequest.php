@@ -16,7 +16,12 @@ class StoreDivisionRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:3', 'max:255'],
-            'city_id' => ['required', 'exists:' . City::class . ',id']
+            'address'=> ['required', 'string','min:3'],
+            'city_id' => ['required', 'exists:' . City::class . ',id'],
+            'shedules' => ['required', 'array'],
+            'shedules.*' => ['nullable','array'],
+            'shedules.*.date_start' => ['required','date_format:H:i'],
+            'shedules.*.date_end' => ['required','date_format:H:i'],
         ];
     }
 }

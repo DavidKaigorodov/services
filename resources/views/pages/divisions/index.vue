@@ -3,7 +3,7 @@ import { usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
-import { Table, EditButton, DeleteButton, AddButton } from "@components";
+import { Table, EditButton, DeleteButton, AddButton, GoToButton } from "@components";
 
 const columns = [
   { key: "name", label: "Наименование" },
@@ -23,6 +23,7 @@ const columns = [
       <template #actions="{ row }">
         <EditButton :href="route('divisions.edit', row)" />
         <DeleteButton :href="route('divisions.destroy', row)" />
+        <GoToButton :href="route('divisions.show', row.id)"/>
       </template>
     </Table>
   </AuthenticatedLayout>
