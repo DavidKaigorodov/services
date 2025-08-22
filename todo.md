@@ -74,6 +74,7 @@
 - [x] f_57 - Сделать страничку division-admin create
 - [x] f_58 - Сделать Subscribes
 - [x] f_59 - Сделать Subscribes show
+- [ ] f_60 - Сделать worker/create
 
 ### BACK-END
 - [x] b_1 - Настроить роуты
