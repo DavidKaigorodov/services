@@ -23,11 +23,14 @@ class SubscribeResource extends JsonResource
             "phone" => $this->phone,
             "start_at" => $this->start_at->format('d.m.Y H:i'),
             "service" => [
-                'name' => $this->service->name,
+                'name' => $this->service?->name,
             ],
             "division" => [
-                'name' => $this->division->name
+                'name' => $this->division?->name,
             ],
+            "worker" => [
+                "name"=> $this->worker->name,
+            ]
         ];
     }
 }

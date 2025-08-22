@@ -5,16 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Division extends Model
 {
     /** @use HasFactory<\Database\Factories\Admin\DivisionFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     ### Настройки
     ##################################################
     protected
-        $table = 'main__divisions';
+    $table = 'main__divisions';
 
     protected $fillable = [
         'name',
@@ -33,5 +35,24 @@ class Division extends Model
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function shedules(): HasMany
+    {
+        return $this->hasMany(DivisionShedule::class, 'division_id');
+    }
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class, 'division_id');
+    }
+
+    public function admins(): HasMany
+    {
+        return $this->users()->where('role_id', UserRole::byCode('division_admin')->id);
+    }
+    public function subscribes(): HasMany
+    {
+        return $this->hasMany(Subscribe::class, 'division_id');
     }
 }

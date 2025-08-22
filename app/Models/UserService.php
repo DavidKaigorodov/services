@@ -10,7 +10,11 @@ class UserService extends Model
     ### Настройки
     ##################################################
     protected
-    $table = 'main__user_service';
+    $table = 'main__user_service',
+    $fillable = [
+        'user_id',
+        'service_id',
+    ];
 
     ### Связи
     ##################################################

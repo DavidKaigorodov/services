@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->time('duration');
 
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('main__user_service', function (Blueprint $table) {

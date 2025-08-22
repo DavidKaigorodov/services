@@ -1,14 +1,11 @@
 <script setup>
 import { usePage } from "@inertiajs/vue3";
-
 import { AuthenticatedLayout } from "@layouts";
-
 import { Table, EditButton, DeleteButton, AddButton } from "@components";
 
 const columns = [
   { key: "name", label: "Наименование" },
   { key: "duration", label: "Продолжительность" },
-  { key: "user", label: "Специалист" },
   { key: "actions", label: "" },
 ];
 </script>
@@ -17,12 +14,12 @@ const columns = [
   <AuthenticatedLayout>
     <Table :data="usePage().props.services" :columns="columns" header="Услуга">
       <template #toolbar-right>
-        <AddButton href="/service/create" />
+        <AddButton href="/services/create" />
       </template>
 
       <template #actions="{ row }">
-        <EditButton :href="route('service.edit', row)" />
-        <DeleteButton :href="route('service.destroy', row)" />
+        <EditButton :href="route('services.edit', row)" />
+        <DeleteButton :href="route('services.destroy', row)" />
       </template>
     </Table>
   </AuthenticatedLayout>

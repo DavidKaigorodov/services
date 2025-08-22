@@ -17,17 +17,9 @@ const cities = usePage().props.cities;
 
 const form = useForm({
   name: "",
-  adres: "",
+  address: "",
   city_id: "",
-  work: {
-    mon: { date_start: "", date_end: "", is_working: "true" },
-    tue: { date_start: "", date_end: "", is_working: "false" },
-    wed: { date_start: "", date_end: "", is_working: "false" },
-    thu: { date_start: "", date_end: "", is_working: "true" },
-    fri: { date_start: "", date_end: "", is_working: "" },
-    sat: { date_start: "", date_end: "", is_working: "" },
-    sun: { date_start: "", date_end: "", is_working: "" },
-  },
+  shedules: {},
   responsible_email: "",
 });
 
@@ -60,7 +52,7 @@ function onSubmit(e) {
           label="Адрес"
           name="address"
           :value="form.address"
-          @update:value="(val) => (form.adres = val)"
+          @update:value="(val) => (form.address = val)"
           autocomplete="current-adres"
           :rows="6"
         />
@@ -74,7 +66,7 @@ function onSubmit(e) {
       </FormGroup>
 
       <FormGroup name="work" label="График работы">
-        <WorkSchedule header="График работы" v-model="form.work" name="work" />
+        <WorkSchedule header="График работы" v-model="form.shedules" name="work" />
       </FormGroup>
 
       <FormGroup name="responsible" label="Ответственное лицо">

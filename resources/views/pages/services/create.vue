@@ -14,7 +14,7 @@ const form = useForm({
 function onSubmit(e) {
   e.preventDefault();
 
-  form.post(route("service.store"));
+  form.post(route("services.store"));
 }
 </script>
 

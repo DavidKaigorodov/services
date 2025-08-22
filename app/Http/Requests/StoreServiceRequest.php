@@ -15,6 +15,7 @@ class StoreServiceRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:3', 'max:255'],
+            'duration' => ['required','date_format:H:i'],
         ];
     }
 }

@@ -2,12 +2,12 @@
 
 use App\Models\Division;
 use App\Models\Service;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -24,6 +24,7 @@ return new class extends Migration
 
             $table->foreignId('division_id')->constrained(new Division()->getTable());
             $table->foreignId('service_id')->constrained(new Service()->getTable());
+            $table->foreignId('worker_id')->constrained(new User()->getTable());
 
             $table->timestamp('start_at');
 

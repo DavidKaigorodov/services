@@ -1,16 +1,20 @@
 <script setup>
 import { Tab } from "@components";
-import { usePage } from "@inertiajs/vue3";
-const user = usePage().props.current_user.data;
+
+const attrs = defineProps({
+    division_id: Number,
+});
 </script>
 <template>
-  <Tab
-    :tabs="[
-      { href: 'divisions.show', title: 'Общая информаця' },
-      { href: 'division-admins.index', title: 'Адмистраторы' },
-      { href: 'workers.index', title: 'Сотрудники' },
-    ]"
-    :params="{ division: user.division_id }"
-  />
-  <slot />
+    <Tab
+        :tabs="[
+            { href: 'divisions.show', title: 'Общая информаця' },
+            { href: 'division-admins.index', title: 'Адмистраторы' },
+            { href: 'workers.index', title: 'Сотрудники' },
+            { href: 'events.index', title: 'Календарь событий' },
+            { href: 'subscribes.index', title: 'Обращения' },
+        ]"
+        :params="{ division: attrs.division_id }"
+    />
+    <slot />
 </template>

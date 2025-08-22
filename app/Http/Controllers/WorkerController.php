@@ -32,7 +32,7 @@ class WorkerController
     public function create(Division $division)
     {
         return Inertia::render(
-            "pages/worker/create",
+            "pages/workers/create",
             [
                 "division" => fn() => getResource($division)
             ]
@@ -83,6 +83,6 @@ class WorkerController
     public function destroy(Division $division, User $worker)
     {
         $worker->delete();
-        return redirect()->route('worker.index')->with('message',value: 'Пользователь удален');
+        return redirect()->route('workers.index', ['division' => $division])->with('message',value: 'Пользователь удален');
     }
 }

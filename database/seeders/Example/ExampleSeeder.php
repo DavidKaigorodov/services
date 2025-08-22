@@ -13,6 +13,7 @@ class ExampleSeeder extends Seeder
     {
         $this->call(CitySeeder::class);
         $this->call(DivisionSeeder::class);
+        $this->call(UserSeeder::class);
         $this->call(ServiceSeeder::class);
         $this->call(SubscribeSeeder::class);
     }

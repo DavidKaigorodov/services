@@ -15,8 +15,7 @@ class StoreDivisionAdminRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "ids" => ["required", "array"],
-            "ids.*" => ["integer", "exists:" . User::class . "id"],
+            'user_id' => ['required','exists:' . User::class . ',id'],
         ];
     }
 }

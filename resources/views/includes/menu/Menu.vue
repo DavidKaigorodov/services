@@ -15,16 +15,14 @@ const user = usePage().props.current_user.data;
       <h4>Админ панель</h4>
       <ItemMenu class="sidebar-link" href="divisions.index" label="Подразделения" />
       <ItemMenu class="sidebar-link" href="cities.index" label="Города" />
+      <ItemMenu class="sidebar-link" href="services.index" label="Услуги" />
       <h4>Подразделения панель</h4>
-      <ItemMenu class="sidebar-link" href="service.index" label="Услуги" />
       <ItemMenu
-        :params="{ division: user.division_id }"
+        :params="{ division: user.division.id }"
         class="sidebar-link"
         href="divisions.show"
         label="Общая информация"
       />
-      <ItemMenu class="sidebar-link" href="subscribes.index" label="Обращения" />
-      <ItemMenu class="sidebar-link" href="dashboard.index" label="Календарь событий" />
     </ul>
   </nav>
 </template>

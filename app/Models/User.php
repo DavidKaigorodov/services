@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
     ],
     $hidden = [
         'password',
@@ -62,7 +63,7 @@ class User extends Authenticatable
 
     public function services(): HasManyThrough
     {
-        return $this->hasManyThrough(Service::class, UserService::class,'user_id','id','id','service_id');
+        return $this->hasManyThrough(Service::class, UserService::class,'user_id','id','id','service_id')->withTrashed();
     }
 
 }

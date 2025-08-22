@@ -1,5 +1,6 @@
 <script setup>
 import { getObjectValue } from "@helpers";
+import {Pagination} from "@components";
 
 const props = defineProps({
   data: [Array, Object],
@@ -42,7 +43,9 @@ const props = defineProps({
             </td>
           </tr>
         </tbody>
+
       </table>
+              <Pagination :total="data.meta.total" :current="data.meta.current_page" :perPage="data.meta.per_page"/>
     </div>
   </div>
 </template>

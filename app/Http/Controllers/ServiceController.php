@@ -34,7 +34,7 @@ class ServiceController
      */
     public function store(StoreServiceRequest $request)
     {
-        Service::create($request->only('name'));
+        Service::create($request->only('name', 'duration'));
 
         return redirect()->route('services.index')->with('message', 'Запись успешно создана');
     }
@@ -54,7 +54,7 @@ class ServiceController
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        $service->update($request->only('name'));
+        $service->update($request->only('name', 'duration'));
 
         return redirect()->route('services.index')->with('message', 'Запись успешно обновлена');
     }

@@ -11,7 +11,7 @@ class SessionController
 {
     public function create()
     {
-        return Inertia::render('pages/session/Login');
+        return Inertia::render('pages/session/login');
     }
 
     public function store(StoreSessionRequest $request)
