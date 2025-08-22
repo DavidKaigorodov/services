@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWorkerRequest;
 use App\Http\Requests\UpdateWorkerRequest;
+use App\Jobs\SendInviteJob;
 use App\Models\DayOfTheWeek;
 use App\Models\Division;
 use App\Models\User;
@@ -44,6 +45,7 @@ class WorkerController
      */
     public function store(StoreWorkerRequest $request, Division $division)
     {
+        SendInviteJob::dispatch();
         return redirect()->route("workers.index", compact("division"))
             ->with("message", "Приглашение успешно отправлено");
     }
