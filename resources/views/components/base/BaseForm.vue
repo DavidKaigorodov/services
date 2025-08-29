@@ -1,5 +1,6 @@
 <script setup>
-import { BlueButton, FormError } from "@components";
+import { default as BlueButton } from "../buttons/BlueButton.vue";
+import {default as FormError} from '../FormError.vue';
 
 const props = defineProps({
     className: String,

@@ -1,5 +1,5 @@
 <script setup>
-import { Label } from "@components";
+import { default as Label } from "./Label.vue";
 
 const props = defineProps({
     name: String,

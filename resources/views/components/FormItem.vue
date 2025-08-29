@@ -1,5 +1,5 @@
 <script setup>
-import { FormError } from "@components";
+import { default as FormError } from "./FormError.vue";
 
 const props = defineProps({
     name: String,

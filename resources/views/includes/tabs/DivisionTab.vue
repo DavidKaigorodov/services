@@ -1,5 +1,5 @@
 <script setup>
-import { Tab } from "@components";
+import { default as Tab } from "../../components/tab/Tab.vue";
 
 const attrs = defineProps({
     division_id: Number,

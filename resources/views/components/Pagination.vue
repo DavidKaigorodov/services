@@ -1,7 +1,8 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 
-import { ChevronRightIco, ChevronLeftIco } from "@components";
+import { default as ChevronRightIco } from "./icons/ChevronRightIco.vue";
+import { default as ChevronLeftIco } from "./icons/ChevronLeftIco.vue";
 
 const props = defineProps({
     total: {

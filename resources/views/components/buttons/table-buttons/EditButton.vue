@@ -1,6 +1,6 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
-import { PenIco } from "@components";
+import { default as PenIco } from "../../icons/PenIco.vue";
 
 defineProps({
   href: {

@@ -65,15 +65,16 @@ const isSelected = (date) =>
         </div>
     </div>
 </template>
-<style lang="sass" scoped>
+
+<style lang="sass">
 .calendar-header
-    background: whiteF
+    background: white
     border-radius: 0.5rem
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)
     border: 1px solid #e5e7eb
     position: absolute
     left: 0
-    right: 0F
+    right: 0
     margin-top: 8px
 
     .calendar-weekdays

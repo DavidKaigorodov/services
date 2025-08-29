@@ -1,5 +1,8 @@
 <script setup>
-import { DatePicker, CheckBox, FormItem } from "@components";
+
+import { default as DatePicker } from './datePicker/DatePicker.vue'
+import { default as CheckBox } from './CheckBox.vue'
+import { default as FormItem } from '../FormItem.vue'
 
 const props = defineProps({
     modelValue: {

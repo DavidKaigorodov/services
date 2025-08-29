@@ -1,6 +1,8 @@
 <script setup>
 import { router } from "@inertiajs/vue3";
-import { TrashIco, RedButton } from "@components";
+
+import { default as RedButton } from "../../buttons/RedButton.vue";
+import { default as TrashIco } from "../../icons/TrashIco.vue";
 
 const props = defineProps({
   href: {

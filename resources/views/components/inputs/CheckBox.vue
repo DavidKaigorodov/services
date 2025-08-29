@@ -1,5 +1,5 @@
 <script setup>
-import { CheckMarkIco } from "@components";
+import { default as CheckMarkIco } from "../icons/CheckMarkIco.vue";
 
 const props = defineProps({
     modelValue: {

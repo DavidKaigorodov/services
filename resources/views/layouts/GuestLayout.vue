@@ -1,5 +1,5 @@
 <script setup>
-import BaseLayout from './BaseLayout.vue';
+import {default as BaseLayout} from './BaseLayout.vue';
 </script>
 
 <template>

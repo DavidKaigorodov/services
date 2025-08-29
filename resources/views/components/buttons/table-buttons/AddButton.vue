@@ -1,6 +1,6 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
-import { PlusIco } from "@components";
+import { default as PlusIco } from "../../icons/PlusIco.vue";
 
 const props = defineProps({
   href: {

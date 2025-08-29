@@ -1,6 +1,12 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { TimePickerPopup, CalendarPopup, DateInput, Label, FormItem } from "@components";
+
+import { default as CalendarPopup } from "./CalendarPopup.vue";
+import { default as TimePickerPopup } from "./TimePickerPopup.vue";
+import { default as DateInput } from "./DateInput.vue";
+
+import { default as Label} from "../../Label.vue";
+import { default as FormItem } from "../../FormItem.vue";
 import { formatDate } from "./utils";
 
 const props = defineProps({

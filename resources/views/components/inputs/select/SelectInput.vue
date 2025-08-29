@@ -39,8 +39,8 @@ defineProps({
         color: #999
         cursor: not-alloweds
         .select-value
-    flex: 1
-    text-align: left
+            flex: 1
+            text-align: left
 
     .select-arrow
         width: 16px

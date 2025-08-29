@@ -61,5 +61,5 @@ const errorMessages = computed(() => {
             top: 0
             font-size: 12px
             line-height: 1.4
-            color: var( --form-error-color)
+            color: var(--form-error-color)
 </style>

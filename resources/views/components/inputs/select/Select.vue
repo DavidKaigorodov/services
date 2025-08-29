@@ -1,7 +1,10 @@
 <script setup>
 import { ref, computed } from "vue";
 
-import { SelectList, SelectInput, Label, FormItem } from "@components";
+import { default as SelectList } from "./SelectList.vue";
+import { default as SelectInput } from "./SelectInput.vue";
+import { default as Label } from "../../Label.vue";
+import { default as FormItem } from "../../FormItem.vue";
 
 const props = defineProps({
     modelValue: [String, Number],

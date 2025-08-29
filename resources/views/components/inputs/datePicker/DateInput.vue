@@ -1,5 +1,5 @@
 <script setup>
-import { CalendarIco } from "@components";
+import { default as CalendarIco } from "../../icons/CalendarIco.vue";
 
 const props = defineProps({
     modelValue: String,

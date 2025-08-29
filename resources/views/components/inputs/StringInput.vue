@@ -1,5 +1,6 @@
 <script setup>
-import { Label, FormItem } from "@components";
+import { default as FormItem } from "../FormItem.vue";
+import{ default as Label} from '../Label.vue';
 
 const props = defineProps({
     type: {

@@ -1,6 +1,6 @@
 <script setup>
 import { usePage } from "@inertiajs/vue3";
-import TabItem from "./TabItem.vue";
+import { default as TabItem} from "./TabItem.vue";
 
 const props = defineProps({
     tabs: {

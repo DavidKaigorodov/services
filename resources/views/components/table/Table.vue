@@ -1,6 +1,6 @@
 <script setup>
-import { getObjectValue } from "@helpers";
-import { Pagination } from "@components";
+import { getObjectValue } from "../../../js/helpers/index";
+import { default as Pagination } from "../Pagination.vue";
 
 const props = defineProps({
     data: [Array, Object],

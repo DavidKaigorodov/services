@@ -3,12 +3,10 @@ import { ref, computed } from "vue";
 import dayjs from "dayjs";
 import { router } from "@inertiajs/vue3";
 
-import {
-    BlueButton,
-    DatePicker,
-    ChevronRightIco,
-    ChevronLeftIco,
-} from "@components";
+import { default as BlueButton } from '../buttons/BlueButton.vue'
+import { default as DatePicker } from '../inputs/datePicker/DatePicker.vue'
+import { default as ChevronRightIco } from '../icons/ChevronRightIco.vue';
+import { default as ChevronLeftIco } from '../icons/ChevronLeftIco.vue';
 
 const props = defineProps({
     records: Array,

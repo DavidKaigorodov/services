@@ -1,5 +1,5 @@
 <script setup>
-import { BaseForm } from "@components";
+import { default as BaseForm } from "../base/BaseForm.vue";
 </script>
 
 <template>

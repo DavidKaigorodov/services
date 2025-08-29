@@ -1,6 +1,6 @@
 <script setup>
-import { ItemMenu } from "@includes";
 import { usePage } from "@inertiajs/vue3";
+import { default as ItemMenu } from "./ItemMenu.vue";
 
 const user = usePage().props.current_user.data;
 </script>

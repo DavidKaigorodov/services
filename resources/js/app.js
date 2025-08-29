@@ -1,6 +1,5 @@
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
-import * as helpers from './helpers';
 
 createInertiaApp({
     progress: {
@@ -10,8 +9,8 @@ createInertiaApp({
         showSpinner: false,
     },
     resolve: (name) => {
-        const pages = import.meta.glob("../views/**/*.vue", { eager: true });
-        return pages[`../views/${name}.vue`];
+        const pages = import.meta.glob("../views/**/*.vue", { eager: false });
+        return pages[`../views/${name}.vue`]();
     },
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })

@@ -1,14 +1,12 @@
 <script setup>
-import BaseLayout from "./BaseLayout.vue";
-import Menu from "../includes/menu/Menu.vue";
 import { usePage } from "@inertiajs/vue3";
+import {default as BaseLayout} from "./BaseLayout.vue";
+import {default as Menu} from "../includes/menu/Menu.vue";
+
 let worker = "";
-if (
-    ["division_worker", "division_admin"].includes(
-        usePage().props.current_user.data.role.code,
-    )
-)
+if (["division_worker", "division_admin"].includes(usePage().props.current_user.data.role.code))
     worker = "worker";
+
 </script>
 <template>
     <BaseLayout name="authenticated-layout">

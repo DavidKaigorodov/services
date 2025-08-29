@@ -1,6 +1,6 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
-import { GoToIco } from "@components";
+import { default as GoToIco } from "../../icons/GoToIco.vue";
 
 defineProps({
   href: {
