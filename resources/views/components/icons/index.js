@@ -3,6 +3,8 @@ export { default as PenIco } from './PenIco.vue'
 export { default as PlusIco } from './PlusIco.vue'
 export { default as TrashIco } from './TrashIco.vue'
 export { default as GoToIco } from './GoToIco.vue'
+export { default as CheckMarkIco } from './CheckMarkIco.vue'
+export { default as CircleIco } from './CircleIco.vue'
 
 export { default as ChevronRightIco } from './ChevronRightIco.vue'
 export { default as ChevronLeftIco } from './ChevronLeftIco.vue'

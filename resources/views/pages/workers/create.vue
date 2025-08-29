@@ -1,38 +1,63 @@
 <script setup>
 import { useForm, usePage } from "@inertiajs/vue3";
 import { GuestLayout } from "@layouts";
-import { DivisionTab } from "@includes";
 import { VerticalForm, StringInput } from "@components";
 
-const division = usePage().props.division.data;
-
+const invite = usePage().props.invite.data
 const form = useForm({
-    login: "",
+    token: invite.token,
+    name: "",
+    email: invite.email,
+    password: "",
+    password_confirmation: "",
 });
 
 function onSubmit(e) {
     e.preventDefault();
 
-    form.post(route("auhtificate"));
+
+    form.post(route("workers.store"));
 }
 </script>
 
 <template>
     <GuestLayout>
-        <DivisionTab :division_id="division.id">
-            <VerticalForm
-                header="Отправить приглашение"
-                sbm="Войти"
-                :handleSubmit="onSubmit"
-            >
-                <StringInput
-                    label="Email"
-                    name="login"
-                    :value="form.login"
-                    @update:value="(val) => (form.login = val)"
-                    autocomplete="username"
-                />
-            </VerticalForm>
-        </DivisionTab>
+        <VerticalForm
+            header="Регистрация"
+            sbm="Зарегистрироваться"
+            :handleSubmit="onSubmit"
+        >
+            <StringInput
+                label="Ваше имя"
+                name="name"
+                :value="form.name"
+                @update:value="(val) => (form.name = val)"
+                autocomplete="name"
+            />
+            <StringInput
+                label="Email"
+                type="email"
+                name="email"
+                :value="form.email"
+                @update:value="(val) => (form.email = val)"
+                autocomplete="email"
+            />
+            <StringInput
+                label="Пароль"
+                type="password"
+                name="password"
+                :value="form.password"
+                @update:value="(val) => (form.password = val)"
+                autocomplete="new-password"
+            />
+            <StringInput
+                label="Подтвердите пароль"
+                type="password"
+                name="password_confirmation"
+                :value="form.password_confirmation"
+                @update:value="(val) => (form.password_confirmation = val)"
+                autocomplete="new-password"
+            />
+        </VerticalForm>
     </GuestLayout>
 </template>

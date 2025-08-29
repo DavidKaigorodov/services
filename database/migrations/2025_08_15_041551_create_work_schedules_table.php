@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('main__work_schedules', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('date_start');
-            $table->timestamp('date_end');
+            $table->time('date_start');
+            $table->time('date_end');
             $table->foreignId('user_id')->constrained(new User()->getTable());
             $table->foreignId('day_of_the_week_id')->constrained(new DayOfTheWeek()->getTable());
+            $table->timestamps();
         });
     }
 

@@ -28,6 +28,7 @@ const emit = defineEmits(["click", "update:value"]);
 const inputId = props.id ?? props.name;
 const placeholderText = props.placeholder ?? "";
 </script>
+
 <template>
   <FormItem :name="name">
     <Label :labelText="label" />
@@ -44,3 +45,10 @@ const placeholderText = props.placeholder ?? "";
     />
   </FormItem>
 </template>
+<style lang="sass" scoped>
+@use '../../../sass/abstracts' as *
+
+textarea
+    @include input()
+
+</style>

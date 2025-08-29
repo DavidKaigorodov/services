@@ -32,7 +32,7 @@ class CityController
     public function store(StoreCityRequest $request){
         City::create($request->only('name'));
 
-        return redirect()->route('cities.index')->with('message', 'Запись успешно создана');
+        return redirect()->route('cities.index')->with('success', 'Запись успешно создана');
     }
 
     /**
@@ -51,7 +51,7 @@ class CityController
     public function update(UpdateCityRequest $request, City $city){
         $city->update($request->only('name'));
 
-        return redirect()->route('cities.index')->with('message', 'Запись успешно добавлена');
+        return redirect()->route('cities.index')->with('success', 'Запись успешно добавлена');
     }
 
     /**
@@ -60,6 +60,6 @@ class CityController
     public function destroy(City $city){
         $city->delete();
 
-        return redirect()->route('cities.index')->with('message', 'Запись удалена');
+        return redirect()->route('cities.index')->with('success', 'Запись удалена');
     }
 }

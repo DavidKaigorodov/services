@@ -16,10 +16,7 @@ class SessionController
 
     public function store(StoreSessionRequest $request)
     {
-        if (Auth::attempt([
-            'email' => $request->login,
-            'password' => $request->password,
-        ]))
+        if (Auth::attempt($request->only('email', 'password'), $request->input('remember')))
             return redirect()->route('home');
 
         return back()->withErrors(['form' => 'Неверный логин или пароль']);

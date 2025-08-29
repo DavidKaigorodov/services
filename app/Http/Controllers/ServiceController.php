@@ -36,7 +36,7 @@ class ServiceController
     {
         Service::create($request->only('name', 'duration'));
 
-        return redirect()->route('services.index')->with('message', 'Запись успешно создана');
+        return redirect()->route('services.index')->with('success', 'Запись успешно создана');
     }
 
     /**
@@ -56,7 +56,7 @@ class ServiceController
     {
         $service->update($request->only('name', 'duration'));
 
-        return redirect()->route('services.index')->with('message', 'Запись успешно обновлена');
+        return redirect()->route('services.index')->with('success', 'Запись успешно обновлена');
     }
 
     /**
@@ -66,6 +66,6 @@ class ServiceController
     {
         $service->delete();
 
-        return redirect()->route('services.index')->with('message', 'Запись удалена');
+        return redirect()->route('services.index')->with('success', 'Запись удалена');
     }
 }

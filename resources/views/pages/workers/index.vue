@@ -19,11 +19,11 @@ const columns = [
         <DivisionTab :division_id="division.id">
             <Table :data="worker" :columns="columns">
                 <template #toolbar-right>
-                    <AddButton :href="route('workers.create', division.id)" />
+                    <AddButton :href="route('invites.create', { division_id: division.id })" />
                 </template>
                 <template #actions="{ row }">
-                    <EditButton :href="route('workers.edit',{ division: division.id, worker: row.id})" />
-                    <DeleteButton :href="route('workers.destroy', { division: division.id, worker: row.id})" />
+                    <EditButton :href="route('workers.edit', { division: division.id, worker: row.id })" />
+                    <DeleteButton :href="route('workers.destroy', { division: division.id, worker: row.id })" />
                 </template>
             </Table>
         </DivisionTab>

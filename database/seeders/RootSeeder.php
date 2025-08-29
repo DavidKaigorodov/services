@@ -15,14 +15,12 @@ class RootSeeder extends Seeder
      */
     public function run(): void
     {
-        Config::create(['code' => 'org.name', 'value' => 'ГКУ ЦСВИ', 'name' => 'Наименование организации']);
-
         User::create([
             'name' => 'root',
             'email' => 'root',
             'password' => Hash::make('root'),
             'division_id' => null,
-            'role_id' => UserRole::byCode('root')->id,
+            'role_id' => UserRole::byCode('admin')->id,
             'email_verified_at' => now(),
         ]);
     }

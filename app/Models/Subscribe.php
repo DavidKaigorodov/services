@@ -32,7 +32,7 @@ class Subscribe extends Model
 
     public function division(): BelongsTo
     {
-        return $this->belongsTo(Division::class, 'division_id', 'id');
+        return $this->belongsTo(Division::class, 'division_id', 'id')->withTrashed();
     }
     public function worker(): BelongsTo
     {

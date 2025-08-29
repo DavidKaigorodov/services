@@ -2,6 +2,9 @@
 
 namespace App\Mail;
 
+use App\Models\Division;
+use App\Models\User;
+use App\Models\UserInvite;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,7 +19,9 @@ class InviteMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public string $email, public string $token){}
+    public function __construct(public UserInvite $invite)
+    {
+    }
 
     /**
      * Get the message envelope.
@@ -24,7 +29,7 @@ class InviteMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Invite Mail',
+            subject: 'Invite',
         );
     }
 
@@ -34,7 +39,7 @@ class InviteMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.mails.invite',
+            view: 'mails.invite',
         );
     }
 
@@ -45,9 +50,6 @@ class InviteMail extends Mailable
      */
     public function attachments(): array
     {
-        return [
-            'email' => $this->email,
-            'token' => $this->token,
-        ];
+        return [];
     }
 }

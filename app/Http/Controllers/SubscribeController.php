@@ -47,16 +47,17 @@ class SubscribeController
             'worker_id',
         ));
 
-        return redirect()->route('subscribes.index')->with('message', 'Запись успешно создана');
+        return redirect()->route('subscribes.index')->with('success', 'Запись успешно создана');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Subscribe $Subscribe)
+    public function show(Division $division, Subscribe $subscribe)
     {
         return Inertia::render("pages/subscribes/show", [
-            'subscribe' => fn() => getResource($Subscribe),
+            'subscribe' => fn() => getResource($subscribe),
+            'division' => fn() => getResource($division),
         ]);
     }
     /**
@@ -85,7 +86,7 @@ class SubscribeController
             'start_at'
         ));
 
-        return redirect()->route('subscribes.index')->with('message', 'Запись успешно обновлена');
+        return redirect()->route('subscribes.index')->with('success', 'Запись успешно обновлена');
     }
 
     /**
@@ -95,6 +96,6 @@ class SubscribeController
     {
         $subscribe->delete();
 
-        return redirect()->route('subscribes.index')->with('message', 'Запись удалена');
+        return redirect()->route('subscribes.index')->with('success', 'Запись удалена');
     }
 }

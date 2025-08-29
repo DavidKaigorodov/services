@@ -19,7 +19,7 @@ const data = [
                 records: [
                     {
                         user: {
-                            first_name: "Бандос",
+                            first_name: "Бандос ",
                         },
                         subscribes: [
                             {
@@ -31,7 +31,7 @@ const data = [
                                     first_name: "sigma",
                                     start_at: "2025-07-31 09:14:00",
                                 },
-                                shift: (15 / 30) * 100,
+                                shift: (14 / 30) * 100,
                             },
                         ],
                     },
@@ -43,10 +43,6 @@ const data = [
             },
             {
                 date_time: "2025-08-01 10:00:00",
-                records: [],
-            },
-            {
-                date_time: "2025-08-01 10:30:00",
                 records: [
                     {
                         user: {
@@ -69,11 +65,11 @@ const data = [
                 ],
             },
             {
-                date_time: "2025-08-01 11:00:00",
+                date_time: "2025-08-01 10:30:00",
                 records: [],
             },
             {
-                date_time: "2025-08-01 11:30:00",
+                date_time: "2025-08-01 11:00:00",
                 records: [
                     {
                         user: {
@@ -89,11 +85,15 @@ const data = [
                                     first_name: "sigma",
                                     start_at: "2025-07-31 11:12:00",
                                 },
-                                shift: (15 / 30) * 100,
+                                shift: (12 / 30) * 100,
                             },
                         ],
                     },
                 ],
+            },
+            {
+                date_time: "2025-08-01 11:30:00",
+                records: [],
             },
             {
                 date_time: "2025-08-01 12:00:00",
@@ -110,9 +110,9 @@ const data = [
                                 duration: "00:32:00",
                                 subscribe: {
                                     first_name: "sigma",
-                                    start_at: "2025-07-31 12:15:00",
+                                    start_at: "2025-07-31 12:04:00",
                                 },
-                                shift: (15 / 30) * 100,
+                                shift: (4 / 30) * 100,
                             },
                         ],
                     },
@@ -184,12 +184,15 @@ const data = [
         ],
     },
 ];
+function goto(){
+    router.get(route('subscribes.show', {division: division.id, subscribe: subscribe.id }))
+}
 </script>
 
 <template>
     <AuthenticatedLayout>
         <DivisionTab :division_id="division.id">
-            <TimeLine name="asd" header="Записи на прием" :records="data" />
+            <TimeLine header="Записи на прием" :records="data" :goto="goto"/>
         </DivisionTab>
     </AuthenticatedLayout>
 </template>

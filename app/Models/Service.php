@@ -20,4 +20,11 @@ class Service extends Model
             'duration',
         ];
 
+    protected function casts(): array
+    {
+        return [
+            'duration' => 'datetime:H:i',
+        ];
+    }
+
 }

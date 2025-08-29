@@ -46,7 +46,7 @@ class DivisionAdminController
 
         return redirect()
             ->route('division-admins.create', compact('division'))
-            ->with('message', 'Админимстратор подразделения успешно назначен');
+            ->with('success', 'Админимстратор подразделения успешно назначен');
     }
 
     /**
@@ -56,6 +56,6 @@ class DivisionAdminController
     {
         $division_admin->update(['role_id' => UserRole::byCode('division_worker')->id]);
 
-        return back()->with('message', 'Админимстратор подразделения удален');;
+        return back()->with('success', 'Админимстратор подразделения удален');;
     }
 }

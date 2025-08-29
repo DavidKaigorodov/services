@@ -80,6 +80,7 @@ function onSubmit(e) {
         <FormGroup name="work" label="График работы">
           <WorkSchedule v-model="form.shedules" name="work" :disabled="!isEditing" />
         </FormGroup>
+
       </HorizontalForm>
     </DivisionTab>
   </AuthenticatedLayout>

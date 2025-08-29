@@ -3,14 +3,13 @@ import { usePage, useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
-import { VerticalForm, DatePicker, Select, TextArea } from "@components";
+import { VerticalForm, DatePicker, TextArea } from "@components";
 
 const services = usePage().props.services.data;
 
 const form = useForm({
   name: services.name,
   duration: services.duration,
-  user: services.user,
 });
 
 function onSubmit(e) {
@@ -36,7 +35,6 @@ function onSubmit(e) {
         name="duration"
         label="Продолжительность"
       />
-      <Select :options="[123]" name="user" label="Специалист" />
     </VerticalForm>
   </AuthenticatedLayout>
 </template>

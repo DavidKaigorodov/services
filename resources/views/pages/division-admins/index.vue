@@ -10,6 +10,7 @@ const division = usePage().props.division.data;
 const columns = [
     { key: "name", label: "Фамилия" },
     { key: "email", label: "Email" },
+    { key: "action", label: "" },
 ];
 </script>
 <template>

@@ -1,0 +1,49 @@
+<script setup>
+import { useForm, usePage } from "@inertiajs/vue3";
+
+import { GuestLayout } from "@layouts";
+
+import { VerticalForm, StringInput } from "@components";
+
+const token = usePage().props.token;
+
+const email = usePage().props.email;
+
+const form = useForm({
+    token: token,
+    email: email,
+    password: "",
+    password_confirmation: "",
+});
+
+function onSubmit(e) {
+    e.preventDefault();
+
+    form.post(route("password.update"));
+}
+</script>
+
+<template>
+    <GuestLayout>
+        <VerticalForm
+            header="Сбросить пароль"
+            sbm="Сбросить"
+            :handleSubmit="onSubmit"
+        >
+            <StringInput
+                label="Пароль"
+                name="password"
+                :value="form.password"
+                @update:value="(val) => (form.password = val)"
+                autocomplete="password"
+            />
+            <StringInput
+                label="Повторите пароль"
+                name="password_confirmation"
+                :value="form.password_confirmation"
+                @update:value="(val) => (form.password_confirmation = val)"
+                autocomplete="password_confirmation"
+            />
+        </VerticalForm>
+    </GuestLayout>
+</template>

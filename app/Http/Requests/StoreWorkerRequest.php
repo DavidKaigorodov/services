@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Division;
 use App\Models\User;
+use App\Models\UserInvite;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreWorkerRequest extends FormRequest
@@ -16,7 +18,10 @@ class StoreWorkerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "email" => ["requared", "email", "unique:" . User::class . ",email"],
+            'token' => ['required', 'exists:' . UserInvite::class . ',token'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:' . User::class . ',email'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
         ];
     }
 }
