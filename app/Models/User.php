@@ -3,16 +3,18 @@
 namespace App\Models;
 
 use App\Models\UserRole;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     ### Настройки
     ##################################################
@@ -23,6 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
+        'division_id'
     ],
     $hidden = [
         'password',
@@ -44,11 +47,6 @@ class User extends Authenticatable
         return user()->role_id === UserRole::where('code', $role)->get()->first()->id;
     }
 
-    public function schedules(): HasMany
-    {
-        return $this->hasMany(WorkSchedule::class, 'user_id', 'id');
-    }
-
     ### Связи
     ##################################################
     public function role(): BelongsTo
@@ -63,7 +61,12 @@ class User extends Authenticatable
 
     public function services(): HasManyThrough
     {
-        return $this->hasManyThrough(Service::class, UserService::class,'user_id','id','id','service_id')->withTrashed();
+        return $this->hasManyThrough(Service::class, UserService::class, 'user_id', 'id', 'id', 'service_id')->withTrashed();
+    }
+
+    public function shedules(): HasMany
+    {
+        return $this->hasMany(WorkSchedule::class, 'user_id', 'id');
     }
 
 }

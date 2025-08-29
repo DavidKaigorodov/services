@@ -18,10 +18,12 @@ class CurrentUserResource extends JsonResource
             'id'=> $this->id,
             'name' => $this->name,
             'email'=> $this->email,
-            'division'=> [
-                'id'=> $this->division->id,
-                'name' => $this->division->name,
-            ],
+            'division' => $this->division !== null
+                ? [
+                    "id" => $this->division->id,
+                    "name" => $this->division->name,
+                ]
+                : null,
             'role'=> [
                 'id'=> $this->role->id,
                 'code'=> $this->role->code,

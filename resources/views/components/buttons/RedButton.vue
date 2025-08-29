@@ -3,7 +3,14 @@ import { BaseButton } from "@components";
 </script>
 
 <template>
-  <BaseButton className="red-button" v-bind="$attrs">
-    <slot />
-  </BaseButton>
+    <BaseButton className="red-button" v-bind="$attrs">
+        <slot />
+    </BaseButton>
 </template>
+
+<style lang="sass" scoped>
+.red-button
+    background: var(--red-button-background-color)
+    &:hover
+        background: var(--red-button-background-color-hover)
+</style>

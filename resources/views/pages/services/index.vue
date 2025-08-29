@@ -5,8 +5,8 @@ import { Table, EditButton, DeleteButton, AddButton } from "@components";
 
 const columns = [
   { key: "name", label: "Наименование" },
-  { key: "duration", label: "Продолжительность" },
-  { key: "actions", label: "" },
+  { key: "duration", label: "Время", width: "100px" },
+  { key: "actions", label: "", width: "118px" },
 ];
 </script>
 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 
 class Division extends Model
 {
@@ -23,6 +24,16 @@ class Division extends Model
         'address',
         'city_id',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function ($model) {
+            if ($model->users()->count() > 0)
+                return abort(403, 'Невозможно удалить подразделение, пока в нем есть пользователи');
+        });
+    }
 
     ### Связи
     ##################################################

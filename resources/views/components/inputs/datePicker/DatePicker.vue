@@ -101,3 +101,9 @@ const popupStyles = computed(() => {
     </div>
   </FormItem>
 </template>
+
+<style lang="sass" scoped>
+.datepicker-wrapper
+    position: relative
+    display: inline-block
+</style>

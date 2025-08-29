@@ -30,6 +30,7 @@ class DivisionResource extends JsonResource
                     ],
                 ];
             })->collapse(),
+            'userCount' => $this->users()->count(),
         ];
     }
 }

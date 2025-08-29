@@ -1,4 +1,6 @@
 <script setup>
+import { FlashMessage } from "@includes";
+
 const props = defineProps({
     name: String,
 });
@@ -6,6 +8,7 @@ const props = defineProps({
 
 <template>
     <div :class="['layout', name]">
+        <FlashMessage />
         <slot />
     </div>
 </template>

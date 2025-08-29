@@ -45,7 +45,7 @@ class DivisionController
                 'date_end' => $shedule['date_end'],
             ]);
         }
-        return redirect()->route('divisions.index')->with('message', 'Запись успешно добавлена');
+        return redirect()->route('divisions.index')->with('success', 'Запись успешно добавлена');
     }
 
     public function show(Division $division)
@@ -87,8 +87,8 @@ class DivisionController
         }
 
         return user()->hasRole('admin')
-            ? redirect()->route('divisions.index')->with('message', 'Запись успешно изменена')
-            : redirect()->route('divisions.show', compact('division'))->with('message', 'Запись успешно изменена');
+            ? redirect()->route('divisions.index')->with('success', 'Запись успешно изменена')
+            : redirect()->route('divisions.show', compact('division'))->with('success', 'Запись успешно изменена');
     }
 
     /**
@@ -98,6 +98,6 @@ class DivisionController
     {
         $division->delete();
 
-        return back()->with('message', 'Запись удалена');
+        return back()->with('success', 'Запись удалена');
     }
 }

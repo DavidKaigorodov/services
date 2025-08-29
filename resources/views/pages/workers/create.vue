@@ -1,5 +1,63 @@
 <script setup>
-</script>
-<template>
+import { useForm, usePage } from "@inertiajs/vue3";
+import { GuestLayout } from "@layouts";
+import { VerticalForm, StringInput } from "@components";
 
+const invite = usePage().props.invite.data
+const form = useForm({
+    token: invite.token,
+    name: "",
+    email: invite.email,
+    password: "",
+    password_confirmation: "",
+});
+
+function onSubmit(e) {
+    e.preventDefault();
+
+
+    form.post(route("workers.store"));
+}
+</script>
+
+<template>
+    <GuestLayout>
+        <VerticalForm
+            header="Регистрация"
+            sbm="Зарегистрироваться"
+            :handleSubmit="onSubmit"
+        >
+            <StringInput
+                label="Ваше имя"
+                name="name"
+                :value="form.name"
+                @update:value="(val) => (form.name = val)"
+                autocomplete="name"
+            />
+            <StringInput
+                label="Email"
+                type="email"
+                name="email"
+                :value="form.email"
+                @update:value="(val) => (form.email = val)"
+                autocomplete="email"
+            />
+            <StringInput
+                label="Пароль"
+                type="password"
+                name="password"
+                :value="form.password"
+                @update:value="(val) => (form.password = val)"
+                autocomplete="new-password"
+            />
+            <StringInput
+                label="Подтвердите пароль"
+                type="password"
+                name="password_confirmation"
+                :value="form.password_confirmation"
+                @update:value="(val) => (form.password_confirmation = val)"
+                autocomplete="new-password"
+            />
+        </VerticalForm>
+    </GuestLayout>
 </template>

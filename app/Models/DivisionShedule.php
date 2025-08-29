@@ -29,6 +29,7 @@ class DivisionShedule extends Model
     }
 
     ### Связи
+    ##################################################
     public function dayOfTheWeek(): BelongsTo
     {
         return $this->belongsTo(DayOfTheWeek::class, 'day_of_the_week_id');

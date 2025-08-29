@@ -12,7 +12,6 @@ class UserRoleSeeder extends Seeder
      */
     public function run(): void
     {
-        UserRole::create(['code' => 'root',             'name' => 'Системная учетная запись']);
         UserRole::create(['code' => 'admin',            'name' => 'Администратор системы']);
         UserRole::create(['code' => 'division_admin',   'name' => 'Администратор организации']);
         UserRole::create(['code' => 'division_worker',  'name' => 'Работник организации']);

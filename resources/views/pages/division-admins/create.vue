@@ -13,7 +13,7 @@ const admins = ref(users);
 const columns = [
     { key: "name", label: "Фамилия" },
     { key: "email", label: "Email" },
-    { key: "actions", label: "Админ" },
+    { key: "actions", label: "" },
 ];
 
 const toggleCheckbox = (row, val) => {
