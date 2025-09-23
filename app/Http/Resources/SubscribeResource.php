@@ -29,8 +29,9 @@ class SubscribeResource extends JsonResource
                 'name' => $this->division?->name,
             ],
             "worker" => [
-                "name"=> $this->worker->name,
-            ]
+                "name" => $this->worker->name,
+            ],
+            "comment" => $this->comment,
         ];
     }
 }

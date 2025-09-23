@@ -12,8 +12,14 @@ class DayOfTheWeek extends Model
     ### Настройки
     ##################################################
     protected
-        $table = 'glossary__day_of_the_week';
+    $table = 'glossary__day_of_the_week';
 
     public $timestamps = false;
 
+    ### Методы
+    ##################################################
+    public static function byNumber(string $code)
+    {
+        return self::query()->where('number', $code)->first();
+    }
 }

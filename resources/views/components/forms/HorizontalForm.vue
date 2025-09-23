@@ -1,16 +1,24 @@
-<script setup>
+<script>
 import { default as BaseForm } from "../base/BaseForm.vue";
+
+export default {
+    components: {
+        BaseForm,
+    },
+
+    props: {
+        header: String,
+    },
+};
 </script>
 
 <template>
-    <BaseForm :header="''" className="horizontal-form">
+    <BaseForm :header="header" className="horizontal-form">
         <slot />
     </BaseForm>
 </template>
 
 <style lang="sass">
-@use '../../../sass/abstracts' as *
-
 .horizontal-form-box
     display: flex
     justify-content: center

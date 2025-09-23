@@ -1,111 +1,119 @@
-<script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-
-import { default as CalendarPopup } from "./CalendarPopup.vue";
-import { default as TimePickerPopup } from "./TimePickerPopup.vue";
-import { default as DateInput } from "./DateInput.vue";
-
-import { default as Label} from "../../Label.vue";
-import { default as FormItem } from "../../FormItem.vue";
+<script>
+import CalendarPopup from "./CalendarPopup.vue";
+import TimePickerPopup from "./TimePickerPopup.vue";
+import DateInput from "./DateInput.vue";
+import Label from "../../Label.vue";
+import FormItem from "../../FormItem.vue";
 import { formatDate } from "./utils";
 
-const props = defineProps({
-  modelValue: String,
-  mode: {
-    type: String,
-    validator: (value) => ["date", "time"].includes(value),
-    default: "date",
-  },
-  name: String,
-  label: String,
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
-});
+export default {
+    components: {
+        CalendarPopup,
+        TimePickerPopup,
+        DateInput,
+        Label,
+        FormItem,
+    },
 
-const emit = defineEmits(["update:modelValue"]);
+    props: {
+        modelValue: {
+            type: [String, Object, Number],
+            default: null,
+        },
+        name: String,
+        label: String,
+        mode: {
+            type: String,
+            default: "date",
+            validator: (value) => ["date", "time"].includes(value),
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+    },
 
-const show = ref(false);
-const wrapperRef = ref(null);
+    emits: ["update:modelValue"],
 
-const togglePopup = () => {
-  if (props.disabled) return;
-  show.value = !show.value;
+    data() {
+        return {
+            show: false,
+        };
+    },
+
+    computed: {
+        formattedValue() {
+            if (!this.modelValue) return "";
+            return this.mode === "date"
+                ? formatDate(this.modelValue, "DD.MM.YYYY")
+                : this.modelValue;
+        },
+        popupStyles() {
+            if (!this.show || !this.$refs.wrapperRef) return {};
+            const rect = this.$refs.wrapperRef.getBoundingClientRect();
+            return {
+                position: "absolute",
+                left: `${rect.left}px`,
+                top: `${rect.bottom + window.scrollY}px`,
+                zIndex: "10000",
+                width: `${rect.width}px`,
+            };
+        },
+        currentPopup() {
+            return this.mode === "time" ? TimePickerPopup : CalendarPopup;
+        },
+    },
+
+    methods: {
+        togglePopup() {
+            if (this.disabled) return;
+            this.show = !this.show;
+        },
+        updateValue(val) {
+            this.$emit("update:modelValue", val);
+        },
+        handleClose() {
+            this.show = false;
+        },
+        handleClickOutside(event) {
+            const wrapper = this.$refs.wrapperRef;
+            const popup = event.target.closest(".calendar-popup");
+            if (wrapper?.contains(event.target) || popup) return;
+            this.show = false;
+        },
+    },
+    mounted() {
+        document.addEventListener("click", this.handleClickOutside);
+    },
+    beforeUnmount() {
+        document.removeEventListener("click", this.handleClickOutside);
+    },
 };
-
-const updateValue = (val) => {
-  emit("update:modelValue", val);
-};
-
-const handleClose = () => {
-  show.value = false;
-};
-
-const formattedValue = computed(() => {
-  if (!props.modelValue) return "";
-  return props.mode === "date"
-    ? formatDate(props.modelValue, "DD.MM.YYYY")
-    : props.modelValue;
-});
-
-const handleClickOutside = (event) => {
-  const wrapper = wrapperRef.value;
-  const popup = event.target.closest(".calendar-popup");
-
-  if (wrapper?.contains(event.target) || popup) {
-    return;
-  }
-
-  show.value = false;
-};
-
-onMounted(() => {
-  document.addEventListener("click", handleClickOutside);
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener("click", handleClickOutside);
-});
-
-const popupStyles = computed(() => {
-  if (!show.value || !wrapperRef.value) return {};
-
-  const rect = wrapperRef.value.getBoundingClientRect();
-
-  return {
-    position: "absolute",
-    left: `${rect.left}px`,
-    top: `${rect.bottom + window.scrollY}px`,
-    zIndex: "10000",
-    width: `${rect.width}px`,
-  };
-});
 </script>
 
 <template>
-  <FormItem :name="name">
-    <Label v-if="label !== ''" :labelText="label" />
-    <div class="datepicker-wrapper" ref="wrapperRef">
-      <DateInput
-        :modelValue="formattedValue"
-        @toggle="togglePopup"
-        :disabled="props.disabled"
-        v-bind="$attrs"
-      />
-      <Teleport to="body">
-        <component
-          :is="mode === 'time' ? TimePickerPopup : CalendarPopup"
-          v-if="show"
-          :modelValue="modelValue"
-          @update:modelValue="updateValue"
-          @close="handleClose"
-          class="calendar-popup"
-          :style="popupStyles"
-        />
-      </Teleport>
-    </div>
-  </FormItem>
+    <FormItem :name="name">
+        <Label v-if="label !== ''" :labelText="label" />
+        <div class="datepicker-wrapper" ref="wrapperRef">
+            <DateInput
+                :modelValue="formattedValue"
+                @toggle="togglePopup"
+                :disabled="disabled"
+                v-bind="$attrs"
+            />
+            <Teleport to="body">
+                <component
+                    :is="currentPopup"
+                    v-if="show"
+                    :modelValue="modelValue"
+                    @update:modelValue="updateValue"
+                    @close="handleClose"
+                    class="calendar-popup"
+                    :style="popupStyles"
+                />
+            </Teleport>
+        </div>
+    </FormItem>
 </template>
 
 <style lang="sass" scoped>

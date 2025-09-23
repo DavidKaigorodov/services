@@ -2,6 +2,7 @@
 
 namespace Database\Seeders\Example;
 
+use App\Models\Division;
 use App\Models\Subscribe;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,10 @@ class SubscribeSeeder extends Seeder
      */
     public function run(): void
     {
-        Subscribe::factory(150)->create();
+        Division::all()->each(
+            fn($division) => $division->workers->each(
+                fn($worker) => Subscribe::factory(5)->create(['worker_id' => $worker->id])
+            )
+        );
     }
 }

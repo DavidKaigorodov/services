@@ -51,7 +51,7 @@ class CityController
     public function update(UpdateCityRequest $request, City $city){
         $city->update($request->only('name'));
 
-        return redirect()->route('cities.index')->with('success', 'Запись успешно добавлена');
+        return redirect()->route('cities.index')->with('success', 'Запись успешно изменена');
     }
 
     /**

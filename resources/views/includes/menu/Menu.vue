@@ -1,69 +1,66 @@
-<script setup>
+<script>
 import { usePage } from "@inertiajs/vue3";
 import { default as ItemMenu } from "./ItemMenu.vue";
+import { default as HomeIco } from "../../components/icons/HomeIco.vue";
+import { default as BuildingsIco } from "../../components/icons/BuildingsIco.vue";
+import { default as CollectionIco } from "../../components/icons/CollectionIco.vue";
+import { default as LogoutIco } from "../../components/icons/LogoutIco.vue";
 
-const user = usePage().props.current_user.data;
+export default {
+    components: {
+        ItemMenu,
+        HomeIco,
+        BuildingsIco,
+        CollectionIco,
+        LogoutIco,
+    },
+
+    computed: {
+        user_role() {
+            return usePage().props.current_user.data.role.code;
+        },
+    },
+};
 </script>
 
 <template>
     <nav class="sidebar">
-        <div class="sidebar-header">
-            <h3>Навигационная панель</h3>
-        </div>
+        <ul class="sidebar-menu" v-if="['admin'].includes(user_role)">
+            <ItemMenu href="divisions.index" label="Подразделения">
+                <HomeIco />
+            </ItemMenu>
 
-        <ul class="sidebar-menu">
-            <ItemMenu
-                class="sidebar-link"
-                href="divisions.index"
-                label="Подразделения"
-            />
-            <ItemMenu class="sidebar-link" href="cities.index" label="Города" />
-            <ItemMenu
-                class="sidebar-link"
-                href="services.index"
-                label="Услуги"
-            />
-            <ItemMenu
-                v-if="user.division !== null"
-                :params="{ division: user.division.id }"
-                class="sidebar-link"
-                href="divisions.show"
-                label="Общая информация"
-            />
+            <ItemMenu href="cities.index" label="Города">
+                <BuildingsIco />
+            </ItemMenu>
+
+            <ItemMenu href="services.index" label="Услуги">
+                <CollectionIco />
+            </ItemMenu>
         </ul>
 
         <div class="sidebar-footer">
-            <ItemMenu class="logout" href="logout" method="post" label="Выход" />
+            <ItemMenu href="logout" method="post" label="Выход">
+                <LogoutIco />
+            </ItemMenu>
         </div>
     </nav>
 </template>
+
 <style lang="sass" scoped>
 .sidebar
-    width: 250px
-    flex-shrink: 0
+    width: 50px
     background: var(--palette-color-4)
     color: #FFF
-    padding: 20px
-    height: 100vh
-    position: fixed
-    left: 0
-    top: 0
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1)
-    z-index: 10001
     display: flex
     flex-direction: column
-    justify-content: flex-start
-
-    &-header
-        margin-bottom: 30px
-        font-size: 1.5rem
 
     &-menu
-        list-style: none
-        padding: 0
         margin: 0
-        flex-grow: 1
+        padding: 8px 0
+        list-style: none
 
     &-footer
         margin-top: auto
+        padding-bottom: 8px
 </style>

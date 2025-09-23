@@ -7,6 +7,7 @@ export default {
             isOpen: true,
         };
     },
+
     computed: {
         flash() {
             const flash = usePage().props.flash;
@@ -14,6 +15,7 @@ export default {
             return flash;
         },
     },
+
     methods: {
         changeIsOpen() {
             setTimeout(
@@ -24,6 +26,7 @@ export default {
             );
         },
     },
+
     watch: {
         flash(newVal) {
             const hasMessages = Object.values(newVal).some(

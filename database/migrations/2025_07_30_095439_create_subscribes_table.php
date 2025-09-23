@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->string('middle_name')->nullable();
             $table->string('phone');
             $table->string('email');
+            $table->string('comment');
 
             $table->foreignId('division_id')->constrained(new Division()->getTable());
             $table->foreignId('service_id')->constrained(new Service()->getTable());

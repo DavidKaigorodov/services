@@ -1,9 +1,15 @@
-<script setup>
+<script>
 import { default as FlashMessage } from "../includes/FlashMessage.vue";
 
-const props = defineProps({
-    name: String,
-});
+export default {
+    components: {
+        FlashMessage,
+    },
+
+    props: {
+        name: String,
+    },
+};
 </script>
 
 <template>

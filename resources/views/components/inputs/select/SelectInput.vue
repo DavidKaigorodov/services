@@ -1,10 +1,12 @@
-<script setup>
-defineProps({
-    selectedLabel: String,
-    placeholder: String,
-    isOpen: Boolean,
-    disabled: Boolean,
-});
+<script>
+export default {
+    props: {
+        selectedLabel: String,
+        placeholder: String,
+        isOpen: Boolean,
+        disabled: Boolean,
+    },
+};
 </script>
 
 <template>
@@ -20,8 +22,6 @@ defineProps({
 </template>
 
 <style lang="sass" scoped>
-@use '../../../../sass/abstracts' as *
-
 .select-input
     @include input()
     cursor: pointer

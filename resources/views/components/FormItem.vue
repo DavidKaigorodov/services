@@ -1,9 +1,15 @@
-<script setup>
+<script>
 import { default as FormError } from "./FormError.vue";
 
-const props = defineProps({
-    name: String,
-});
+export default {
+    components: {
+        FormError,
+    },
+
+    props: {
+        name: String,
+    },
+};
 </script>
 
 <template>

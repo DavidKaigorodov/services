@@ -1,39 +1,49 @@
-<script setup>
-import { computed } from "vue";
+<script>
 import { useForm, usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
-import {
-    HorizontalForm,
-    FormGroup,
-    Select,
-    WorkSchedule,
-    TextArea,
-} from "@components";
+import { HorizontalForm, FormGroup, Select, WorkSchedule, TextArea } from "@components";
 
-const cities = usePage().props.cities;
+export default {
+    components: {
+        AuthenticatedLayout,
+        HorizontalForm,
+        FormGroup,
+        Select,
+        WorkSchedule,
+        TextArea,
+    },
 
-const form = useForm({
-    name: "",
-    address: "",
-    city_id: "",
-    shedules: {},
-    responsible_email: "",
-});
+    data() {
+        return {
+            cities: usePage().props.cities,
+            form: useForm({
+                name: "",
+                address: "",
+                city_id: "",
+                shedules: {},
+                responsible_email: "",
+            }),
+        };
+    },
 
-const cityOptions = computed(() => {
-    return Object.entries(cities).map(([id, cityData]) => ({
-        value: id,
-        label: cityData.name,
-    }));
-});
+    computed: {
+        cityOptions() {
+            return Object.entries(this.cities).map(([id, cityData]) => ({
+                value: id,
+                label: cityData.name,
+            }));
+        },
+    },
 
-function onSubmit(e) {
-    e.preventDefault();
-
-    form.post(route("divisions.store"));
-}
+    methods: {
+        onSubmit(e) {
+            e.preventDefault();
+            this.form.post(route("divisions.store"));
+        },
+    },
+};
 </script>
 
 <template>
@@ -72,7 +82,7 @@ function onSubmit(e) {
                 <WorkSchedule
                     header="График работы"
                     v-model="form.shedules"
-                    name="work"
+                    name="shedules"
                 />
             </FormGroup>
         </HorizontalForm>

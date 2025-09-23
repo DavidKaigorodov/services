@@ -1,13 +1,16 @@
-<script setup>
-const props = defineProps({
-    type: {
-        type: String,
-        default: "button",
+<script>
+export default {
+
+    props: {
+        type: {
+            type: String,
+            default: "button",
+        },
+        className: String,
+        disabled: Boolean,
+        handleClick: Function,
     },
-    className: String,
-    disabled: Boolean,
-    handleClick: Function,
-});
+};
 </script>
 
 <template>
@@ -23,8 +26,6 @@ const props = defineProps({
 </template>
 
 <style lang="sass">
-@use '../../../sass/abstracts' as *
-
 button, .button
     min-height: 30px
     padding: 5px 15px

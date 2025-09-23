@@ -1,67 +1,74 @@
-<script setup>
-import { ref, watch } from "vue";
-
-const props = defineProps({
-    modelValue: String,
-});
-const emit = defineEmits(["update:modelValue", "close"]);
-
-const tempHour = ref(null);
-const tempMinute = ref(null);
-
-const userSelectedHour = ref(false);
-const userSelectedMinute = ref(false);
-
-watch(
-    () => props.modelValue,
-    (val) => {
-        if (val && typeof val === "string") {
-            const [h, m] = val.split(":");
-            tempHour.value = parseInt(h);
-            tempMinute.value = parseInt(m);
-        } else {
-            tempHour.value = null;
-            tempMinute.value = null;
-        }
-        userSelectedHour.value = false;
-        userSelectedMinute.value = false;
+<script>
+export default {
+    props: {
+        modelValue: {
+            type: [String, Object, Number],
+            default: null,
+        },
     },
-    { immediate: true },
-);
 
-const updateValue = () => {
-    if (tempHour.value !== null && tempMinute.value !== null) {
-        emit(
-            "update:modelValue",
-            `${pad(tempHour.value)}:${pad(tempMinute.value)}`,
-        );
-    }
+    emits: ["update:modelValue", "close"],
+
+    data() {
+        return {
+            tempHour: null,
+            tempMinute: null,
+            userSelectedHour: false,
+            userSelectedMinute: false,
+            hours: Array.from({ length: 24 }, (_, i) => i),
+            minutes: Array.from({ length: 60 }, (_, i) => i),
+        };
+    },
+
+    watch: {
+        modelValue: {
+            handler(val) {
+                if (val && typeof val === "string") {
+                    const [h, m] = val.split(":");
+                    this.tempHour = parseInt(h);
+                    this.tempMinute = parseInt(m);
+                } else {
+                    this.tempHour = null;
+                    this.tempMinute = null;
+                }
+                this.userSelectedHour = false;
+                this.userSelectedMinute = false;
+            },
+            immediate: true,
+        },
+    },
+
+    methods: {
+        pad(n) {
+            return String(n).padStart(2, "0");
+        },
+        updateValue() {
+            if (this.tempHour !== null && this.tempMinute !== null) {
+                this.$emit(
+                    "update:modelValue",
+                    `${this.pad(this.tempHour)}:${this.pad(this.tempMinute)}`,
+                );
+            }
+        },
+        selectHour(hour) {
+            this.tempHour = hour;
+            this.userSelectedHour = true;
+            this.updateValue();
+            this.tryEmit();
+        },
+        selectMinute(minute) {
+            this.tempMinute = minute;
+            this.userSelectedMinute = true;
+            this.updateValue();
+            this.tryEmit();
+        },
+        tryEmit() {
+            if (this.userSelectedHour && this.userSelectedMinute) {
+                this.$emit("close");
+            }
+        },
+    },
 };
-
-const pad = (n) => String(n).padStart(2, "0");
-
-const selectHour = (hour) => {
-    tempHour.value = hour;
-    userSelectedHour.value = true;
-    updateValue();
-    tryEmit();
-};
-
-const selectMinute = (minute) => {
-    tempMinute.value = minute;
-    userSelectedMinute.value = true;
-    updateValue();
-    tryEmit();
-};
-
-const tryEmit = () => {
-    if (userSelectedHour.value && userSelectedMinute.value) {
-        emit("close");
-    }
-};
-
-const hours = Array.from({ length: 24 }, (_, i) => i);
-const minutes = Array.from({ length: 60 }, (_, i) => i);
 </script>
 
 <template>
@@ -100,8 +107,6 @@ const minutes = Array.from({ length: 60 }, (_, i) => i);
 </template>
 
 <style lang="sass" scoped>
-@use '../../../../sass/abstracts' as *
-
 .timepicker-popup
     background: white
     border-radius: 0.5rem
@@ -159,7 +164,6 @@ const minutes = Array.from({ length: 60 }, (_, i) => i);
             overflow-y: auto
             padding: 0.25rem 0
             scroll-behavior: smooth
-            @include scroll
 
             &.hours
                 border-right: 1px solid #e5e7eb
@@ -186,9 +190,4 @@ const minutes = Array.from({ length: 60 }, (_, i) => i);
                     color: white
                     font-weight: 600
                     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
-
-                > span
-                    display: inline-block
-                    width: 2rem
-                    text-align: center
 </style>

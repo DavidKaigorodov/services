@@ -1,5 +1,11 @@
-<script setup>
+<script>
 import { default as BaseButton } from "../base/BaseButton.vue";
+
+export default {
+    components: {
+        BaseButton,
+    },
+};
 </script>
 
 <template>
@@ -8,7 +14,7 @@ import { default as BaseButton } from "../base/BaseButton.vue";
     </BaseButton>
 </template>
 
-<style lang="sass" >
+<style lang="sass">
 .blue-button
     background: var(--blue-button-background-color)
     &:hover

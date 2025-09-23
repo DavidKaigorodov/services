@@ -179,8 +179,53 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'shedules' =>[
+            'required'=> 'График работы должен быть заполнен',
+        ],
+        'shedules.sun.date_start' => [
+            'required' => 'Поле дата начала обязательно.',
+        ],
+         'shedules.sun.date_end' => [
+            'required' => 'Поле дата окончания обязательно.',
+        ],
+        'shedules.mon.date_start' => [
+            'required' => 'Поле дата начала обязательно.',
+        ],
+         'shedules.mon.date_end' => [
+            'required' => 'Поле дата окончания обязательно.',
+        ],
+         'shedules.thu.date_start' => [
+            'required' => 'Поле дата начала обязательно.',
+        ],
+         'shedules.thu.date_end' => [
+            'required' => 'Поле дата окончания обязательно.',
+        ],
+        'shedules.tue.date_start' => [
+            'required' => 'Поле дата начала обязательно.',
+        ],
+         'shedules.tue.date_end' => [
+            'required' => 'Поле дата окончания обязательно.',
+        ],
+        'shedules.wed.date_start' => [
+            'required' => 'Поле дата начала обязательно.',
+        ],
+         'shedules.wed.date_end' => [
+            'required' => 'Поле дата окончания обязательно.',
+        ],
+        'shedules.fri.date_start' => [
+            'required' => 'Поле дата начала обязательно.',
+        ],
+         'shedules.fri.date_end' => [
+            'required' => 'Поле дата окончания обязательно.',
+        ],
+        'shedules.sat.date_start' => [
+            'required' => 'Поле дата начала обязательно.',
+        ],
+         'shedules.sat.date_end' => [
+            'required' => 'Поле дата окончания обязательно.',
+        ],
+        'duration' =>[
+            'required'=> 'Поле продолжительность обязательно',
         ],
     ],
 

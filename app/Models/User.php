@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Http\Resources\SubscribeTimeLineResource;
 use App\Models\UserRole;
+use Carbon\CarbonImmutable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 class User extends Authenticatable
 {
@@ -47,6 +50,51 @@ class User extends Authenticatable
         return user()->role_id === UserRole::where('code', $role)->get()->first()->id;
     }
 
+    public function getTimeLine(Carbon|CarbonImmutable $day)
+    {
+        // $day = Carbon::create($year, $month, $day);
+        $shedule = $this
+            ->division
+            ->shedules()
+            ->where('day_of_the_week_id', DayOfTheWeek::byNumber($day->dayOfWeekIso)->id)
+            ->first();
+        // ?? new DivisionShedule(['date_start' => $day->startOfDay()->format('H:i'), 'date_end' => $day->endOfDay()->format('H:i')]);
+
+        // if ($shedule === null)
+        //     $shedule = $this->division->shedules->orderBy(fn($shedule) => $shedule->dayOfTheWeek->number)->last();
+
+        // $date_start = $shedule?->date_start;
+        $date_start = $day->setTime($shedule?->date_start->hour ?? 0, $shedule?->date_start->minute ?? 0);
+        $date_end = $day->setTime($shedule?->date_end->hour ?? 0, $shedule?->date_end->minute ?? 0);
+        // dd($date_start);
+        // $date_end = $shedule?->date_end;
+
+        $userShedules = $this
+            ->subscribes()
+            ->where(function ($query) use ($shedule, $date_start, $date_end) {
+                if ($shedule !== null)
+                    $query->whereBetween('start_at', [$date_start, $date_end]);
+                else
+                    $query->whereKey(null);
+            })
+            ->get()
+            ->map(fn($subscribe) => SubscribeTimeLineResource::make($subscribe))
+            ->groupBy(
+                fn($subscribe) => $subscribe->start_at->minute > 30
+                ? $subscribe->start_at->startOfHour()->addMinutes(30)->format('Y-m-d H:i:s')
+                : $subscribe->start_at->startOfHour()->format('Y-m-d H:i:s')
+            );
+        // dd($this->subscribes, $this->subscribes()->whereBetween('start_at', [$date_start, $date_end])->get(), $date_start, $date_end);
+
+        if ($shedule === null)
+            return $userShedules;
+
+        $interval = $date_start->toPeriod($date_end, '30 minutes');
+        $intervalCollection = collect($interval->map(fn($time) => [$time->format('Y-m-d H:i:s') => collect([])]))->collapse();
+
+        return $intervalCollection->merge($userShedules);
+    }
+
     ### Связи
     ##################################################
     public function role(): BelongsTo
@@ -69,4 +117,8 @@ class User extends Authenticatable
         return $this->hasMany(WorkSchedule::class, 'user_id', 'id');
     }
 
+    public function subscribes(): HasMany
+    {
+        return $this->hasMany(Subscribe::class, 'worker_id', 'id');
+    }
 }

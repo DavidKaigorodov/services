@@ -1,31 +1,42 @@
-<script setup>
+<script>
 import { usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
-import {
-    Table,
-    EditButton,
-    DeleteButton,
-    AddButton,
-    GoToButton,
-} from "@components";
+import { Table, EditButton, DeleteButton, AddButton, GoToButton } from "@components";
 
-const columns = [
-    { key: "name", label: "Наименование", width: "342px" },
-    { key: "address", label: "Адрес" },
-    { key: ["city", "name"], label: "Город", width: "160px" },
-    { key: "actions", label: "", width: "175px" },
-];
+export default {
+    components: {
+        AuthenticatedLayout,
+        Table,
+        EditButton,
+        DeleteButton,
+        AddButton,
+        GoToButton,
+    },
+
+    data() {
+        return {
+            columns: [
+                { key: "name", label: "Наименование", width: "342px" },
+                { key: "address", label: "Адрес" },
+                { key: ["city", "name"], label: "Город", width: "160px" },
+                { key: "actions", label: "", width: "175px" },
+            ],
+        };
+    },
+    computed:{
+        divisions(){
+            const divisions = usePage().props.divisions;
+            return divisions
+        }
+    }
+};
 </script>
 
 <template>
     <AuthenticatedLayout>
-        <Table
-            :data="usePage().props.divisions"
-            :columns="columns"
-            header="Подразделения"
-        >
+        <Table :data="divisions" :columns="columns" header="Подразделения">
             <template #toolbar-right>
                 <AddButton href="/divisions/create" />
             </template>

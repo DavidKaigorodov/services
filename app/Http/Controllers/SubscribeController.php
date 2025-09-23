@@ -17,7 +17,7 @@ class SubscribeController
     public function index(Division $division)
     {
         return Inertia::render('pages/subscribes/index', [
-            'subscribes' => fn() => getResource($division->subscribes()),
+            'subscribes' => fn() => getResource($division->subscribes()->whereHasAccess()),
             'division' => fn() => getResource($division),
         ]);
     }

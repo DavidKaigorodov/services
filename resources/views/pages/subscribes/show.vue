@@ -1,16 +1,30 @@
-<script setup>
+<script>
 import { usePage } from "@inertiajs/vue3";
 import { AuthenticatedLayout } from "@layouts";
 import { DivisionTab } from "@includes";
 
-const subscribe = usePage().props.subscribe.data;
-const role = usePage().props.current_user.data.role.code;
-const division = usePage().props.division.data;
+export default {
+    components: {
+        AuthenticatedLayout,
+        DivisionTab,
+    },
+
+    data() {
+        const subscribe = usePage().props.subscribe.data;
+        const user_role = usePage().props.current_user.data.role.code;
+        const division = usePage().props.division.data;
+        return {
+            subscribe,
+            user_role,
+            division,
+        };
+    },
+};
 </script>
 
 <template>
     <AuthenticatedLayout>
-        <DivisionTab :division_id="division.id">
+        <DivisionTab current="subscribes">
             <div class="subscribe-show">
                 <div class="cards-container">
                     <div class="card">
@@ -31,7 +45,7 @@ const division = usePage().props.division.data;
                     <div class="card">
                         <h2 class="card-title">Данные обращения</h2>
                         <div class="card-content">
-                            <p v-if="['admin'].includes(role)">
+                            <p v-if="['admin'].includes(user_role)">
                                 <strong>Подразделение:</strong>
                                 {{ subscribe.division?.name }}
                             </p>
@@ -46,6 +60,10 @@ const division = usePage().props.division.data;
                             <p>
                                 <strong>Время начала:</strong>
                                 {{ subscribe.start_at }}
+                            </p>
+                            <p>
+                                <strong>Комментарий:</strong>
+                                {{ subscribe.comment }}
                             </p>
                         </div>
                     </div>

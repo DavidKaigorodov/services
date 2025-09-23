@@ -1,20 +1,32 @@
-<script setup>
+<script>
 import { getObjectValue } from "../../../js/helpers/index";
 import { default as Pagination } from "../Pagination.vue";
 
-const props = defineProps({
-    data: [Array, Object],
-    columns: Array,
-    header: String,
-    head: {
-        type: Boolean,
-        default: true,
+export default {
+    components: {
+        Pagination,
     },
-    toolbarVisible: {
-        type: Boolean,
-        default: true,
+
+    props: {
+        data: [Array, Object],
+        columns: Array,
+        header: String,
+        head: {
+            type: Boolean,
+            default: true,
+        },
+        toolbarVisible: {
+            type: Boolean,
+            default: true,
+        },
     },
-});
+
+    methods:{
+        getObjectValue(key, row){
+           return getObjectValue(key, row)
+        }
+    }
+};
 </script>
 
 <template>
@@ -91,8 +103,6 @@ const props = defineProps({
 </template>
 
 <style lang="sass" scoped>
-@use '../../../sass/abstracts' as *
-
 .table-container
     border-radius: 16px
     padding: 24px

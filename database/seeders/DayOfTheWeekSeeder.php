@@ -13,12 +13,12 @@ class DayOfTheWeekSeeder extends Seeder
      */
     public function run(): void
     {
-        DayOfTheWeek::create(['code' => 'mon', 'name' => 'Понедельник']);
-        DayOfTheWeek::create(['code' => 'tue', 'name' => 'Вторник']);
-        DayOfTheWeek::create(['code' => 'wed', 'name' => 'Среда']);
-        DayOfTheWeek::create(['code' => 'thu', 'name' => 'Четверг']);
-        DayOfTheWeek::create(['code' => 'fri', 'name' => 'Пятница']);
-        DayOfTheWeek::create(['code' => 'sat', 'name' => 'Суббота']);
-        DayOfTheWeek::create(['code' => 'sun', 'name' => 'Воскресенье']);
+        DayOfTheWeek::create(['code' => 'mon', 'number' => 1, 'name' => 'Понедельник']);
+        DayOfTheWeek::create(['code' => 'tue', 'number' => 2, 'name' => 'Вторник']);
+        DayOfTheWeek::create(['code' => 'wed', 'number' => 3, 'name' => 'Среда']);
+        DayOfTheWeek::create(['code' => 'thu', 'number' => 4, 'name' => 'Четверг']);
+        DayOfTheWeek::create(['code' => 'fri', 'number' => 5, 'name' => 'Пятница']);
+        DayOfTheWeek::create(['code' => 'sat', 'number' => 6, 'name' => 'Суббота']);
+        DayOfTheWeek::create(['code' => 'sun', 'number' => 7, 'name' => 'Воскресенье']);
     }
 }

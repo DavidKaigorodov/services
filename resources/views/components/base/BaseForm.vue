@@ -1,20 +1,31 @@
-<script setup>
+<script>
 import { default as BlueButton } from "../buttons/BlueButton.vue";
-import {default as FormError} from '../FormError.vue';
+import { default as FormError } from "../FormError.vue";
 
-const props = defineProps({
-    className: String,
-    header: String,
-    sbm: String,
-    handleSubmit: Function,
-});
+export default {
+    components: {
+        BlueButton,
+        FormError,
+    },
 
-const boxClassName = props.className ? `${props.className}-box` : "";
+    props: {
+        className: String,
+        header: String,
+        sbm: String,
+        handleSubmit: Function,
+    },
+
+    computed: {
+        boxClassName() {
+            return this.className ? `${this.className}-box` : "";
+        },
+    },
+};
 </script>
 
 <template>
     <div :class="['form-container', boxClassName]">
-        <form @submit="handleSubmit" :class="'form ' + className">
+        <form @submit="handleSubmit" :class="['form', className]">
             <h3 v-if="header" class="form-header">
                 {{ header }}
             </h3>

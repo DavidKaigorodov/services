@@ -1,24 +1,37 @@
-<script setup>
+<script>
 import { useForm, usePage } from "@inertiajs/vue3";
-import { GuestLayout } from "@layouts";
+import { AuthenticatedLayout } from "@layouts";
 import { DivisionTab } from "@includes";
 import { VerticalForm, StringInput } from "@components";
 
-const division = usePage().props.division.data;
+export default {
+    components: {
+        AuthenticatedLayout,
+        DivisionTab,
+        VerticalForm,
+        StringInput,
+    },
 
-const form = useForm({
-    email: "",
-});
+    data() {
+        return {
+            form: useForm({
+                email: "",
+            }),
+            division: usePage().props.division.data,
+        };
+    },
 
-function onSubmit(e) {
-    e.preventDefault();
-
-    form.post(route("invites.store", {division_id: division.id}));
-}
+    methods: {
+        onSubmit(e) {
+            e.preventDefault();
+            this.form.post(route("invites.store", { division_id: this.division.id }));
+        },
+    },
+};
 </script>
 
 <template>
-    <GuestLayout>
+    <AuthenticatedLayout>
         <DivisionTab :division_id="division.id">
             <VerticalForm
                 header="Отправить приглашение"
@@ -34,5 +47,5 @@ function onSubmit(e) {
                 />
             </VerticalForm>
         </DivisionTab>
-    </GuestLayout>
+    </AuthenticatedLayout>
 </template>

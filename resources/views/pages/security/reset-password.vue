@@ -1,26 +1,35 @@
-<script setup>
+<script>
 import { useForm, usePage } from "@inertiajs/vue3";
-
 import { GuestLayout } from "@layouts";
-
 import { VerticalForm, StringInput } from "@components";
 
-const token = usePage().props.token;
+export default {
+    components: {
+        GuestLayout,
+        VerticalForm,
+        StringInput,
+    },
 
-const email = usePage().props.email;
+    data() {
+        const token = usePage().props.token;
+        const email = usePage().props.email;
+        return {
+            form: useForm({
+                token: token,
+                email: email,
+                password: "",
+                password_confirmation: "",
+            }),
+        };
+    },
 
-const form = useForm({
-    token: token,
-    email: email,
-    password: "",
-    password_confirmation: "",
-});
-
-function onSubmit(e) {
-    e.preventDefault();
-
-    form.post(route("password.update"));
-}
+    methods: {
+        onSubmit(e) {
+            e.preventDefault();
+            this.form.post(route("password.update"));
+        },
+    },
+};
 </script>
 
 <template>

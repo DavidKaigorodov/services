@@ -1,12 +1,14 @@
-<script setup>
-defineProps({
-    options: {
-        type: Array,
-        required: true,
+<script>
+export default {
+    props: {
+        options: {
+            type: Array,
+            required: true,
+        },
+        modelValue: [String, Number],
+        onSelect: Function,
     },
-    modelValue: [String, Number],
-    onSelect: Function,
-});
+};
 </script>
 
 <template>
@@ -26,8 +28,6 @@ defineProps({
 </template>
 
 <style lang="sass" scoped>
-@use '../../../../sass/abstracts' as *
-
 .select-dropdown
     position: absolute
     top: 100%

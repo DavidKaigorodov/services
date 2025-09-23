@@ -1,21 +1,41 @@
-<script setup>
+<script>
+import { usePage } from "@inertiajs/vue3";
 import { AuthenticatedLayout } from "@layouts";
 import { DivisionTab } from "@includes";
 import { Table, EditButton } from "@components";
-import { usePage } from "@inertiajs/vue3";
 
-const admins = usePage().props.users;
-const division = usePage().props.division.data;
-
-const columns = [
-    { key: "name", label: "Фамилия" },
-    { key: "email", label: "Email" },
-    { key: "action", label: "" },
-];
+export default {
+    components: {
+        AuthenticatedLayout,
+        DivisionTab,
+        Table,
+        EditButton,
+    },
+    data() {
+        return {
+            columns: [
+                { key: "name", label: "Фамилия" },
+                { key: "email", label: "Email" },
+                { key: "action", label: "" },
+            ],
+        };
+    },
+    computed: {
+        division() {
+            const division = usePage().props.division.data;
+            return division;
+        },
+        admins() {
+            const admins = usePage().props.users;
+            return admins;
+        },
+    },
+};
 </script>
+
 <template>
     <AuthenticatedLayout>
-        <DivisionTab :division_id="division.id" >
+        <DivisionTab current="admins">
             <Table :data="admins" :columns="columns">
                 <template #toolbar-right>
                     <EditButton

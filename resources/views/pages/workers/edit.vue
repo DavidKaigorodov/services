@@ -12,7 +12,7 @@ import {
 } from "@components";
 
 const worker = usePage().props.worker.data;
-
+const division = usePage().props.division.data;
 const services = usePage().props.services;
 
 const form = useForm({
@@ -20,6 +20,7 @@ const form = useForm({
     name: worker.name,
     email: worker.email,
     service_ids: worker.services.map((service) => service.id),
+    division_id: division.id,
 });
 
 function toggleCheckbox(row, val) {
@@ -41,7 +42,7 @@ function onSubmit(e) {
 
 <template>
     <AuthenticatedLayout>
-        <DivisionTab :division_id="worker.division.id">
+        <DivisionTab current="workers">
             <HorizontalForm
                 header="Информация о работнике"
                 sbm="Сохранить"
@@ -66,7 +67,7 @@ function onSubmit(e) {
                     <WorkSchedule
                         header="График работы"
                         v-model="form.shedules"
-                        name="work"
+                        name="shedules"
                     />
                 </FormGroup>
                 <FormGroup name="services" label="Услуги">
@@ -96,13 +97,8 @@ function onSubmit(e) {
 </template>
 
 <style lang="sass">
-@use '../../../sass/abstracts' as *
-
 .services
-    max-height: 400px
+    // max-height: 605px
     overflow-y: auto
     @include scroll()
-
-.work
-    width: 700px
 </style>

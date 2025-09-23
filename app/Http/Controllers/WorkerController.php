@@ -73,11 +73,12 @@ class WorkerController
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $worker)
+    public function edit(Division $division, User $worker)
     {
         return Inertia::render("pages/workers/edit", [
             "worker" => fn() => WorkerResource::make($worker),
             'services' => fn() => getResource(Service::class),
+            "division" => fn() => getResource($worker->division),
         ]);
     }
 

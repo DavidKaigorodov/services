@@ -1,5 +1,11 @@
-<script setup>
-import {default as BaseLayout} from './BaseLayout.vue';
+<script>
+import { default as BaseLayout } from "./BaseLayout.vue";
+
+export default {
+    components: {
+        BaseLayout,
+    },
+};
 </script>
 
 <template>
@@ -7,5 +13,3 @@ import {default as BaseLayout} from './BaseLayout.vue';
         <slot />
     </BaseLayout>
 </template>
-
-<style></style>

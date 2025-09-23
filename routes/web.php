@@ -68,6 +68,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/workers', [WorkerController::class, 'store'])->name('workers.store');
 });
 
+
 Route::controller(SecurityController::class)->group(function () {
     Route::get('/forgot-password', 'forgotPasswordGet')->middleware('guest')->name('password.request');
     Route::post('/forgot-password', 'forgotPasswordPost')->middleware('guest')->name('password.email');

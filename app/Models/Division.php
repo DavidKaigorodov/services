@@ -62,6 +62,12 @@ class Division extends Model
     {
         return $this->users()->where('role_id', UserRole::byCode('division_admin')->id);
     }
+
+    public function workers(): HasMany
+    {
+        return $this->users()->where('role_id', UserRole::byCode('division_worker')->id);
+    }
+
     public function subscribes(): HasMany
     {
         return $this->hasMany(Subscribe::class, 'division_id');

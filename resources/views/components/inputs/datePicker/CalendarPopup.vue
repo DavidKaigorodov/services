@@ -1,53 +1,93 @@
-<script setup>
-import { ref, computed } from "vue";
-
+<script>
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-
+import ChevronRigtIco from "../../icons/ChevronRightIco.vue";
+import ChevronLeftIco from "../../icons/ChevronLeftIco.vue";
 import { getMonthDays, isSameDay } from "./utils";
 
-const props = defineProps({
-    modelValue: String,
-});
-
-const emit = defineEmits(["update:modelValue"]);
-
 dayjs.locale("ru");
-const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
-const currentMonth = ref(dayjs(props.modelValue || new Date()));
+export default {
+    components: {
+        ChevronRigtIco,
+        ChevronLeftIco,
+    },
+    props: {
+        modelValue: {
+            type: [String, Object, Number],
+            default: null,
+        },
+    },
+    emits: ["update:modelValue"],
 
-const days = computed(() => getMonthDays(currentMonth.value));
+    data() {
+        return {
+            currentMonth: dayjs(this.modelValue || new Date()),
+            weekDays: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
+        };
+    },
 
-const select = (date) => {
-    emit("update:modelValue", dayjs(date).format("YYYY-MM-DD"));
+    computed: {
+        normalizedValue() {
+            if (!this.modelValue) return null;
+            return dayjs(this.modelValue).format("YYYY-MM-DD");
+        },
+        days() {
+            return getMonthDays(this.currentMonth);
+        },
+    },
+
+    watch: {
+        modelValue(newVal) {
+            if (newVal) {
+                this.currentMonth = dayjs(newVal);
+            }
+        },
+    },
+
+    methods: {
+        formatDate(date, format = "YYYY-MM-DD") {
+            return date ? dayjs(date).format(format) : "";
+        },
+        select(date) {
+            if (!date) return;
+            this.$emit("update:modelValue", this.formatDate(date));
+        },
+        prevMonth() {
+            this.currentMonth = this.currentMonth.subtract(1, "month");
+        },
+        nextMonth() {
+            this.currentMonth = this.currentMonth.add(1, "month");
+        },
+        isToday(date) {
+            return date && isSameDay(date, new Date());
+        },
+        isSelected(date) {
+            if (!date || !this.normalizedValue) return false;
+            return this.formatDate(date) === this.normalizedValue;
+        },
+    },
 };
-
-const prevMonth = () => {
-    currentMonth.value = currentMonth.value.subtract(1, "month");
-};
-
-const nextMonth = () => {
-    currentMonth.value = currentMonth.value.add(1, "month");
-};
-
-const isToday = (date) => date && isSameDay(date, new Date());
-const isSelected = (date) =>
-    date && dayjs(date).format("YYYY-MM-DD") === props.modelValue;
 </script>
 
 <template>
     <div class="calendar-header">
         <div class="calendar-weekdays">
-            <button @click="prevMonth">‹</button>
+            <button @click="prevMonth">
+                <ChevronLeftIco />
+            </button>
             <span class="font-bold">
-                {{ currentMonth.format("MMMM YYYY") }}s
+                {{ currentMonth.format("MMMM YYYY") }}
             </span>
-            <button @click="nextMonth">›</button>
+            <button @click="nextMonth">
+                <ChevronRigtIco />
+            </button>
         </div>
+
         <div class="calendar-days">
             <span v-for="day in weekDays" :key="day">{{ day }}</span>
         </div>
+
         <div class="grid grid-cols-7 gap-1">
             <button
                 v-for="(day, index) in days"
@@ -60,7 +100,7 @@ const isSelected = (date) =>
                     isSelected(day) ? 'selected' : '',
                 ]"
             >
-                {{ day ? dayjs(day).date() : "" }}
+                {{ day ? formatDate(day, "D") : "" }}
             </button>
         </div>
     </div>
@@ -127,7 +167,7 @@ const isSelected = (date) =>
             font-size: 0.875rem
             color: #374151
             cursor: pointer
-            transition: all 0.2s easeall 0.2s ease
+            transition: all 0.2s ease
             border: none
             background: transparent
             padding: 0

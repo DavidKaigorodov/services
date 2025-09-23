@@ -1,45 +1,50 @@
-<script setup>
+<script>
 import { default as CheckMarkIco } from "../icons/CheckMarkIco.vue";
 
-const props = defineProps({
-    modelValue: {
-        type: Boolean,
-        default: false,
+export default {
+    components: {
+        CheckMarkIco,
     },
-    label: {
-        type: String,
-        default: "",
-    },
-    disabled: {
-        type: Boolean,
-        default: false,
-    },
-});
 
-const emit = defineEmits(["update:modelValue"]);
+    props: {
+        modelValue: {
+            type: Boolean,
+            default: false,
+        },
+        label: {
+            type: String,
+            default: "",
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    emits: ["update:modelValue"],
 
-const toggle = () => {
-    if (props.disabled) return;
-    emit("update:modelValue", !props.modelValue);
+    methods: {
+        toggle() {
+            if (this.disabled) return;
+            this.$emit("update:modelValue", !this.modelValue);
+        },
+    },
 };
 </script>
 
 <template>
     <label
         class="custom-checkbox"
-        :class="{ disabled: props.disabled }"
+        :class="{ disabled: disabled }"
         @click="toggle"
     >
         <span class="checkbox-box">
-            <CheckMarkIco v-if="props.modelValue" />
+            <CheckMarkIco v-if="modelValue" />
         </span>
-        <span class="checkbox-label" v-if="props.label">{{ props.label }}</span>
+        <span class="checkbox-label" v-if="label">{{ label }}</span>
     </label>
 </template>
 
 <style lang="sass">
-@use '../../../sass/abstracts' as *
-
 .custom-checkbox
     display: flex
     align-items: center

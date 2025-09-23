@@ -1,10 +1,16 @@
-<script setup>
+<script>
 import { default as Label } from "./Label.vue";
 
-const props = defineProps({
-    name: String,
-    label: String,
-});
+export default {
+    components: {
+        Label,
+    },
+
+    props: {
+        name: String,
+        label: String,
+    },
+};
 </script>
 
 <template>

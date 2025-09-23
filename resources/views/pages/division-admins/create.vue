@@ -1,40 +1,48 @@
-<script setup>
-import { ref } from "vue";
-import { router, usePage } from "@inertiajs/vue3";
+<script>
+import { usePage, router } from "@inertiajs/vue3";
 import { AuthenticatedLayout } from "@layouts";
 import { Table, CheckBox, GoToButton } from "@components";
 import { DivisionTab } from "@includes";
 
-const users = usePage().props.users;
-const division = usePage().props.division.data;
+export default {
+    components: {
+        AuthenticatedLayout,
+        Table,
+        CheckBox,
+        GoToButton,
+        DivisionTab,
+    },
 
-const admins = ref(users);
+    data() {
+        const users = usePage().props.users;
+        const division = usePage().props.division.data;
 
-const columns = [
-    { key: "name", label: "Фамилия" },
-    { key: "email", label: "Email" },
-    { key: "actions", label: "" },
-];
+        return {
+            admins: users,
+            division,
+            columns: [
+                { key: "name", label: "Фамилия" },
+                { key: "email", label: "Email" },
+                { key: "actions", label: "" },
+            ],
+        };
+    },
 
-const toggleCheckbox = (row, val) => {
-    row.role.code = val ? "division_admin" : "division_worker";
-    console.log(val);
+    methods: {
+        toggleCheckbox(row, val) {
+            row.role.code = val ? "division_admin" : "division_worker";
 
-    val === true
-        ? router.post(
-              route("division-admins.store", { division: division.id }),
-              {
-                  user_id: row.id,
-              },
-          )
-        : router.delete(
-              route("division-admins.destroy", {
-                  division: division.id,
-                  division_admin: row.id,
-              }),
-          );
+            if (val) {
+                router.post(
+                    route("division-admins.store", { division: this.division.id }), { user_id: row.id });
+            } else {
+                router.delete(
+                    route("division-admins.destroy", { division: this.division.id, division_admin: row.id }),
+                );
+            }
+        },
+    },
 };
-
 </script>
 
 <template>
@@ -43,11 +51,7 @@ const toggleCheckbox = (row, val) => {
             <Table :data="admins" :columns="columns">
                 <template #toolbar-right>
                     <GoToButton
-                        :href="
-                            route('division-admins.index', {
-                                division: division.id,
-                            })
-                        "
+                        :href="route('division-admins.index', { division: division.id })"
                     />
                 </template>
 

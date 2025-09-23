@@ -1,18 +1,34 @@
-<script setup>
+<script>
 import { Link, useForm } from "@inertiajs/vue3";
 import { GuestLayout } from "@layouts";
 import { VerticalForm, StringInput, CheckBox } from "@components";
 
-const form = useForm({
-    email: "",
-    password: "",
-    remember: false, // ✅ добавляем remember
-});
+export default {
+    components: {
+        Link,
+        GuestLayout,
+        VerticalForm,
+        StringInput,
+        CheckBox,
+    },
 
-function onSubmit(e) {
-    e.preventDefault();
-    form.post(route("auhtificate"));
-}
+    data() {
+        return {
+            form: useForm({
+                email: "",
+                password: "",
+                remember: false,
+            }),
+        };
+    },
+
+    methods: {
+        onSubmit(e) {
+            e.preventDefault();
+            this.form.post(route("auhtificate"));
+        },
+    },
+};
 </script>
 
 <template>
@@ -36,10 +52,7 @@ function onSubmit(e) {
             />
 
             <template #buttons>
-                <CheckBox
-                    label="Запомнить меня"
-                    v-model="form.remember"
-                />
+                <CheckBox label="Запомнить меня" v-model="form.remember" />
             </template>
 
             <template #info>

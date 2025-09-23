@@ -1,31 +1,45 @@
-<script setup>
+<script>
 import { useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
 import { VerticalForm, StringInput } from "@components";
 
-const form = useForm({
-  name: "",
-});
+export default {
+    components: {
+        AuthenticatedLayout,
+        VerticalForm,
+        StringInput,
+    },
 
-function onSubmit(e) {
-  e.preventDefault();
+    data() {
+        return {
+            form: useForm({
+                name: "",
+            }),
+        };
+    },
 
-  form.post(route("cities.store"));
-}
+    methods: {
+        onSubmit(e) {
+            e.preventDefault();
+
+            this.form.post(route("cities.store"));
+        },
+    },
+};
 </script>
 
 <template>
-  <AuthenticatedLayout>
-    <VerticalForm header="Город" sbm="Отправить" :handleSubmit="onSubmit">
-      <StringInput
-        label="Наименование"
-        name="name"
-        :value="form.name"
-        @update:value="(val) => (form.name = val)"
-        autocomplete="current-name"
-      />
-    </VerticalForm>
-  </AuthenticatedLayout>
+    <AuthenticatedLayout>
+        <VerticalForm header="Город" sbm="Отправить" :handleSubmit="onSubmit">
+            <StringInput
+                label="Наименование"
+                name="name"
+                :value="form.name"
+                @update:value="(val) => (form.name = val)"
+                autocomplete="current-name"
+            />
+        </VerticalForm>
+    </AuthenticatedLayout>
 </template>

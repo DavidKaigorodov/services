@@ -1,41 +1,54 @@
-<script setup>
+<script>
 import { default as FormItem } from "../FormItem.vue";
-import{ default as Label} from '../Label.vue';
+import { default as Label } from "../Label.vue";
 
-const props = defineProps({
-    type: {
-        type: String,
-        default: "text",
+export default {
+    components: {
+        Label,
+        FormItem,
     },
-    value: {
-        type: [String, Number, null],
-        default: "",
-    },
-    placeholder: {
-        type: String,
-        default: "",
-    },
-    disabled: {
-        type: Boolean,
-        default: false,
-    },
-    autocomplete: {
-        type: String,
-        default: "",
-    },
-    id: {
-        type: String,
-        default: null,
-    },
-    name: String,
-    label: String,
-    readonly: Boolean,
-});
 
-const emit = defineEmits(["update:value", "click", "keydown"]);
+    props: {
+        type: {
+            type: String,
+            default: "text",
+        },
+        value: {
+            type: [String, Number, null],
+            default: "",
+        },
+        placeholder: {
+            type: String,
+            default: "",
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+        autocomplete: {
+            type: String,
+            default: "",
+        },
+        id: {
+            type: String,
+            default: null,
+        },
+        name: String,
+        label: String,
+        readonly: Boolean,
+    },
 
-const inputId = props.id ?? props.name;
-const placeholderText = props.placeholder ?? "";
+    emits: ["update:value", "click", "keydown"],
+
+    computed: {
+        inputId() {
+            this.id ?? this.name;
+        },
+        placeholderText() {
+            this.placeholder ?? "";
+        },
+    },
+};
 </script>
 
 <template>
@@ -59,8 +72,6 @@ const placeholderText = props.placeholder ?? "";
 </template>
 
 <style lang="sass">
-@use '../../../sass/abstracts' as *
-
 input, .input
     height: 30px
     @include input

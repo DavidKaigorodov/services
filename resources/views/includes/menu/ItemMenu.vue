@@ -1,59 +1,82 @@
-<script setup>
+<script>
 import { Link, router } from "@inertiajs/vue3";
 
-const props = defineProps({
-    href: {
-        type: String,
+export default {
+    components: {
+        Link,
     },
-    label: String,
-    params: {
-        type: Object,
-    },
-    method: {
-        type: String,
-    },
-});
 
-function goto(e) {
-    e.preventDefault();
+    props: {
+        href: String,
+        label: {
+            type: String,
+            default: "",
+        },
+        params: Object,
+        method: String,
+    },
 
-    if (props.method === "post") router.post(route(props.href, props.params));
-    else router.get(route(props.href, props.params));
-}
+    methods: {
+        goto(e) {
+            e.preventDefault();
+            if (this.method === "post")
+                router.post(route(this.href, this.params));
+            else router.get(route(this.href, this.params));
+        },
+    },
+};
 </script>
 
 <template>
-    <li>
-        <Link :href="props.href" @click="goto" v-bind="$attrs">
-            {{ label }}
+    <li class="link-box">
+        <Link class="link" :href="href" @click="goto" v-bind="$attrs">
+            <slot />
+            <span class="link-label">{{ label }}</span>
         </Link>
     </li>
 </template>
+
 <style lang="sass" scoped>
-.sidebar-link
-    display: block
-    padding: 5px 10px
-    color: white
-    text-decoration: none
-    border-radius: 8px
-    transition: all 0.2s ease
-    font-size: 1rem
+.link-box
+    display: flex
+    justify-content: center
+    margin: 6px 0
 
-    &:hover
-        background: var(--blue-button-background-color-hover)
+    .link
+        position: relative
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 50px
+        height: 50px
+        border-radius: 12px
+        transition: background 0.2s ease
         color: white
 
-.logout
-    display: block
-    padding: 5px 10px
-    font-weight: bold
-    color: white
-    text-decoration: none
-    border-radius: 8px
-    transition: all 0.2s ease
-    font-size: 1.1rem
+        svg
+            width: 26px
+            height: 26px
 
-    &:hover
+        &:hover
+            background: var(--blue-button-background-color-hover)
+
+    .link-label
+        position: absolute
+        left: 60px
+        top: 50%
+        transform: translateY(-50%) translateX(-10px)
         background: var(--blue-button-background-color-hover)
-        color: white
+        color: #fff
+        padding: 6px 12px
+        border-radius: 6px
+        font-size: 14px
+        white-space: nowrap
+        opacity: 0
+        pointer-events: none
+        z-index: 10000
+        transition: opacity 0.25s ease, transform 0.25s ease
+
+    .link:hover .link-label
+        opacity: 1
+        transform: translateY(-50%) translateX(0)
 </style>

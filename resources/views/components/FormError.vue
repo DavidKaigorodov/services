@@ -1,33 +1,39 @@
-<script setup>
+<script>
 import { usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
 
-const props = defineProps({
-    name: {
-        type: String,
-        default: "",
+export default {
+    props: {
+        name: {
+            type: String,
+            default: "",
+        },
     },
-});
 
-const errors = computed(() => usePage().props.errors);
+    computed: {
+        errors() {
+            return usePage().props.errors;
+        },
+        errorKeys() {
+            let processedName = this.name;
 
-const errorKeys = computed(() => {
-    let processedName = props.name;
+            if (processedName.includes("[")) {
+                processedName = processedName
+                    .replaceAll("[", ".")
+                    .replaceAll("]", "");
+            }
 
-    if (processedName.includes("[")) {
-        processedName = processedName.replaceAll("[", ".").replaceAll("]", "");
-    }
+            const reg = new RegExp(
+                `(^${processedName}$)|(^${processedName}\\.[0-9]{1,99}$)|(^${processedName}.*\\.[0-9]{1,99}$)`,
+            );
 
-    const reg = new RegExp(
-        `(^${processedName}$)|(^${processedName}\\.[0-9]{1,99}$)|(^${processedName}.*\\.[0-9]{1,99}$)`,
-    );
-
-    return Object.keys(errors.value).filter((item) => reg.test(item));
-});
-
-const errorMessages = computed(() => {
-    return errorKeys.value.map((key) => errors.value[key]);
-});
+            return Object.keys(this.errors).filter((item) => reg.test(item));
+        },
+        errorMessages() {
+            return this.errorKeys.map((key) => this.errors[key]);
+        },
+    },
+};
 </script>
 
 <template>

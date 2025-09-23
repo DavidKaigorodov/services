@@ -23,6 +23,22 @@ class Subscribe extends Model
         ];
     }
 
+    public function scopeWhereHasAccess()
+    {
+        return $this->where(function ($query) {
+            if(user()->hasRole('admin'))
+                return $query;
+
+            if (user()->hasRole('division_admin'))
+                return $query->orWhere('division_id', user()->division->id);
+
+            if (user()->hasRole('division_worker'))
+                return $query->orWhere('worker_id', user()->id);
+
+            return $query->whereKey(null);
+        });
+    }
+
     ### Связи
     ##################################################
     public function service(): BelongsTo

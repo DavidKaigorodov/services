@@ -1,30 +1,43 @@
-<script setup>
+<script>
 import { Link } from "@inertiajs/vue3";
 
 import { default as ChevronRightIco } from "./icons/ChevronRightIco.vue";
 import { default as ChevronLeftIco } from "./icons/ChevronLeftIco.vue";
 
-const props = defineProps({
-    total: {
-        type: Number,
-        required: true,
+export default {
+    components: {
+        Link,
+        ChevronRightIco,
+        ChevronLeftIco,
     },
-    current: {
-        type: Number,
-        required: true,
-    },
-    perPage: {
-        type: Number,
-        required: true,
-    },
-});
 
-const last = Math.ceil(props.total / props.perPage);
+    props: {
+        total: {
+            type: Number,
+            required: true,
+        },
+        current: {
+            type: Number,
+            required: true,
+        },
+        perPage: {
+            type: Number,
+            required: true,
+        },
+    },
 
-const href = (page) => {
-    const url = new URL(location.href);
-    url.searchParams.set("page", page);
-    return url.toString();
+    methods: {
+        href(page) {
+            const url = new URL(location.href);
+            url.searchParams.set("page", page);
+            return url.toString();
+        },
+    },
+    computed: {
+        last() {
+            return Math.ceil(this.total / this.perPage);
+        },
+    },
 };
 </script>
 
@@ -37,7 +50,8 @@ const href = (page) => {
         >
             <ChevronLeftIco />
         </Link>
-        <Link v-if="current > 1" class="pagination-item">1</Link>
+
+        <Link v-if="current > 1" :href="href(1)" class="pagination-item">1</Link>
 
         <span v-if="current > 3" class="pagination-ellipsis">...</span>
 

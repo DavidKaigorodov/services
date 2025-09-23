@@ -14,15 +14,17 @@ const columns = [
     { key: "actions", label: "" },
 ];
 </script>
+
 <template>
     <AuthenticatedLayout>
-        <DivisionTab :division_id="division.id">
+        <DivisionTab current="workers">
             <Table :data="worker" :columns="columns">
                 <template #toolbar-right>
                     <AddButton :href="route('invites.create', { division_id: division.id })" />
                 </template>
+
                 <template #actions="{ row }">
-                    <EditButton :href="route('workers.edit', { division: division.id, worker: row.id })" />
+                    <EditButton :href="route('workers.edit', { worker: row.id })" />
                     <DeleteButton :href="route('workers.destroy', { division: division.id, worker: row.id })" />
                 </template>
             </Table>

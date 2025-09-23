@@ -1,26 +1,75 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>{{ $exception->getStatusCode() }} | {{ config('app.name') }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 48rem;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .title {
+            font-size: 10rem;
+            font-weight: 800;
+            color: #dc2626;
+        }
+
+        .subtitle {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-top: 1rem;
+            color: #1f2937;
+        }
+
+        .description {
+            color: #4b5563;
+            margin-top: 0.5rem;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.5rem 1.25rem;
+            background-color: #83adf0;
+            border-radius: 0.5rem;
+            color: white;
+            text-decoration: none;
+            margin-top: 1.5rem;
+        }
+
+        .button:hover {
+            background-color: #88a2ff;
+        }
+    </style>
 </head>
-        <h1 class="text-9xl font-extrabold text-red-600">
-        </h1>
-        <h2 class="text-3xl font-bold mt-4">
-            {{ __($exception->getMessage()) ?: __('Что-то пошло не так') }}
-        </h2>
-
-        <p class="text-gray-600 mt-2">
-            Попробуйте вернуться назад или перейти на главную.
-        </p>
-
-        <div class="mt-6">
-            <a href="{{ route('home') }}"
-                class="px-5 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 ml-2">
-                🏠 На главную
-            </a>
-        </div>
+{{-- @dd($exception) --}}
+<body>
+    <div class="container">
+        <h1 class="title">{{ $exception->getStatusCode() }}</h1>
+        <h2 class="subtitle">{{ __($exception->getMessage(), ['route'=> 'test']) }}</h2>
+        <p class="description">Попробуйте обновить страницу или вернуться на главную</p>
+        <a href="{{ route('home') }}" class="button">
+            🏠 На главную
+        </a>
     </div>
 </body>
+
 </html>
