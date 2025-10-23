@@ -21,6 +21,7 @@ class DivisionFactory extends Factory
             'name' => $this->faker->company(),
             'city_id' => City::all()->random(),
             'address' => $this->faker->address(),
+            'url' => 'http://example.ru'
         ];
     }
 }

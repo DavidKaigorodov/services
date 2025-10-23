@@ -3,7 +3,14 @@ import { usePage, useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 import { DivisionTab } from "@includes";
-import { HorizontalForm, FormGroup, Select, WorkSchedule, TextArea } from "@components";
+import {
+    HorizontalForm,
+    FormGroup,
+    Select,
+    WorkSchedule,
+    TextArea,
+    StringInput,
+} from "@components";
 
 export default {
     components: {
@@ -14,6 +21,7 @@ export default {
         Select,
         WorkSchedule,
         TextArea,
+        StringInput,
     },
 
     data() {
@@ -24,6 +32,7 @@ export default {
                 name: division.name,
                 address: division.address,
                 city_id: division.city.id,
+                url: division.url,
                 shedules: division.shedules,
             }),
             cities,
@@ -47,15 +56,17 @@ export default {
                 return;
             }
 
-            this.form.put(route("divisions.update", { division: this.division.id }),
+            this.form.put(
+                route("divisions.update", { division: this.division.id }),
                 {
-                    onSuccess: () => {this.isEditing = false}
-                }
+                    onSuccess: () => {
+                        this.isEditing = false;
+                    },
+                },
             );
         },
     },
 };
-
 </script>
 
 <template>
@@ -93,6 +104,14 @@ export default {
                         v-model="form.city_id"
                         :options="cityOptions"
                         placeholder="Выберите город"
+                        :disabled="!isEditing"
+                    />
+                    <StringInput
+                        label="Ссылка"
+                        name="url"
+                        :value="form.url"
+                        @update:value="(val) => (form.url = val)"
+                        autocomplete="url"
                         :disabled="!isEditing"
                     />
                 </FormGroup>

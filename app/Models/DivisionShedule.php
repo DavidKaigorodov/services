@@ -10,13 +10,15 @@ use Carbon\Carbon;
 class DivisionShedule extends Model
 {
     protected
-        $table = "main__division_shedule",
-        $fillable = [
-            'date_start',
-            'date_end',
-            'division_id',
-            'day_of_the_week_id',
-        ];
+    $table = "main__division_shedule",
+    $fillable = [
+        'date_start',
+        'date_end',
+        'lunch_start',
+        'lunch_end',
+        'division_id',
+        'day_of_the_week_id',
+    ];
 
     public $timestamps = false;
 
@@ -25,6 +27,8 @@ class DivisionShedule extends Model
         return [
             'date_start' => 'datetime:H:i',
             'date_end' => 'datetime:H:i',
+            'lunch_start' => 'datetime:H:i',
+            'lunch_end' => 'datetime:H:i',
         ];
     }
 

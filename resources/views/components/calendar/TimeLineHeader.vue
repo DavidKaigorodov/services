@@ -124,4 +124,9 @@ export default {
             display: flex
             gap: 6px
             white-space: nowrap
+
+</style>
+<style lang="sass" scoped>
+.datepicker-input
+    width: 280px
 </style>

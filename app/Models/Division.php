@@ -23,6 +23,8 @@ class Division extends Model
         'name',
         'address',
         'city_id',
+        'parent_id',
+        'url',
     ];
 
     public static function boot()
@@ -47,6 +49,17 @@ class Division extends Model
     {
         return $this->belongsTo(City::class, 'city_id');
     }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Division::class, 'parent_id');
+    }
+
+    public function childrens(): HasMany
+    {
+        return $this->hasMany(Division::class, 'parent_id');
+    }
+
 
     public function shedules(): HasMany
     {

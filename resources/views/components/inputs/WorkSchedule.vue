@@ -56,6 +56,8 @@ export default {
                     newValue[day] = {
                         date_start: null,
                         date_end: null,
+                        lunch_start: null,
+                        lunch_end: null,
                     };
                 }
             } else {
@@ -73,7 +75,7 @@ export default {
         <div class="work-schedule-time">
             <div v-for="day in days" :key="day.key" class="day-row-container">
                 <div class="day-row">
-                    <span class="day-label"> {{ day.label }}: </span>
+                    <span class="day-label">{{ day.label }}:</span>
 
                     <CheckBox
                         :modelValue="day.key in modelValue"
@@ -82,17 +84,15 @@ export default {
                     />
 
                     <div v-if="day.key in modelValue" class="time-picker-block">
+
                         <div class="datepicker-wrapper-relative">
                             <DatePicker
                                 mode="time"
                                 :modelValue="modelValue[day.key]?.date_start"
-                                @update:modelValue="
-                                    (val) =>
-                                        updateDay(day.key, 'date_start', val)
-                                "
+                                @update:modelValue="(val) => updateDay(day.key, 'date_start', val)"
                                 :name="`${name}[${day.key}][date_start]`"
                                 :disabled="disabled"
-                                :label="''"
+                                :label="'Начало'"
                             />
                         </div>
 
@@ -100,12 +100,32 @@ export default {
                             <DatePicker
                                 mode="time"
                                 :modelValue="modelValue[day.key]?.date_end"
-                                @update:modelValue="
-                                    (val) => updateDay(day.key, 'date_end', val)
-                                "
+                                @update:modelValue="(val) => updateDay(day.key, 'date_end', val)"
                                 :name="`${name}[${day.key}][date_end]`"
                                 :disabled="disabled"
-                                :label="''"
+                                :label="'Конец'"
+                            />
+                        </div>
+
+                        <div class="datepicker-wrapper-relative lunch">
+                            <DatePicker
+                                mode="time"
+                                :modelValue="modelValue[day.key]?.lunch_start"
+                                @update:modelValue="(val) => updateDay(day.key, 'lunch_start', val)"
+                                :name="`${name}[${day.key}][lunch_start]`"
+                                :disabled="disabled"
+                                :label="'Начало обеда'"
+                            />
+                        </div>
+
+                        <div class="datepicker-wrapper-relative lunch">
+                            <DatePicker
+                                mode="time"
+                                :modelValue="modelValue[day.key]?.lunch_end"
+                                @update:modelValue="(val) => updateDay(day.key, 'lunch_end', val)"
+                                :name="`${name}[${day.key}][lunch_end]`"
+                                :disabled="disabled"
+                                :label="'Конец обеда'"
                             />
                         </div>
                     </div>
@@ -117,35 +137,48 @@ export default {
 
 <style lang="sass">
 .work
-    width: 700px
+    width: 100%
 
 .work-schedule-time
     display: flex
     flex-direction: column
+    gap: 8px
 
     .day-row-container
         display: flex
-        align-items: center
-        padding: 8px 0
+        align-items: flex-end
         box-sizing: border-box
+        padding: 6px 0
 
         .day-row
             display: flex
-            align-items: center
-            gap: 10px
-            flex: 1
+            align-items: flex-end
+            width: 100%
+            gap: 16px
 
             .day-label
                 width: 30px
                 flex-shrink: 0
                 font-weight: 500
+                text-align: right
+                padding-bottom: 4px
+
+            .checkbox
+                display: flex
+                align-items: flex-end
+                justify-content: center
+                height: 150px
+                margin-bottom: 4px
 
             .time-picker-block
                 display: flex
-                align-items: center
-                gap: 12px
+                align-items: flex-end
+                gap: 20px
+                flex: 1
+                flex-wrap: nowrap
 
                 .datepicker-wrapper-relative
                     position: relative
-                    max-width: 280px
+                    width: 160px
+                    flex-shrink: 0
 </style>

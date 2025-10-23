@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use App\Models\ChangeEmailToken;
 
 class User extends Authenticatable
 {
@@ -24,7 +25,9 @@ class User extends Authenticatable
     protected
     $table = 'main__users',
     $fillable = [
-        'name',
+        'first_name',
+        'middle_name',
+        'last_name',
         'email',
         'password',
         'role_id',
@@ -52,22 +55,15 @@ class User extends Authenticatable
 
     public function getTimeLine(Carbon|CarbonImmutable $day)
     {
-        // $day = Carbon::create($year, $month, $day);
+
         $shedule = $this
             ->division
             ->shedules()
             ->where('day_of_the_week_id', DayOfTheWeek::byNumber($day->dayOfWeekIso)->id)
             ->first();
-        // ?? new DivisionShedule(['date_start' => $day->startOfDay()->format('H:i'), 'date_end' => $day->endOfDay()->format('H:i')]);
 
-        // if ($shedule === null)
-        //     $shedule = $this->division->shedules->orderBy(fn($shedule) => $shedule->dayOfTheWeek->number)->last();
-
-        // $date_start = $shedule?->date_start;
         $date_start = $day->setTime($shedule?->date_start->hour ?? 0, $shedule?->date_start->minute ?? 0);
         $date_end = $day->setTime($shedule?->date_end->hour ?? 0, $shedule?->date_end->minute ?? 0);
-        // dd($date_start);
-        // $date_end = $shedule?->date_end;
 
         $userShedules = $this
             ->subscribes()
@@ -84,7 +80,6 @@ class User extends Authenticatable
                 ? $subscribe->start_at->startOfHour()->addMinutes(30)->format('Y-m-d H:i:s')
                 : $subscribe->start_at->startOfHour()->format('Y-m-d H:i:s')
             );
-        // dd($this->subscribes, $this->subscribes()->whereBetween('start_at', [$date_start, $date_end])->get(), $date_start, $date_end);
 
         if ($shedule === null)
             return $userShedules;
@@ -120,5 +115,9 @@ class User extends Authenticatable
     public function subscribes(): HasMany
     {
         return $this->hasMany(Subscribe::class, 'worker_id', 'id');
+    }
+
+    public function changeEmailTokens(){
+        return $this->hasMany(ChangeEmailToken::class, 'user_id');
     }
 }

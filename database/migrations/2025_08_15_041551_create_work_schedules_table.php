@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->time('date_start');
             $table->time('date_end');
+            $table->time('lunch_start');
+            $table->time('lunch_end');
             $table->foreignId('user_id')->constrained(new User()->getTable());
             $table->foreignId('day_of_the_week_id')->constrained(new DayOfTheWeek()->getTable());
             $table->timestamps();

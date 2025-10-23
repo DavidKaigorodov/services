@@ -1,4 +1,5 @@
 <script>
+import { ref, watch } from "vue";
 import { usePage, router } from "@inertiajs/vue3";
 import { AuthenticatedLayout } from "@layouts";
 import { Table, CheckBox, GoToButton } from "@components";
@@ -13,34 +14,69 @@ export default {
         DivisionTab,
     },
 
-    data() {
-        const users = usePage().props.users;
-        const division = usePage().props.division.data;
+    setup() {
+        const page = usePage();
+        const division = ref(page.props.division.data);
+        const admins = ref(page.props.users);
 
-        return {
-            admins: users,
-            division,
-            columns: [
-                { key: "name", label: "Фамилия" },
-                { key: "email", label: "Email" },
-                { key: "actions", label: "" },
-            ],
-        };
-    },
+        watch(
+            () => page.props.users,
+            (newUsers) => {
+                admins.value = newUsers;
+            },
+        );
 
-    methods: {
-        toggleCheckbox(row, val) {
+        const columns = [
+            {
+                label: "ФИО",
+                render: (row) => {
+                    return (
+                        row.last_name +
+                        " " +
+                        row.first_name[0] +
+                        ". " +
+                        row.middle_name[0] +
+                        "."
+                    );
+                },
+            },
+            { key: "email", label: "Email" },
+            { key: "actions", label: "" },
+        ];
+
+        const toggleCheckbox = async (row, val) => {
+            const previousRole = row.role.code;
+
             row.role.code = val ? "division_admin" : "division_worker";
 
-            if (val) {
-                router.post(
-                    route("division-admins.store", { division: this.division.id }), { user_id: row.id });
-            } else {
-                router.delete(
-                    route("division-admins.destroy", { division: this.division.id, division_admin: row.id }),
-                );
+            try {
+                if (val) {
+                    await router.post(
+                        route("division-admins.store", {
+                            division: division.value.id,
+                        }),
+                        { user_id: row.id },
+                    );
+                } else {
+                    await router.delete(
+                        route("division-admins.destroy", {
+                            division: division.value.id,
+                            division_admin: row.id,
+                        }),
+                    );
+                }
+            } catch (error) {
+                console.error(error);
+                row.role.code = previousRole;
             }
-        },
+        };
+
+        return {
+            admins,
+            division,
+            columns,
+            toggleCheckbox,
+        };
     },
 };
 </script>
@@ -50,9 +86,7 @@ export default {
         <DivisionTab :division_id="division.id">
             <Table :data="admins" :columns="columns">
                 <template #toolbar-right>
-                    <GoToButton
-                        :href="route('division-admins.index', { division: division.id })"
-                    />
+                    <GoToButton :href="route('division-admins.index', {division: division.id})"/>
                 </template>
 
                 <template #actions="{ row }">

@@ -13,16 +13,25 @@ use Inertia\Inertia;
 
 class UserInviteController
 {
-    public function create(Request $request)
-    {
+    public function create(Request $request) {
+        if (!(user()->hasRole('admin')
+            or (user()->hasRole('division_admin')))) {
+            abort(403);
+        }
+
         $division = Division::whereKey($request->division_id)->first();
 
         return Inertia::render("pages/invites/create", [
             "division" => fn() => getResource($division),
         ]);
     }
-    public function store(StoreUserInviteRequest $request)
-    {
+
+    public function store(StoreUserInviteRequest $request){
+        if (!(user()->hasRole('admin')
+            or (user()->hasRole('division_admin')))) {
+            abort(403);
+        }
+
         $userInvite = UserInvite::create([
             'email' => $request->input('email'),
             'division_id' => $request->input('division_id'),
@@ -34,6 +43,7 @@ class UserInviteController
         return redirect()->route("workers.index", ['division' => $request->input('division_id')])
             ->with("message", "Приглашение успешно отправлено");
     }
+
     public function accept(string $token)
     {
         $invite = UserInvite::where('token', $token)->first();

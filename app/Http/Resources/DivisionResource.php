@@ -18,6 +18,7 @@ class DivisionResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'address' => $this->address,
+            'url' => $this->url,
             'city' => [
                 'id' => $this->city?->id,
                 'name' => $this->city?->name,
@@ -27,10 +28,23 @@ class DivisionResource extends JsonResource
                     $shedule->dayOfTheWeek->code => [
                         'date_start' => $shedule->date_start->format('H:i'),
                         'date_end' => $shedule->date_end->format('H:i'),
+                        'lunch_start' => $shedule->lunch_start->format('H:i'),
+                        'lunch_end' => $shedule->lunch_end->format('H:i'),
                     ],
                 ];
             })->collapse(),
             'userCount' => $this->users()->count(),
+            'parent' => [
+                'id' => $this->parent?->id,
+                'name' => $this->parent?->name,
+            ],
+            'childrens' => $this->childrens->map(function($child) {
+                return [
+                        'id' => $child->id,
+                        'name' => $child->name,
+                ];
+            }),
         ];
+
     }
 }

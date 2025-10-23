@@ -14,7 +14,12 @@ export default {
     data() {
         return {
             columns: [
-                { key: "name", label: "Фамилия" },
+                {
+                    label: "ФИО",
+                    render: (row) => {
+                        return row.last_name + ' ' + row.first_name[0] + ". " + row.middle_name[0] + ".";
+                    },
+                },
                 { key: "email", label: "Email" },
                 { key: "action", label: "" },
             ],

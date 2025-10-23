@@ -17,7 +17,7 @@ const services = usePage().props.services;
 
 const form = useForm({
     shedules: worker.shedules,
-    name: worker.name,
+    name: worker.last_name + ' ' + worker.first_name[0]+ '. ' + worker.middle_name[0] + '.',
     email: worker.email,
     service_ids: worker.services.map((service) => service.id),
     division_id: division.id,

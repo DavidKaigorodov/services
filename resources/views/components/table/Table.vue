@@ -21,11 +21,11 @@ export default {
         },
     },
 
-    methods:{
-        getObjectValue(key, row){
-           return getObjectValue(key, row)
-        }
-    }
+    methods: {
+        getObjectValue(key, row) {
+            return getObjectValue(key, row);
+        },
+    },
 };
 </script>
 
@@ -62,28 +62,29 @@ export default {
                             :key="c_index"
                             :style="cell.width ? { width: cell.width } : {}"
                         >
-                            <div
-                                v-if="cell.key === 'actions'"
-                                class="table-actions"
-                            >
+                            <!-- Кастомный рендер, если указан -->
+                            <div v-if="cell.render">
+                                {{ cell.render(row) }}
+                            </div>
+
+                            <!-- Стандартные случаи -->
+                            <div v-else-if="cell.key === 'actions'" class="table-actions">
                                 <slot name="actions" :row="row" />
                             </div>
+
                             <div v-else-if="cell.splitDateTime">
                                 <div>
                                     {{
-                                        getObjectValue(cell.key, row)?.split(
-                                            " ",
-                                        )[0] || "-"
+                                        getObjectValue(cell.key, row)?.split(" ")[0] || "-"
                                     }}
                                 </div>
                                 <div>
                                     {{
-                                        getObjectValue(cell.key, row)?.split(
-                                            " ",
-                                        )[1] || "-"
+                                        getObjectValue(cell.key, row)?.split(" ")[1] || "-"
                                     }}
                                 </div>
                             </div>
+
                             <div v-else>
                                 {{ getObjectValue(cell.key, row) ?? "" }}
                             </div>

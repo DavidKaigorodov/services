@@ -6,7 +6,9 @@ import { VerticalForm, StringInput } from "@components";
 const invite = usePage().props.invite.data
 const form = useForm({
     token: invite.token,
-    name: "",
+    first_name: "",
+    last_name: "",
+    middle_name: "",
     email: invite.email,
     password: "",
     password_confirmation: "",
@@ -28,11 +30,25 @@ function onSubmit(e) {
             :handleSubmit="onSubmit"
         >
             <StringInput
-                label="Ваше имя"
-                name="name"
-                :value="form.name"
-                @update:value="(val) => (form.name = val)"
-                autocomplete="name"
+                label="Фамилия"
+                name="last_name"
+                :value="form.last_name"
+                @update:value="(val) => (form.last_name = val)"
+                autocomplete="last_name"
+            />
+             <StringInput
+                label="Имя"
+                name="first_name"
+                :value="form.first_name"
+                @update:value="(val) => (form.first_name = val)"
+                autocomplete="first_name"
+            />
+             <StringInput
+                label="Отчество(при наличии)"
+                name="middle_name"
+                :value="form.middle_name"
+                @update:value="(val) => (form.middle_name = val)"
+                autocomplete="middle_name"
             />
             <StringInput
                 label="Email"

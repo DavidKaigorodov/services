@@ -60,6 +60,14 @@ return [
             'report' => false,
         ],
 
+        'frame-storage' =>  [
+            'driver'        => 'local',
+            'root'          => '/var/www/entry-form/storage/app/public',
+            'visibility'    => 'public',
+            'throw'         => true,
+            'report'        => false,
+        ],
+
     ],
 
     /*

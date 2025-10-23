@@ -18,7 +18,13 @@ export default {
 <template>
     <tbody>
         <tr v-for="user in subscribes" :key="user.worker.data.id">
-            <td class="user-cell">{{ user.worker.data.name }}</td>
+            <td class="user-cell">
+            {{
+                user.worker.data.last_name + ' ' +
+                user.worker.data.first_name[0] + '. ' +
+                user.worker.data.middle_name[0] + '.'
+             }}
+             </td>
 
             <template v-if="allSlots.length > 0">
                 <td

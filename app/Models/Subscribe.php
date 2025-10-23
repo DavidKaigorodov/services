@@ -23,9 +23,9 @@ class Subscribe extends Model
         ];
     }
 
-    public function scopeWhereHasAccess()
+    public function scopeWhereHasAccess($query)
     {
-        return $this->where(function ($query) {
+        return $query->where(function ($query) {
             if(user()->hasRole('admin'))
                 return $query;
 

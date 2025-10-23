@@ -23,7 +23,6 @@ export default {
                 address: "",
                 city_id: "",
                 shedules: {},
-                responsible_email: "",
             }),
         };
     },

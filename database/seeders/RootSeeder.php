@@ -16,7 +16,9 @@ class RootSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'root',
+            'first_name' => 'root',
+            'last_name' => '',
+            'middle_name' => '',
             'email' => 'root',
             'password' => Hash::make('root'),
             'division_id' => null,

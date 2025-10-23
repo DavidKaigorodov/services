@@ -3,7 +3,13 @@ import { usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
-import { Table, EditButton, DeleteButton, AddButton, GoToButton } from "@components";
+import {
+    Table,
+    EditButton,
+    DeleteButton,
+    AddButton,
+    GoToButton,
+} from "@components";
 
 export default {
     components: {
@@ -21,16 +27,18 @@ export default {
                 { key: "name", label: "Наименование", width: "342px" },
                 { key: "address", label: "Адрес" },
                 { key: ["city", "name"], label: "Город", width: "160px" },
+                { key: ["parent", "name"], label: "Главное подразделение", width: "160px" },
+                { key: "url", label: "Ссылка" },
                 { key: "actions", label: "", width: "175px" },
             ],
         };
     },
-    computed:{
-        divisions(){
+    computed: {
+        divisions() {
             const divisions = usePage().props.divisions;
-            return divisions
-        }
-    }
+            return divisions;
+        },
+    },
 };
 </script>
 
