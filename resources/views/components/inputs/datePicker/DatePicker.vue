@@ -51,19 +51,29 @@ export default {
         popupStyles() {
             if (!this.show || !this.$refs.wrapperRef) return {};
             const rect = this.$refs.wrapperRef.getBoundingClientRect();
-            return {
+            const styles = {
                 position: "absolute",
                 left: `${rect.left}px`,
                 top: `${rect.bottom + window.scrollY}px`,
                 zIndex: "10000",
                 width: `${rect.width}px`,
             };
+
+            if (this.mode === "date") {
+                styles.minWidth = "280px";
+            }
+
+            return styles;
+        },
+        inputStyles() {
+            return this.mode === "date"
+                ? { width: "280px", minWidth: "280px" }
+                : {};
         },
         currentPopup() {
             return this.mode === "time" ? TimePickerPopup : CalendarPopup;
         },
     },
-
     methods: {
         togglePopup() {
             if (this.disabled) return;
@@ -100,6 +110,7 @@ export default {
                 @toggle="togglePopup"
                 :disabled="disabled"
                 v-bind="$attrs"
+                :style="inputStyles"
             />
             <Teleport to="body">
                 <component

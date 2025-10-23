@@ -19,13 +19,17 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $gender = rand(1, 2) === 1 ? 'male' : 'female';
+
         return [
-            'name' => $this->faker->lastName(),
-            'email' => $this->faker->email(),
+            'first_name' => $this->faker->firstName($gender),
+            'last_name' => $this->faker->lastName($gender),
+            'middle_name' => $this->faker->firstName('male') . ($gender === 'male' ? 'ов' : 'ова'),
+            'email' => $this->faker->unique()->email(),
             'password' => Hash::make($this->faker->word()),
             'division_id' => Division::all()->random()->id,
             'role_id' => UserRole::all()->random()->id,
-            'email_verified_at' => rand(0,1) === 1 ? now() : null,
+            'email_verified_at' => now()->subDay(rand(1, 364)),
         ];
     }
 }

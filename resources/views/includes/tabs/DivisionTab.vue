@@ -15,6 +15,8 @@ export default {
         const division = usePage().props.division.data;
         const user_role = usePage().props.current_user.data.role.code;
         const hasAdmins = ["admin", "division_admin"].includes(user_role);
+        const hasDivisionAdmins = ["division_admin"].includes(user_role);
+
         return {
             division,
             user_role,
@@ -61,6 +63,14 @@ export default {
                     title: "Обращения",
                     isActive: this.current === "subscribes",
                     hasAccess: true,
+                },
+                {
+                    title: "Генерация iFrame",
+                    href: route("frame.index", {
+                        division: division.id,
+                    }),
+                    isActive: this.current === "frame",
+                    hasAccess: hasDivisionAdmins,
                 },
             ],
         };

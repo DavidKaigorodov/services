@@ -16,6 +16,8 @@ class UpdateWorkerRequest extends FormRequest
             'shedules.*' => ['nullable', 'array'],
             'shedules.*.date_start' => ['required', 'date_format:H:i'],
             'shedules.*.date_end' => ['required', 'date_format:H:i'],
+            'shedules.*.lunch_start' => ['nullable', 'date_format:H:i'],
+            'shedules.*.lunch_end' => ['nullable', 'date_format:H:i'],
         ];
     }
     public function withValidator($validator)

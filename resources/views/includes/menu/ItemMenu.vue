@@ -12,24 +12,14 @@ export default {
             type: String,
             default: "",
         },
-        params: Object,
         method: String,
-    },
-
-    methods: {
-        goto(e) {
-            e.preventDefault();
-            if (this.method === "post")
-                router.post(route(this.href, this.params));
-            else router.get(route(this.href, this.params));
-        },
     },
 };
 </script>
 
 <template>
     <li class="link-box">
-        <Link class="link" :href="href" @click="goto" v-bind="$attrs">
+        <Link class="link" :href="href" :method="method">
             <slot />
             <span class="link-label">{{ label }}</span>
         </Link>
@@ -47,6 +37,7 @@ export default {
         display: flex
         align-items: center
         justify-content: center
+        background-color: transparent
         width: 50px
         height: 50px
         border-radius: 12px

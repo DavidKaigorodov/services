@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventCalendarController;
 use App\Http\Controllers\DivisionAdminController;
 use App\Http\Controllers\DivisionController;
+use App\Http\Controllers\FrameController;
 use App\Http\Controllers\SecurityController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SessionController;
@@ -44,7 +46,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/divisions', DivisionController::class);
 
-    Route::resource('/division/{division}/subscribes', SubscribeController::class);
+    Route::resource('/division/{division}/subscribes', SubscribeController::class)
+        ->only(['index', 'show']);
 
     Route::resource('/statistic', StatisticController::class)
         ->only(['index']);
@@ -60,7 +63,14 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/workers', WorkerController::class)
         ->only(['edit', 'update', 'destroy']);
+
+    Route::resource('/dashboard/user', DashboardController::class)
+        ->only(['show', 'edit', 'update']);
+
+    Route::resource('/{division}/frame', FrameController::class)
+        ->except(['show', 'create', 'edit']);
 });
+
 
 Route::middleware('guest')->group(function () {
     Route::get('/invites/{token}/accept', [UserInviteController::class, 'accept'])->name('invites.accept');
@@ -74,4 +84,11 @@ Route::controller(SecurityController::class)->group(function () {
     Route::post('/forgot-password', 'forgotPasswordPost')->middleware('guest')->name('password.email');
     Route::get('/reset-password/{token}', 'passwordResetGet')->middleware('guest')->name('password.reset');
     Route::post('/reset-password', 'passwordResetPost')->middleware('guest')->name('password.update');
+
+    Route::get('/change-password', 'passwordChangeGet')->middleware('auth')->name('passwordChange.edit');
+    Route::put('/change-password/{user}', 'passwordChangePut')->middleware('auth')->name('passwordChange.update');
+
+    Route::get('/change-email/user/{token}/accept', 'accept')->name('change-email.accept');
+    Route::get('/change-email', 'changeEmailGet')->middleware('auth')->name('change-email');
+    Route::post('/change-email', 'changeEmailPost')->middleware('auth')->name('change-email.post');
 });

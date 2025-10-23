@@ -16,6 +16,8 @@ return new class extends Migration {
             $table->id();
             $table->time('date_start');
             $table->time('date_end');
+            $table->time('lunch_start');
+            $table->time('lunch_end');
             $table->foreignId('division_id')->constrained(new Division()->getTable())->onDelete('cascade');
             $table->foreignId('day_of_the_week_id')->constrained(new DayOfTheWeek()->getTable());
         });

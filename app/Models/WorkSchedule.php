@@ -15,6 +15,8 @@ class WorkSchedule extends Model
         $fillable = [
             'date_start',
             'date_end',
+            'lunch_start',
+            'lunch_end',
             'user_id',
             'day_of_the_week_id',
         ];
@@ -24,6 +26,8 @@ class WorkSchedule extends Model
         return [
             'date_start' => 'datetime:H:i',
             'date_end' => 'datetime:H:i',
+            'lunch_start' => 'datetime:H:i',
+            'lunch_end' => 'datetime:H:i',
         ];
     }
 

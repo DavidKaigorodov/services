@@ -14,7 +14,7 @@ class UpdateCityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:2', 'max:255']
+            'name' => ['required', 'string', 'min:2', 'max:255', 'regex:/^[А-Яа-яЁё\s-]+$/u',]
         ];
     }
 }

@@ -13,16 +13,10 @@ class EventCalendarController
 {
     public function index(Request $request, Division $division)
     {
-        // $year = (int) ($request->input('year') ?? now()->year);
-        // $month = (int) ($request->input('month') ?? now()->month);
-        // $day = (int) ($request->input('day') ?? now()->day);
-
         $day = $request->has(['year', 'month', 'day'])
             ? CarbonImmutable::create($request->input('year'), $request->input('month'), $request->input('day'))
             : CarbonImmutable::now()->startOfDay();
 
-        // if(in_array($day->dayOfWeekIso, []) )
-        // dd($day);
         $subscribes = user()->hasRole('division_worker')
             ? [
                 [

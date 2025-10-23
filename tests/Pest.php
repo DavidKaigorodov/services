@@ -1,5 +1,27 @@
 <?php
 
+// use App\Models\User;
+// use App\Models\UserRole;
+
+require_once __DIR__ . '/Helpers/invalidDataGenerate.php';
+// require_once __DIR__ . '/Helpers/TestLogger.php';
+
+// pest()->beforeEach(function(){
+//     $this->seed();
+
+//     $this->admin = User::factory()->make(['role_id' => UserRole::byCode('admin')->id]);
+//     $this->division_admin = User::factory()->make(['role_id' => UserRole::byCode('division_admin')->id]);
+//     $this->division_worker = User::factory()->make(['role_id' => UserRole::byCode('division_worker')->id]);
+
+//     Log::channel('test')->info('Start Test: ' . $this->getPrintableTestCaseMethodName(), [
+//         'users' => [
+//             'admin' => $this->admin,
+//             'division_admin' => $this->division_admin,
+//             'division_worker' => $this->division_worker,
+//         ]
+//     ]);
+// });
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,9 +33,9 @@
 |
 */
 
-pest()->extend(Tests\TestCase::class)
- // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
+pest()->extend(Tests\Cases\ControllerCase::class)
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->in('Feature/*');
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +67,4 @@ function something()
 {
     // ..
 }
+

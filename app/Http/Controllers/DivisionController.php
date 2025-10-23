@@ -16,6 +16,10 @@ class DivisionController
      */
     public function index()
     {
+        if (user()->cannot('viewAny', Division::class)) {
+            abort(403);
+        }
+
         return Inertia::render('pages/divisions/index', [
             'divisions' => fn() => getResource(Division::class),
         ]);
@@ -26,6 +30,10 @@ class DivisionController
      */
     public function create()
     {
+        if (user()->cannot('create', Division::class)) {
+            abort(403);
+        }
+
         return Inertia::render('pages/divisions/create', [
             'cities' => fn() => City::get(['id', 'name'])
         ]);
@@ -36,13 +44,19 @@ class DivisionController
      */
     public function store(StoreDivisionRequest $request)
     {
-        $division = Division::create($request->only('name','address', 'city_id'));
+        if (user()->cannot('create', Division::class)) {
+            abort(403);
+        }
+
+        $division = Division::create($request->only('name', 'address', 'city_id', 'parent_id', 'url'));
 
         foreach ($request->get('shedules') as $day_code => $shedule) {
             $division->shedules()->create([
                 'day_of_the_week_id' => DayOfTheWeek::byCode($day_code)->id,
                 'date_start' => $shedule['date_start'],
                 'date_end' => $shedule['date_end'],
+                'lunch_start' => $shedule['lunch_start'],
+                'lunch_end' => $shedule['lunch_end'],
             ]);
         }
         return redirect()->route('divisions.index')->with('success', 'Запись успешно добавлена');
@@ -50,6 +64,10 @@ class DivisionController
 
     public function show(Division $division)
     {
+        if (user()->cannot('view', $division)) {
+            abort(403);
+        }
+
         return Inertia::render(
             'pages/divisions/show',
             [
@@ -64,8 +82,13 @@ class DivisionController
      */
     public function edit(Division $division)
     {
+        if (user()->cannot('update', $division)) {
+            abort(403);
+        }
+
         return Inertia::render('pages/divisions/edit', [
             'division' => fn() => getResource($division),
+            'divisions' => fn() => getResource(Division::class),
             'cities' => fn() => City::get(['id', 'name']),
         ]);
     }
@@ -75,7 +98,11 @@ class DivisionController
      */
     public function update(UpdateDivisionRequest $request, Division $division)
     {
-        $division->update($request->only('name', 'address', 'city_id'));
+        if (user()->cannot('update', $division)) {
+            abort(403);
+        }
+
+        $division->update($request->only('name', 'address', 'city_id', 'parent_id', 'url'));
 
         $division->shedules()->delete();
         foreach ($request->get('shedules') as $day_code => $shedule) {
@@ -83,6 +110,8 @@ class DivisionController
                 'day_of_the_week_id' => DayOfTheWeek::byCode($day_code)->id,
                 'date_start' => $shedule['date_start'],
                 'date_end' => $shedule['date_end'],
+                'lunch_start' => $shedule['lunch_start'],
+                'lunch_end' => $shedule['lunch_end'],
             ]);
         }
 
@@ -96,6 +125,10 @@ class DivisionController
      */
     public function destroy(Division $division)
     {
+        if (user()->cannot('delete', $division)) {
+            abort(403);
+        }
+
         $division->delete();
 
         return back()->with('success', 'Запись удалена');

@@ -52,7 +52,7 @@ export default {
 .datepicker-input
     display: flex
     cursor: pointer
-    min-width: 280px
+    // min-width: 280px
     justify-content: space-between
 
     .input-text

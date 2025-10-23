@@ -29,7 +29,11 @@ class SubscribeResource extends JsonResource
                 'name' => $this->division?->name,
             ],
             "worker" => [
-                "name" => $this->worker->name,
+                "name" => implode(' ', array_filter([
+                    $this->worker->last_name,
+                    $this->worker->name ? mb_substr($this->worker->name, 0, 1) . '.' : null,
+                    $this->worker->middle_name ? mb_substr($this->worker->middle_name, 0, 1) . '.' : null,
+                ])),
             ],
             "comment" => $this->comment,
         ];

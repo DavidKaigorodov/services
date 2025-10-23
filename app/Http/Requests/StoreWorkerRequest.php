@@ -19,7 +19,9 @@ class StoreWorkerRequest extends FormRequest
     {
         return [
             'token' => ['required', 'exists:' . UserInvite::class . ',token'],
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['nullable', 'string', 'max:255'],
+            'middle_name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:' . User::class . ',email'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ];

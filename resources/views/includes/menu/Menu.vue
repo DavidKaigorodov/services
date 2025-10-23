@@ -5,6 +5,7 @@ import { default as HomeIco } from "../../components/icons/HomeIco.vue";
 import { default as BuildingsIco } from "../../components/icons/BuildingsIco.vue";
 import { default as CollectionIco } from "../../components/icons/CollectionIco.vue";
 import { default as LogoutIco } from "../../components/icons/LogoutIco.vue";
+import { default as PersonIco } from "../../components/icons/PersonIco.vue";
 
 export default {
     components: {
@@ -13,34 +14,77 @@ export default {
         BuildingsIco,
         CollectionIco,
         LogoutIco,
+        PersonIco,
     },
-
-    computed: {
-        user_role() {
-            return usePage().props.current_user.data.role.code;
-        },
+    data() {
+        const current_user = usePage().props.current_user.data;
+        return {
+            current_user,
+        };
     },
 };
 </script>
 
 <template>
     <nav class="sidebar">
-        <ul class="sidebar-menu" v-if="['admin'].includes(user_role)">
-            <ItemMenu href="divisions.index" label="Подразделения">
-                <HomeIco />
-            </ItemMenu>
+        <ul class="sidebar-menu">
+            <template v-if="['admin'].includes(current_user.role.code)">
+                <ItemMenu
+                    :href="route('divisions.index')"
+                    label="Подразделения"
+                >
+                    <HomeIco />
+                </ItemMenu>
 
-            <ItemMenu href="cities.index" label="Города">
-                <BuildingsIco />
-            </ItemMenu>
+                <ItemMenu :href="route('cities.index')" label="Города">
+                    <BuildingsIco />
+                </ItemMenu>
 
-            <ItemMenu href="services.index" label="Услуги">
-                <CollectionIco />
+                <ItemMenu :href="route('services.index')" label="Услуги">
+                    <CollectionIco />
+                </ItemMenu>
+            </template>
+
+            <template
+                v-if="['division_admin'].includes(current_user.role.code)"
+            >
+                <ItemMenu
+                    :href="
+                        route('divisions.show', {
+                            division: current_user.division.id,
+                        })
+                    "
+                    label="Домой"
+                >
+                    <HomeIco />
+                </ItemMenu>
+            </template>
+
+            <template
+                v-if="['division_worker'].includes(current_user.role.code)"
+            >
+                <ItemMenu
+                    :href="
+                        route('events.index', {
+                            division: current_user.division.id,
+                        })
+                    "
+                    label="Домой"
+                >
+                    <HomeIco />
+                </ItemMenu>
+            </template>
+
+            <ItemMenu
+                :href="route('user.show', { user: current_user.id })"
+                label="Личный Кабинет"
+            >
+                <PersonIco />
             </ItemMenu>
         </ul>
 
         <div class="sidebar-footer">
-            <ItemMenu href="logout" method="post" label="Выход">
+            <ItemMenu :href="route('logout')" method="post" label="Выход">
                 <LogoutIco />
             </ItemMenu>
         </div>
@@ -57,8 +101,11 @@ export default {
 
     &-menu
         margin: 0
-        padding: 8px 0
+        padding: 0 0 8px 0
         list-style: none
+
+    &-menu > *:not(:last-child)
+        margin-bottom: 4px
 
     &-footer
         margin-top: auto

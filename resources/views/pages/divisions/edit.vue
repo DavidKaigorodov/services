@@ -3,7 +3,14 @@ import { usePage, useForm } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
-import { HorizontalForm, FormGroup, Select, WorkSchedule, TextArea } from "@components";
+import {
+    HorizontalForm,
+    FormGroup,
+    Select,
+    WorkSchedule,
+    TextArea,
+    StringInput,
+} from "@components";
 
 export default {
     components: {
@@ -13,10 +20,12 @@ export default {
         Select,
         WorkSchedule,
         TextArea,
+        StringInput,
     },
 
     data() {
         const division = usePage().props.division.data;
+        const divisions = usePage().props.divisions.data;
         const cities = usePage().props.cities;
         return {
             form: useForm({
@@ -24,12 +33,12 @@ export default {
                 address: division.address,
                 city_id: division.city.id,
                 shedules: division.shedules,
-                responsible_name: "",
-                responsible_email: "",
-                responsible_password: "",
+                parent_id: division.parent.id,
+                url: division.url,
             }),
             cities,
             division,
+            divisions,
         };
     },
 
@@ -40,12 +49,20 @@ export default {
                 label: city.name,
             }));
         },
+        divisionOption() {
+            return this.divisions.map((division) => ({
+                value: division.id,
+                label: division.name,
+            }));
+        },
     },
 
     methods: {
         onSubmit(e) {
             e.preventDefault();
-            this.form.put(route("divisions.update", { division: this.division.id }));
+            this.form.put(
+                route("divisions.update", { division: this.division.id }),
+            );
         },
     },
 };
@@ -81,8 +98,22 @@ export default {
                     :options="cityOptions"
                     placeholder="Выберите город"
                 />
+                <Select
+                    label="Главное подразделение"
+                    name="parent_id"
+                    v-model="form.parent_id"
+                    :options="divisionOption"
+                    placeholder="Выберите главное подразделение"
+                />
+                <StringInput
+                    label="Ссылка"
+                    name="url"
+                    :value="form.url"
+                    placeholder="http://example.ru"
+                    @update:value="(val) => (form.url = val)"
+                    autocomplete="url"
+                />
             </FormGroup>
-
             <FormGroup name="work" label="График работы">
                 <WorkSchedule v-model="form.shedules" name="shedules" />
             </FormGroup>

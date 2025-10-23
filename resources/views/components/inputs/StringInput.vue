@@ -44,9 +44,6 @@ export default {
         inputId() {
             this.id ?? this.name;
         },
-        placeholderText() {
-            this.placeholder ?? "";
-        },
     },
 };
 </script>
@@ -60,7 +57,7 @@ export default {
             :name="name"
             :value="value ?? ''"
             @input="$emit('update:value', $event.target.value)"
-            :placeholder="placeholderText"
+            :placeholder="placeholder"
             :disabled="disabled"
             :autocomplete="autocomplete"
             :readonly="readonly"

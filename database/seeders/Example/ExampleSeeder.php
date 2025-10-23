@@ -2,6 +2,7 @@
 
 namespace Database\Seeders\Example;
 
+use Database\Seeders\FrameStatusSeeder;
 use Illuminate\Database\Seeder;
 
 class ExampleSeeder extends Seeder
@@ -16,5 +17,6 @@ class ExampleSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(ServiceSeeder::class);
         $this->call(SubscribeSeeder::class);
+        $this->call(FrameStatusSeeder::class);
     }
 }

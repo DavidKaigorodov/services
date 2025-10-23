@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\City;
+use App\Models\Division;
 use App\Models\DayOfTheWeek;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
@@ -20,10 +21,14 @@ class UpdateDivisionRequest extends FormRequest
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'address' => ['required', 'string', 'min:3'],
             'city_id' => ['required', 'exists:' . City::class . ',id'],
+            'parent_id' => ['nullable', 'exists:' . Division::class . ',id'],
+            'url' => ['nullable', 'url'],
             'shedules' => ['required', 'array'],
             'shedules.*' => ['nullable', 'array'],
             'shedules.*.date_start' => ['required', 'date_format:H:i'],
             'shedules.*.date_end' => ['required', 'date_format:H:i'],
+            'shedules.*.lunch_start' => ['required', 'date_format:H:i'],
+            'shedules.*.lunch_end' => ['required', 'date_format:H:i'],
         ];
     }
     public function withValidator($validator)
