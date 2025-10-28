@@ -73,7 +73,7 @@ class SecurityController
         }
 
         $user->update([
-            'password' => Hash::make($request->new_password),
+            'password' => Hash::make($request->password),
         ]);
 
         return redirect()->route('user.show', ['user' => $user->id])->with('success', 'Пароль успешно изменён!');
@@ -99,13 +99,14 @@ class SecurityController
             ->with("message", "На указанный email было высланно письмо с подтверждением");
     }
 
-    public function accept(string $token) {
+    public function accept(string $token)
+    {
         $changeEmail = ChangeEmailToken::where('token', $token)->first();
 
         if ($changeEmail === null)
             return abort(404);
 
-        if(user()->id !== $changeEmail->user->id)
+        if (user()->id !== $changeEmail->user->id)
             return abort(403);
 
 

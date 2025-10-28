@@ -30,7 +30,7 @@ export default {
     computed: {
         cityOptions() {
             return Object.entries(this.cities).map(([id, cityData]) => ({
-                value: id,
+                value: cityData.id,
                 label: cityData.name,
             }));
         },
@@ -47,6 +47,7 @@ export default {
 
 <template>
     <AuthenticatedLayout>
+    {{ console.log(cityOptions) }}
         <HorizontalForm
             header="Организации"
             sbm="Отправить"
