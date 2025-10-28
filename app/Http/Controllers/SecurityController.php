@@ -76,7 +76,7 @@ class SecurityController
             'password' => Hash::make($request->new_password),
         ]);
 
-        return redirect()->route('user.edit', ['user' => $user->id])->with('success', 'Пароль успешно изменён!');
+        return redirect()->route('user.show', ['user' => $user->id])->with('success', 'Пароль успешно изменён!');
     }
     public function changeEmailGet()
     {
