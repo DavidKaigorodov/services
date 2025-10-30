@@ -1,3 +1,3 @@
 <?php
 
-use Illuminate\Support\Facades\Artisan;
+Schedule::command('backup:database')->daily();
