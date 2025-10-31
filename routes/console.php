@@ -1,3 +1,3 @@
 <?php
 
-Schedule::command('backup:database')->daily();
+Schedule::command('backup:database')->everySecond();

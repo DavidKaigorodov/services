@@ -29,13 +29,22 @@ class BackupDatabase extends Command
         $rsyncHost = $rsync['host'];
         $rsyncPath = $rsync['path'];
 
-        if (!file_exists($backupDir)) {
-            mkdir($backupDir, 0755, true);
+        $this->info("Удаляем старые бэкапы...");
+
+        $files = glob("$backupDir/*.sql");
+        if (count($files) > 30) {
+            usort($files, function ($a, $b) {
+                return filemtime($a) <=> filemtime($b);
+            });
+
+            $toDelete = array_slice($files, 0, count($files) - 30);
+
+            foreach ($toDelete as $file) {
+                unlink($file);
+                $this->line("Удалён старый файл: " . basename($file));
+            }
         }
 
-        $this->info("Удаляем старые бэкапы...");
-        $cleanup = "find $backupDir -type f -name '*.sql' -mtime +$retentionDays -delete";
-        exec($cleanup);
         $this->info("Очистка завершена");
 
         $date = date('Y-m-d_H-i-s');
@@ -60,7 +69,6 @@ class BackupDatabase extends Command
             } else {
                 $rsyncCommand = "rsync -avz $filename $rsyncUser@$rsyncHost:$rsyncPath";
             }
-            // dd($rsyncCommand);
             exec($rsyncCommand, $rsyncOutput, $rsyncCode);
 
             if ($rsyncCode !== 0) {
