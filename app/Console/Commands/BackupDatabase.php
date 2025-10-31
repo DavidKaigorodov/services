@@ -62,15 +62,10 @@ class BackupDatabase extends Command
         if ($rsyncUser && $rsyncHost && $rsyncPath) {
             $this->info("Отправляем файлы бэкапов на сервер через rsync...");
 
-            if (!empty($rsyncPass)) {
-                $rsyncCommand = "/usr/bin/sshpass -p '$rsyncPass' /usr/bin/rsync -avz --delete --progress "
-                    . escapeshellarg($backupDir . '/')
-                    . " $rsyncUser@$rsyncHost:$rsyncPath";
-            } else {
-                $rsyncCommand = "/usr/bin/rsync -avz --delete --progress "
-                    . escapeshellarg($backupDir . '/')
-                    . " $rsyncUser@$rsyncHost:$rsyncPath";
-            }
+            $rsyncCommand = "sshpass -p $rsyncPass rsync -avz --delete --progress "
+                . escapeshellarg(getcwd() . '/')
+                . " $rsyncUser@$rsyncHost:$rsyncPath";
+
 
             $this->line("Команда rsync: $rsyncCommand");
 
