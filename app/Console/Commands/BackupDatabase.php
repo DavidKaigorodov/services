@@ -65,9 +65,6 @@ class BackupDatabase extends Command
             $rsyncCommand = "sshpass -p \"$rsyncPass\" rsync -at --delete --progress "
                 . getcwd() . '/' . " $rsyncUser@$rsyncHost:$rsyncPath";
 
-
-            $this->line("Команда rsync: $rsyncCommand");
-
             $this->info("Процесс синхронизации...");
             exec($rsyncCommand . " 2>&1", $rsyncOutput, $rsyncCode);
 
