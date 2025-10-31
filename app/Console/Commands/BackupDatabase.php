@@ -24,16 +24,18 @@ class BackupDatabase extends Command
         $dbPass = $db['password'];
 
         $rsync = config('backup.rsync');
-        $rsyncUser = $rsync['user'] ?? null;
-        $rsyncPass = $rsync['password'] ?? null;
-        $rsyncHost = $rsync['host'] ?? null;
-        $rsyncPath = $rsync['path'] ?? null;
+        $rsyncUser = $rsync['user'];
+        $rsyncPass = $rsync['password'];
+        $rsyncHost = $rsync['host'];
+        $rsyncPath = $rsync['path'];
 
         $this->info("Удаляем старые бэкапы...");
 
         $files = glob("$backupDir/*.sql");
         if (count($files) > 30) {
-            usort($files, fn($a, $b) => filemtime($a) <=> filemtime($b));
+            usort($files, function ($a, $b) {
+                return filemtime($a) <=> filemtime($b);
+            });
 
             $toDelete = array_slice($files, 0, count($files) - 30);
 
@@ -62,32 +64,19 @@ class BackupDatabase extends Command
         if ($rsyncUser && $rsyncHost && $rsyncPath) {
             $this->info("Отправляем файл на сервер...");
 
-            // Лог-файл для rsync
-            $logFile = storage_path('logs/rsync.log');
-            $this->line("Лог rsync будет записан в: $logFile");
-
             if (!empty($rsyncPass)) {
-                $rsyncCommand = "/usr/bin/sshpass -p '$rsyncPass' /usr/bin/rsync -avz --progress $filename $rsyncUser@$rsyncHost::$rsyncPath 2>&1";
+                $rsyncCommand = "/usr/bin/sshpass -p '$rsyncPass' /usr/bin/rsync -av " . getcwd() . "/ $rsyncUser@$rsyncHost::$rsyncPath";
             } else {
-                $rsyncCommand = "/usr/bin/rsync -avz --progress $filename $rsyncUser@$rsyncHost:$rsyncPath 2>&1";
+                $rsyncCommand = "/usr/bin/rsync -avz $filename $rsyncUser@$rsyncHost:$rsyncPath";
             }
-
-            $this->line("Выполняется команда: $rsyncCommand");
-
             exec($rsyncCommand, $rsyncOutput, $rsyncCode);
 
-            file_put_contents($logFile, "=== " . date('Y-m-d H:i:s') . " ===\n" . $rsyncCommand . "\n" . implode("\n", $rsyncOutput) . "\n\n", FILE_APPEND);
-
-            foreach ($rsyncOutput as $line) {
-                $this->line("→ $line");
-            }
-
             if ($rsyncCode !== 0) {
-                $this->error("Ошибка при передаче! Код: $rsyncCode");
+                $this->error("Ошибка при передаче!");
                 return 1;
             }
 
-            $this->info("Файл успешно передан.");
+            $this->info("Файл передан.");
         } else {
             $this->warn("Данные rsync не заданы - файл не отправлен.");
         }
