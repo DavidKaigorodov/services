@@ -65,9 +65,9 @@ class BackupDatabase extends Command
             $this->info("Отправляем файл на сервер...");
 
             if (!empty($rsyncPass)) {
-                $rsyncCommand = "sshpass -p '$rsyncPass' rsync -av " . getcwd() . "/ $rsyncUser@$rsyncHost::$rsyncPath";
+                $rsyncCommand = "/usr/bin/sshpass -p '$rsyncPass' /usr/bin/rsync -av " . getcwd() . "/ $rsyncUser@$rsyncHost::$rsyncPath";
             } else {
-                $rsyncCommand = "rsync -avz $filename $rsyncUser@$rsyncHost:$rsyncPath";
+                $rsyncCommand = "/usr/bin/rsync -avz $filename $rsyncUser@$rsyncHost:$rsyncPath";
             }
             exec($rsyncCommand, $rsyncOutput, $rsyncCode);
 
