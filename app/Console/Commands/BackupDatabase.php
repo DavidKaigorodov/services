@@ -12,7 +12,6 @@ class BackupDatabase extends Command
     public function handle()
     {
         $backupDir = config('backup.backup_dir');
-        $retentionDays = config('backup.retention_days');
 
         $connection = config('database.default');
         $db = config("database.connections.$connection");
@@ -38,7 +37,6 @@ class BackupDatabase extends Command
             });
 
             $toDelete = array_slice($files, 0, count($files) - 30);
-
             foreach ($toDelete as $file) {
                 unlink($file);
                 $this->line("Удалён старый файл: " . basename($file));
@@ -62,23 +60,26 @@ class BackupDatabase extends Command
         $this->info("Дамп создан: $filename");
 
         if ($rsyncUser && $rsyncHost && $rsyncPath) {
-            $this->info("Отправляем файл на сервер...");
+            $this->info("Отправляем файлы бэкапов на сервер через rsync...");
 
-            if (!empty($rsyncPass)) {
-                $rsyncCommand = "sshpass -p '$rsyncPass' rsync -av " . getcwd() . "/ $rsyncUser@$rsyncHost::$rsyncPath";
-            } else {
-                $rsyncCommand = "rsync -avz $filename $rsyncUser@$rsyncHost:$rsyncPath";
+            $rsyncCommand = "sshpass -p \"$rsyncPass\" rsync -at --delete --progress "
+                . getcwd() . '/' . " $rsyncUser@$rsyncHost:$rsyncPath";
+
+            $this->info("Процесс синхронизации...");
+            exec($rsyncCommand . " 2>&1", $rsyncOutput, $rsyncCode);
+
+            foreach ($rsyncOutput as $line) {
+                $this->line($line);
             }
-            exec($rsyncCommand, $rsyncOutput, $rsyncCode);
 
             if ($rsyncCode !== 0) {
-                $this->error("Ошибка при передаче!");
+                $this->error("Ошибка при передаче rsync!");
                 return 1;
             }
 
-            $this->info("Файл передан.");
+            $this->info("Файлы успешно синхронизированы с удалённым сервером.");
         } else {
-            $this->warn("Данные rsync не заданы - файл не отправлен.");
+            $this->warn("Данные rsync не заданы — файл не отправлен.");
         }
 
         $this->info("Копирование завершено успешно.");
