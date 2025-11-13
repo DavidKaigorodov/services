@@ -9,7 +9,7 @@ export default {
     props: {
         division_id: Number,
         allSlots: Array,
-        subscribes: Array, // Это массив пользователей
+        subscribes: Array,
         show: Function,
     },
 };
@@ -27,13 +27,11 @@ export default {
                         const middleName = worker.middle_name;
 
                         if (lastName) {
-                            // Есть фамилия: Фамилия И. О.
                             const parts = [lastName];
                             if (firstName) parts.push(firstName[0] + ".");
                             if (middleName) parts.push(middleName[0] + ".");
                             return parts.join(" ");
                         } else {
-                            // Нет фамилии: Имя Отчество
                             const parts = [];
                             if (firstName) parts.push(firstName);
                             if (middleName) parts.push(middleName);
