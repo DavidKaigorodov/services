@@ -22,6 +22,7 @@ class SecurityController
     {
         return Inertia::render('pages/security/forgot-password');
     }
+    //Отправка письма на почту для смены пароля
 
     public function forgotPasswordPost(ForgotPasswordRequest $request)
     {
@@ -29,11 +30,18 @@ class SecurityController
             $request->only('email')
         );
 
-        return $status === Password::ResetLinkSent
-            ? back()->with('success', $status)
-            : back()->withErrors('error', $status);
-    }
+        if ($status === Password::RESET_LINK_SENT) {
+            return back()->with('success', 'На почту отправлено письмо для смены пароля');
+        }
 
+        $errorMessages = [
+            Password::INVALID_USER => 'Пользователь с таким email не найден',
+        ];
+
+        $errorMessage = $errorMessages[$status] ?? __($status);
+
+        return back()->withErrors(['email' => $errorMessage]);
+    }
     public function passwordResetGet(Request $request, string $token, )
     {
         return Inertia::render('pages/security/reset-password', ['token' => $token, 'email' => $request->input('email')]);

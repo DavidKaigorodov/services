@@ -3,7 +3,14 @@ import { useForm, usePage } from "@inertiajs/vue3";
 
 import { AuthenticatedLayout } from "@layouts";
 
-import { HorizontalForm, FormGroup, Select, WorkSchedule, TextArea } from "@components";
+import {
+    HorizontalForm,
+    FormGroup,
+    Select,
+    WorkSchedule,
+    TextArea,
+    StringInput,
+} from "@components";
 
 export default {
     components: {
@@ -13,9 +20,11 @@ export default {
         Select,
         WorkSchedule,
         TextArea,
+        StringInput,
     },
 
     data() {
+        const divisions = usePage().props.divisions;
         return {
             cities: usePage().props.cities,
             form: useForm({
@@ -23,7 +32,10 @@ export default {
                 address: "",
                 city_id: "",
                 shedules: {},
+                parent_id: "",
+                url: "",
             }),
+            divisions,
         };
     },
 
@@ -32,6 +44,12 @@ export default {
             return Object.entries(this.cities).map(([id, cityData]) => ({
                 value: cityData.id,
                 label: cityData.name,
+            }));
+        },
+        divisionOption() {
+            return this.divisions.map((division) => ({
+                value: division.id,
+                label: division.name,
             }));
         },
     },
@@ -47,7 +65,6 @@ export default {
 
 <template>
     <AuthenticatedLayout>
-    {{ console.log(cityOptions) }}
         <HorizontalForm
             header="Организации"
             sbm="Отправить"
@@ -75,6 +92,21 @@ export default {
                     v-model="form.city_id"
                     :options="cityOptions"
                     placeholder="Выберите город"
+                />
+                <Select
+                    label="Главное подразделение"
+                    name="parent_id"
+                    v-model="form.parent_id"
+                    :options="divisionOption"
+                    placeholder="Выберите главное подразделение"
+                />
+                <StringInput
+                    label="Ссылка"
+                    name="url"
+                    :value="form.url"
+                    placeholder="http://example.ru"
+                    @update:value="(val) => (form.url = val)"
+                    autocomplete="url"
                 />
             </FormGroup>
 

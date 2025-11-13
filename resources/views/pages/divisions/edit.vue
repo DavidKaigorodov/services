@@ -25,7 +25,7 @@ export default {
 
     data() {
         const division = usePage().props.division.data;
-        const divisions = usePage().props.divisions.data;
+        const divisions = usePage().props.divisions;
         const cities = usePage().props.cities;
         return {
             form: useForm({

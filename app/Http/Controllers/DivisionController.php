@@ -35,7 +35,8 @@ class DivisionController
         }
 
         return Inertia::render('pages/divisions/create', [
-            'cities' => fn() => City::get(['id', 'name'])
+            'cities' => fn() => City::get(['id', 'name']),
+            'divisions' => fn() => Division::get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +89,7 @@ class DivisionController
 
         return Inertia::render('pages/divisions/edit', [
             'division' => fn() => getResource($division),
-            'divisions' => fn() => getResource(Division::class),
+            'divisions' => fn() => Division::get(['id', 'name']),
             'cities' => fn() => City::get(['id', 'name']),
         ]);
     }

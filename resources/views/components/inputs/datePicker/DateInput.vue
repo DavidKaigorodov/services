@@ -5,72 +5,123 @@ export default {
     components: {
         CalendarIco,
     },
-
     props: {
-        modelValue: {
-            type: [String, Object, Number],
-            default: null,
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
+        modelValue: String,
+        disabled: Boolean,
+        placeholder: {
+            type: String,
+            default: "ДД.MM.ГГГГ",
         },
     },
 
-    emits: ["toggle"],
+    emits: ["focus", "confirm"],
+
+    data() {
+        return {
+            internalValue: this.modelValue || "",
+            isPopupClick: false,
+        };
+    },
+
+    watch: {
+        modelValue: {
+            handler(val) {
+                this.internalValue = val || "";
+            },
+            immediate: true,
+        },
+    },
 
     methods: {
-        handleClick() {
-            if (!this.disabled) {
-                this.$emit("toggle");
+        onInput(e) {
+            this.internalValue = e.target.value;
+        },
+
+        onFocus() {
+            this.isPopupClick = false;
+            this.$emit("focus");
+        },
+
+        onBlur(e) {
+            if (this.isPopupClick) {
+                this.isPopupClick = false;
+                return;
             }
+
+            setTimeout(() => {
+                const active = document.activeElement;
+                if (active && active.closest(".datepicker-popup-teleport")) {
+                    return;
+                }
+                this.$emit("confirm", this.internalValue);
+            }, 100);
+        },
+
+        onKeyDown(e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                this.$emit("confirm", this.internalValue);
+            }
+        },
+
+        markAsPopupClick() {
+            this.isPopupClick = true;
         },
     },
 };
 </script>
 
 <template>
-    <div
-        class="input datepicker-input"
-        :class="{ disabled: disabled }"
-        @click="handleClick"
-    >
-        <span class="input-text">{{ modelValue }}</span>
-        <div class="ico-calendar">
+    <div class="date-input-wrapper">
+        <input
+            type="date"
+            :value="internalValue"
+            :disabled="disabled"
+            :placeholder="placeholder"
+            @input="onInput"
+            @focus="onFocus"
+            @blur="onBlur"
+            @keydown="onKeyDown"
+            max="9999-12-31"
+            class="custom-date-input"
+        />
+        <div class="calendar-icon">
             <CalendarIco />
         </div>
-        <input
-            type="hidden"
-            :value="modelValue"
-            v-bind="$attrs"
-            :disabled="disabled"
-        />
     </div>
 </template>
 
 <style lang="sass" scoped>
-.datepicker-input
-    display: flex
+.date-input-wrapper
+    position: relative
+    display: inline-block
+    width: 100%
+
+
+.custom-date-input
+    @include input()
+    width: 100%
+    padding: 8px 40px 8px 12px;
+
+
+.calendar-icon
+    position: absolute
+    right: 12px
+    top: 50%
+    transform: translateY(-50%)
+    color: #6b7280
     cursor: pointer
-    // min-width: 280px
-    justify-content: space-between
+    display: flex
+    align-items: center
+    justify-content: center
 
-    .input-text
-        flex: 1
-        text-align: start
-        white-space: nowrap
-        overflow: hidden
-        text-overflow: ellipsis
+.custom-date-input
+    -webkit-appearance: none
+    -moz-appearance: none
+    appearance: none
+    background-image: none
 
-    .ico-calendar
-        flex-shrink: 0
-        margin-left: 8px
-        display: flex
-        align-items: center
-        color: #aaa
-
-    &.disabled
-        opacity: 0.6
-        cursor: not-allowed
-        pointer-events: none
+.custom-date-input::-webkit-calendar-picker-indicator
+    display: none
+    -webkit-appearance: none
 </style>

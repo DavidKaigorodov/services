@@ -97,8 +97,7 @@ function onSubmit(e) {
 </template>
 
 <style lang="sass">
-.services
-    // max-height: 605px
+.form-group.services
     overflow-y: auto
     @include scroll()
 </style>

@@ -9,7 +9,7 @@ export default {
     props: {
         division_id: Number,
         allSlots: Array,
-        subscribes: Array,
+        subscribes: Array, // Это массив пользователей
         show: Function,
     },
 };
@@ -17,27 +17,48 @@ export default {
 
 <template>
     <tbody>
-        <tr v-for="user in subscribes" :key="user.worker.data.id">
+        <tr v-for="subscribe in subscribes" :key="subscribe.worker.data.id">
             <td class="user-cell">
-            {{
-                user.worker.data.last_name + ' ' +
-                user.worker.data.first_name[0] + '. ' +
-                user.worker.data.middle_name[0] + '.'
-             }}
-             </td>
+                {{
+                    (() => {
+                        const worker = subscribe.worker.data;
+                        const lastName = worker.last_name;
+                        const firstName = worker.first_name;
+                        const middleName = worker.middle_name;
+
+                        if (lastName) {
+                            // Есть фамилия: Фамилия И. О.
+                            const parts = [lastName];
+                            if (firstName) parts.push(firstName[0] + ".");
+                            if (middleName) parts.push(middleName[0] + ".");
+                            return parts.join(" ");
+                        } else {
+                            // Нет фамилии: Имя Отчество
+                            const parts = [];
+                            if (firstName) parts.push(firstName);
+                            if (middleName) parts.push(middleName);
+                            return parts.join(" ");
+                        }
+                    })()
+                }}
+            </td>
 
             <template v-if="allSlots.length > 0">
                 <td
                     v-for="slot in allSlots"
-                    :key="slot + user.worker.data.id"
+                    :key="slot + subscribe.worker.data.id"
                     class="time-slot"
                 >
                     <div class="events-track">
                         <div
-                            v-for="(record, i) in user.timeline[slot]"
+                            v-for="(record, i) in subscribe.timeline[slot]"
                             :key="i"
                         >
-                            <EventBlock :record :show :division_id />
+                            <EventBlock
+                                :record="record"
+                                :show="show"
+                                :division_id="division_id"
+                            />
                         </div>
                     </div>
                 </td>

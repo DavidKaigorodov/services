@@ -145,6 +145,6 @@ class WorkerController
         }
 
         $worker->delete();
-        return redirect()->route('workers.index', ['division' => $division])->with('success', value: 'Пользователь удален');
+        return redirect()->route('workers.index', ['division' => $worker->division_id])->with('success', value: 'Пользователь удален');
     }
 }

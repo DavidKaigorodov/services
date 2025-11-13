@@ -41,6 +41,7 @@ export default {
         >
             <StringInput
                 label="Пароль"
+                type="password"
                 name="password"
                 :value="form.password"
                 @update:value="(val) => (form.password = val)"
@@ -48,6 +49,7 @@ export default {
             />
             <StringInput
                 label="Повторите пароль"
+                type="password"
                 name="password_confirmation"
                 :value="form.password_confirmation"
                 @update:value="(val) => (form.password_confirmation = val)"

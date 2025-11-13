@@ -30,14 +30,23 @@ export default {
             {
                 label: "ФИО",
                 render: (row) => {
-                    return (
-                        row.last_name +
-                        " " +
-                        row.first_name[0] +
-                        ". " +
-                        row.middle_name[0] +
-                        "."
-                    );
+                    const lastName = row.last_name || "";
+                    const firstNameInitial = row.first_name
+                        ? row.first_name[0] + "."
+                        : "";
+                    const middleNameInitial = row.middle_name
+                        ? row.middle_name[0] + "."
+                        : "";
+
+                    const result = [
+                        lastName,
+                        firstNameInitial,
+                        middleNameInitial,
+                    ]
+                        .filter((part) => part !== "")
+                        .join(" ");
+
+                    return result || "-";
                 },
             },
             { key: "email", label: "Email" },
@@ -86,7 +95,13 @@ export default {
         <DivisionTab :division_id="division.id">
             <Table :data="admins" :columns="columns">
                 <template #toolbar-right>
-                    <GoToButton :href="route('division-admins.index', {division: division.id})"/>
+                    <GoToButton
+                        :href="
+                            route('division-admins.index', {
+                                division: division.id,
+                            })
+                        "
+                    />
                 </template>
 
                 <template #actions="{ row }">
