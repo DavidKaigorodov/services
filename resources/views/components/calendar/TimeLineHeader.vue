@@ -44,7 +44,7 @@ export default {
             nextDay,
             todayDate,
             form: {
-                date: currentDate,
+                date: currentDate.toDate(),
             },
         };
     },
@@ -68,7 +68,10 @@ export default {
         },
         handleDateChange(val) {
             const date = dayjs(val);
-            this.goToDate(date);
+            if (date.isValid()) {
+                this.goToDate(date);
+                this.form.date = date.toDate();
+            }
         },
     },
 };

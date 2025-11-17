@@ -1,134 +1,148 @@
 <script>
-import CalendarPopup from "./CalendarPopup.vue";
-import TimePickerPopup from "./TimePickerPopup.vue";
+import dayjs from "dayjs";
 import DateInput from "./DateInput.vue";
-import Label from "../../Label.vue";
-import FormItem from "../../FormItem.vue";
-import { formatDate } from "./utils";
+import DatePickerPopup from "./DatePickerPopup.vue";
 
 export default {
     components: {
-        CalendarPopup,
-        TimePickerPopup,
         DateInput,
-        Label,
-        FormItem,
+        DatePickerPopup,
     },
 
     props: {
-        modelValue: {
-            type: [String, Object, Number],
-            default: null,
-        },
-        name: String,
-        label: String,
-        mode: {
-            type: String,
-            default: "date",
-            validator: (value) => ["date", "time"].includes(value),
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
+        modelValue: [String, Date, null],
+        disabled: Boolean,
     },
 
     emits: ["update:modelValue"],
 
     data() {
         return {
-            show: false,
+            internalValue: "",
+            isEditing: false,
+            showPopup: false,
         };
     },
 
-    computed: {
-        formattedValue() {
-            if (!this.modelValue) return "";
-            return this.mode === "date"
-                ? formatDate(this.modelValue, "DD.MM.YYYY")
-                : this.modelValue;
+    watch: {
+        modelValue: {
+            handler(val) {
+                if (!this.isEditing) {
+                    this.initializeValue();
+                }
+            },
+            immediate: true,
         },
+    },
+
+    mounted() {
+        document.addEventListener("mousedown", this.handleClickOutside);
+    },
+
+    beforeUnmount() {
+        document.removeEventListener("mousedown", this.handleClickOutside);
+    },
+
+    computed: {
         popupStyles() {
-            if (!this.show || !this.$refs.wrapperRef) return {};
+            if (!this.showPopup || !this.$refs.wrapperRef) {
+                return { position: "absolute", zIndex: 9999 };
+            }
             const rect = this.$refs.wrapperRef.getBoundingClientRect();
-            const styles = {
+            return {
                 position: "absolute",
                 left: `${rect.left}px`,
-                top: `${rect.bottom + window.scrollY}px`,
-                zIndex: "10000",
+                top: `${rect.bottom + window.scrollY + 4}px`,
                 width: `${rect.width}px`,
+                zIndex: 9999,
             };
-
-            if (this.mode === "date") {
-                styles.minWidth = "280px";
-            }
-
-            return styles;
-        },
-        inputStyles() {
-            return this.mode === "date"
-                ? { width: "280px", minWidth: "280px" }
-                : {};
-        },
-        currentPopup() {
-            return this.mode === "time" ? TimePickerPopup : CalendarPopup;
         },
     },
+
     methods: {
-        togglePopup() {
-            if (this.disabled) return;
-            this.show = !this.show;
+        initializeValue() {
+            this.internalValue = this.modelValue
+                ? dayjs(this.modelValue).format("YYYY-MM-DD")
+                : "";
         },
-        updateValue(val) {
-            this.$emit("update:modelValue", val);
+
+        openPopup() {
+            if (!this.disabled) {
+                this.showPopup = true;
+                this.isEditing = false;
+                this.$refs.dateInput.markAsPopupClick?.();
+            }
         },
-        handleClose() {
-            this.show = false;
+
+        closePopup() {
+            this.showPopup = false;
         },
-        handleClickOutside(event) {
-            const wrapper = this.$refs.wrapperRef;
-            const popup = event.target.closest(".calendar-popup");
-            if (wrapper?.contains(event.target) || popup) return;
-            this.show = false;
+
+        handleClickOutside(e) {
+            if (!this.$refs.wrapperRef) return;
+            if (this.$refs.wrapperRef.contains(e.target)) return;
+            if (
+                this.$refs.popupWrapperRef &&
+                this.$refs.popupWrapperRef.contains(e.target)
+            ) {
+                return;
+            }
+            this.closePopup();
         },
-    },
-    mounted() {
-        document.addEventListener("click", this.handleClickOutside);
-    },
-    beforeUnmount() {
-        document.removeEventListener("click", this.handleClickOutside);
+
+        handleInputFocus() {
+            this.isEditing = true;
+            this.closePopup();
+        },
+
+        handleInputConfirm(val) {
+            const parsed = dayjs(val, "YYYY-MM-DD", true);
+            if (parsed.isValid()) {
+                this.internalValue = parsed.format("YYYY-MM-DD");
+                this.$emit("update:modelValue", parsed.toDate());
+            } else {
+                this.initializeValue();
+            }
+            this.isEditing = false;
+        },
+
+        handleSelectDate(val) {
+            const parsed = dayjs(val, "YYYY-MM-DD", true);
+            if (!parsed.isValid()) return;
+
+            this.$refs.dateInput.markAsPopupClick?.();
+
+            this.internalValue = parsed.format("YYYY-MM-DD");
+            this.$emit("update:modelValue", parsed.toDate());
+            this.closePopup();
+        },
     },
 };
 </script>
 
 <template>
-    <FormItem :name="name">
-        <Label v-if="label !== ''" :labelText="label" />
-        <div class="datepicker-wrapper" ref="wrapperRef">
-            <DateInput
-                :modelValue="formattedValue"
-                @toggle="togglePopup"
-                :disabled="disabled"
-                v-bind="$attrs"
-                :style="inputStyles"
-            />
-            <Teleport to="body">
-                <component
-                    :is="currentPopup"
-                    v-if="show"
-                    :modelValue="modelValue"
-                    @update:modelValue="updateValue"
-                    @close="handleClose"
-                    class="calendar-popup"
-                    :style="popupStyles"
-                />
-            </Teleport>
-        </div>
-    </FormItem>
-</template>
+    <div class="datepicker-wrapper" ref="wrapperRef">
+        <DateInput
+            ref="dateInput"
+            :modelValue="internalValue"
+            :disabled="disabled"
+            @focus="handleInputFocus"
+            @confirm="handleInputConfirm"
+            @click="openPopup"
+        />
 
-<style lang="sass" scoped>
-.datepicker-wrapper
-    position: relative
-    display: inline-block
-</style>
+        <Teleport to="body">
+            <div
+                v-if="showPopup"
+                ref="popupWrapperRef"
+                :style="popupStyles"
+                @click.stop
+            >
+                <DatePickerPopup
+                    :modelValue="internalValue"
+                    @update:internal="handleSelectDate"
+                />
+            </div>
+        </Teleport>
+    </div>
+</template>

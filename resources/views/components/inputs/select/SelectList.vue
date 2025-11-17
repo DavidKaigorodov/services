@@ -1,27 +1,65 @@
 <script>
+import StringInput from "../StringInput.vue";
 export default {
+    components: { StringInput },
     props: {
         options: {
             type: Array,
             required: true,
         },
         modelValue: [String, Number],
-        onSelect: Function,
+    },
+    emits: ["select"],
+
+    data() {
+        return {
+            searchQuery: "",
+        };
+    },
+
+    computed: {
+        filteredOptions() {
+            const query = this.searchQuery.trim().toLowerCase();
+            if (!query) return this.options;
+            return this.options.filter((option) =>
+                option.label.toLowerCase().includes(query),
+            );
+        },
+    },
+
+    methods: {
+        onSelect(option) {
+            this.$emit("select", option);
+            this.searchQuery = "";
+        },
     },
 };
 </script>
 
 <template>
     <div class="select-dropdown">
+        <div class="search-wrapper">
+            <input
+                v-model="searchQuery"
+                type="text"
+                class="search-input"
+                placeholder="Поиск..."
+                @click.stop
+            />
+        </div>
+
         <ul>
             <li
-                v-for="option in options"
+                v-for="option in filteredOptions"
                 :key="option.value"
                 class="select-option"
                 :class="{ 'is-selected': option.value === modelValue }"
                 @click.stop="onSelect(option)"
             >
                 {{ option.label }}
+            </li>
+            <li v-if="filteredOptions.length === 0" class="select-empty">
+                Ничего не найдено
             </li>
         </ul>
     </div>
@@ -41,20 +79,30 @@ export default {
     z-index: 1000
     animation: slideDown 0.2s ease
 
-    ul
-        overflow-y: auto
-        max-height: 200px
-        @include scroll
+.search-wrapper
+    padding: 8px 8px
+    border-bottom: 1px solid var(--input-border-color)
+    background: var(--input-background)
+    .search-input
+        width: 100%
 
-        .select-option
-            font-size: 0.95rem
-            padding: 10px 10px
-            cursor: pointer
+ul
+    overflow-y: auto
+    max-height: 200px
+    @include scroll
 
-            &:last-child
-                border-bottom: none
-            &:hover
-                background: #83adf028
+.select-option
+    font-size: 0.95rem
+    padding: 10px
+    cursor: pointer
+
+    &:hover
+        background: #83adf028
+
+.select-empty
+    padding: 10px
+    text-align: center
+    color: #888
 
 @keyframes slideDown
     from

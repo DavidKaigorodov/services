@@ -1,11 +1,11 @@
 <script>
-import { default as DatePicker } from "./datePicker/DatePicker.vue";
+import { default as TimePicker } from "./datePicker/TimePicker.vue";
 import { default as CheckBox } from "./CheckBox.vue";
 import { default as FormItem } from "../FormItem.vue";
 
 export default {
     components: {
-        DatePicker,
+        TimePicker,
         CheckBox,
         FormItem,
     },
@@ -86,7 +86,7 @@ export default {
                     <div v-if="day.key in modelValue" class="time-picker-block">
 
                         <div class="datepicker-wrapper-relative">
-                            <DatePicker
+                            <TimePicker
                                 mode="time"
                                 :modelValue="modelValue[day.key]?.date_start"
                                 @update:modelValue="(val) => updateDay(day.key, 'date_start', val)"
@@ -97,7 +97,7 @@ export default {
                         </div>
 
                         <div class="datepicker-wrapper-relative">
-                            <DatePicker
+                            <TimePicker
                                 mode="time"
                                 :modelValue="modelValue[day.key]?.date_end"
                                 @update:modelValue="(val) => updateDay(day.key, 'date_end', val)"
@@ -108,7 +108,7 @@ export default {
                         </div>
 
                         <div class="datepicker-wrapper-relative lunch">
-                            <DatePicker
+                            <TimePicker
                                 mode="time"
                                 :modelValue="modelValue[day.key]?.lunch_start"
                                 @update:modelValue="(val) => updateDay(day.key, 'lunch_start', val)"
@@ -119,7 +119,7 @@ export default {
                         </div>
 
                         <div class="datepicker-wrapper-relative lunch">
-                            <DatePicker
+                            <TimePicker
                                 mode="time"
                                 :modelValue="modelValue[day.key]?.lunch_end"
                                 @update:modelValue="(val) => updateDay(day.key, 'lunch_end', val)"

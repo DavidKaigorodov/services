@@ -1,193 +1,124 @@
-<script>
-export default {
-    props: {
-        modelValue: {
-            type: [String, Object, Number],
-            default: null,
-        },
-    },
+<script setup>
+import { ref, watch, onMounted } from "vue";
 
-    emits: ["update:modelValue", "close"],
+const props = defineProps({ modelValue: String });
+const emit = defineEmits(["update:modelValue", "close"]);
 
-    data() {
-        return {
-            tempHour: null,
-            tempMinute: null,
-            userSelectedHour: false,
-            userSelectedMinute: false,
-            hours: Array.from({ length: 24 }, (_, i) => i),
-            minutes: Array.from({ length: 60 }, (_, i) => i),
-        };
-    },
+const hoursRef = ref(null);
+const minutesRef = ref(null);
+const tempHour = ref(0);
+const tempMinute = ref(0);
 
-    watch: {
-        modelValue: {
-            handler(val) {
-                if (val && typeof val === "string") {
-                    const [h, m] = val.split(":");
-                    this.tempHour = parseInt(h);
-                    this.tempMinute = parseInt(m);
-                } else {
-                    this.tempHour = null;
-                    this.tempMinute = null;
-                }
-                this.userSelectedHour = false;
-                this.userSelectedMinute = false;
-            },
-            immediate: true,
-        },
-    },
+const pad = (v) => String(v).padStart(2, "0");
 
-    methods: {
-        pad(n) {
-            return String(n).padStart(2, "0");
-        },
-        updateValue() {
-            if (this.tempHour !== null && this.tempMinute !== null) {
-                this.$emit(
-                    "update:modelValue",
-                    `${this.pad(this.tempHour)}:${this.pad(this.tempMinute)}`,
-                );
-            }
-        },
-        selectHour(hour) {
-            this.tempHour = hour;
-            this.userSelectedHour = true;
-            this.updateValue();
-            this.tryEmit();
-        },
-        selectMinute(minute) {
-            this.tempMinute = minute;
-            this.userSelectedMinute = true;
-            this.updateValue();
-            this.tryEmit();
-        },
-        tryEmit() {
-            if (this.userSelectedHour && this.userSelectedMinute) {
-                this.$emit("close");
-            }
-        },
-    },
+function updateFromModel() {
+    const [h, m] = props.modelValue?.split(":").map(Number) || [];
+    if (!isNaN(h)) tempHour.value = Math.min(Math.max(h, 0), 23);
+    if (!isNaN(m)) tempMinute.value = Math.min(Math.max(m, 0), 59);
+    scrollToSelected();
+}
+
+watch(
+    () => props.modelValue,
+    () => updateFromModel(),
+);
+onMounted(() => updateFromModel());
+
+const selectHour = (h) => {
+    tempHour.value = h;
+    emit("update:modelValue", `${pad(h)}:${pad(tempMinute.value)}`);
 };
+
+const selectMinute = (m) => {
+    tempMinute.value = m;
+    emit("update:modelValue", `${pad(tempHour.value)}:${pad(m)}`);
+    emit("close");
+};
+
+function scrollToSelected() {
+    const scrollTo = (refEl, idx) => {
+        const el = refEl.value?.children[idx];
+        if (el) {
+            refEl.value.scrollTo({
+                top:
+                    el.offsetTop -
+                    refEl.value.clientHeight / 2 +
+                    el.clientHeight / 2,
+                behavior: "smooth",
+            });
+        }
+    };
+    scrollTo(hoursRef, tempHour.value);
+    scrollTo(minutesRef, tempMinute.value);
+}
 </script>
 
 <template>
     <div class="timepicker-popup">
-        <div class="timepicker-header">
-            <span :class="{ selected: tempHour }">Часы</span>
-            <span :class="{ selected: tempMinute }">Минуты</span>
-        </div>
-
-        <div class="timepicker-columns">
-            <div class="timepicker-column hours">
+        <div class="columns">
+            <div class="col" ref="hoursRef">
                 <div
-                    v-for="h in hours"
+                    v-for="h in 24"
                     :key="h"
-                    class="timepicker-item"
-                    :class="{ selected: h === tempHour }"
-                    @click="selectHour(h)"
+                    class="item"
+                    :class="{ selected: tempHour === h - 1 }"
+                    @click="selectHour(h - 1)"
                 >
-                    {{ h }}
+                    {{ pad(h - 1) }}
                 </div>
             </div>
-
-            <div class="timepicker-column minutes">
+            <div class="col" ref="minutesRef">
                 <div
-                    v-for="m in minutes"
+                    v-for="m in 60"
                     :key="m"
-                    class="timepicker-item"
-                    :class="{ selected: m === tempMinute }"
-                    @click="selectMinute(m)"
+                    class="item"
+                    :class="{ selected: tempMinute === m - 1 }"
+                    @click="selectMinute(m - 1)"
                 >
-                    {{ m }}
+                    {{ pad(m - 1) }}
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<style lang="sass" scoped>
+<style scoped lang="sass">
 .timepicker-popup
-    background: white
-    border-radius: 0.5rem
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)
-    border: 1px solid #e5e7eb
-    position: absolute
-    left: 0
-    right: 0
-    z-index: 1000
-    margin-top: 8px
-    width: 240px
-    overflow: hidden
+  background: #fff
+  border: 1px solid #e5e7eb
+  border-radius: 10px
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15)
+  width: 240px
+  height: 220px
+  display: flex
+  padding: 6px
 
-    .timepicker-header
-        display: grid
-        grid-template-columns: 1fr 1fr
-        gap: 0.5rem
-        padding: 0.75rem 0.5rem
-        background-color: #f9fafb
-        border-bottom: 1px solid #e5e7eb
-        text-align: center
-        font-size: 0.875rem
-        font-weight: 600
-        color: #6b7280
-        letter-spacing: -0.01em
+.columns
+  display: flex
+  flex: 1
+  gap: 6px
 
-        span
-            position: relative
+.col
+  flex: 1
+  overflow-y: auto
+  @include scroll()
+  border-right: 1px solid #f3f4f6
+  &:last-child
+    border-right: none
 
-            &::after
-                content: ''
-                position: absolute
-                bottom: -1px
-                left: 50%
-                transform: translateX(-50%)
-                width: 0
-                height: 2px
-                background-color: transparent
-                transition: all 0.2s ease
-
-            &.selected
-                color: var(--blue-button-background-color)
-
-            &::after
-                width: 50%
-                background-color: var(--blue-button-background-color)
-
-    .timepicker-columns
-        display: flex
-        height: 200px
-        border-bottom: 1px solid #e5e7eb
-
-        .timepicker-column
-            flex: 1
-            overflow-y: auto
-            padding: 0.25rem 0
-            scroll-behavior: smooth
-
-            &.hours
-                border-right: 1px solid #e5e7eb
-
-            .timepicker-item
-                display: flex
-                align-items: center
-                justify-content: center
-                height: 36px
-                font-size: 0.9rem
-                font-weight: 500
-                color: #374151
-                cursor: pointer
-                border-radius: 0.5rem
-                margin: 0 0.5rem
-                transition: all 0.2s ease
-
-                &:hover
-                    background-color: var(--blue-button-background-color)
-                    color: white
-
-                &.selected
-                    background-color: var(--blue-button-background-color-hover)
-                    color: white
-                    font-weight: 600
-                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
+.item
+  text-align: center
+  height: 36px
+  line-height: 36px
+  cursor: pointer
+  border-radius: 6px
+  font-size: 14px
+  font-weight: 500
+  transition: 0.15s background, 0.15s color
+  &:hover
+    background: var(--blue-button-background-color)
+    color: white
+  &.selected
+    background: var(--blue-button-background-color-hover)
+    color: white
 </style>

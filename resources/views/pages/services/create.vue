@@ -1,13 +1,13 @@
 <script>
 import { useForm } from "@inertiajs/vue3";
 import { AuthenticatedLayout } from "@layouts";
-import { VerticalForm, DatePicker, TextArea } from "@components";
+import { VerticalForm, TimePicker, TextArea } from "@components";
 
 export default {
     components: {
         AuthenticatedLayout,
         VerticalForm,
-        DatePicker,
+        TimePicker,
         TextArea,
     },
 
@@ -39,7 +39,7 @@ export default {
                 @update:value="(val) => (form.name = val)"
                 :rows="4"
             />
-            <DatePicker
+            <TimePicker
                 v-model="form.duration"
                 mode="time"
                 name="duration"

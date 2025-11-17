@@ -44,12 +44,13 @@ thead th
 
     .time-row.time-header
         text-align: center
-        font-size: 12px
         height: 40px
 
         .time-slot
             padding: 6px 0px
             min-width: 60px
+
+            font-size: 10px
             color: var(--text-color)
             position: relative
             text-align: center
