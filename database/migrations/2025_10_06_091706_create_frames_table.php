@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('token');
             $table->foreignId('division_id')->constrained(new Division()->getTable());
-            $table->foreignId('status_id')->constrained(new FrameStatus()->getTable());
             $table->timestamps();
         });
     }
