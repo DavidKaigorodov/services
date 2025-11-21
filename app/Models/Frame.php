@@ -20,11 +20,4 @@ class Frame extends Model
     {
         return $this->belongsTo(Division::class, 'division_id');
     }
-
-        public function status(): BelongsTo
-    {
-        return $this->belongsTo(FrameStatus::class, 'status_id');
-    }
-
-
 }

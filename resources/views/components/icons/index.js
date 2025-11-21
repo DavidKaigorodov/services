@@ -8,6 +8,7 @@ export { default as CircleIco } from './CircleIco.vue'
 export { default as HomeIco } from './HomeIco.vue'
 export { default as BuildingsIco } from './BuildingsIco.vue'
 export { default as CollectionIco } from './CollectionIco.vue'
+export { default as ListIco } from './ListIco.vue'
 
 export { default as ChevronRightIco } from './ChevronRightIco.vue'
 export { default as ChevronLeftIco } from './ChevronLeftIco.vue'

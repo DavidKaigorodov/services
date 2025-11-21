@@ -27,7 +27,7 @@ export default {
                 { key: "name", label: "Наименование", width: "342px" },
                 { key: "address", label: "Адрес" },
                 { key: ["city", "name"], label: "Город", width: "160px" },
-                { key: ["parent", "name"], label: "Главное подразделение", width: "160px" },
+                { key: ["group","name"], label: "Группа", width: "160px" },
                 { key: "url", label: "Ссылка" },
                 { key: "actions", label: "", width: "175px" },
             ],

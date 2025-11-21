@@ -6,12 +6,14 @@ import { default as BuildingsIco } from "../../components/icons/BuildingsIco.vue
 import { default as CollectionIco } from "../../components/icons/CollectionIco.vue";
 import { default as LogoutIco } from "../../components/icons/LogoutIco.vue";
 import { default as PersonIco } from "../../components/icons/PersonIco.vue";
+import ListIco from "../../components/icons/ListIco.vue";
 
 export default {
     components: {
         ItemMenu,
         HomeIco,
         BuildingsIco,
+        ListIco,
         CollectionIco,
         LogoutIco,
         PersonIco,
@@ -41,6 +43,10 @@ export default {
                 </ItemMenu>
 
                 <ItemMenu :href="route('services.index')" label="Услуги">
+                    <ListIco />
+                </ItemMenu>
+
+                <ItemMenu :href="route('division-group.index')" label="Группы подразделений">
                     <CollectionIco />
                 </ItemMenu>
             </template>

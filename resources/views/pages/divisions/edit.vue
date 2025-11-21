@@ -25,7 +25,7 @@ export default {
 
     data() {
         const division = usePage().props.division.data;
-        const divisions = usePage().props.divisions;
+        const division_group = usePage().props.division_group;
         const cities = usePage().props.cities;
         return {
             form: useForm({
@@ -33,12 +33,12 @@ export default {
                 address: division.address,
                 city_id: division.city.id,
                 shedules: division.shedules,
-                parent_id: division.parent.id,
+                group_id: division.group.id,
                 url: division.url,
             }),
             cities,
             division,
-            divisions,
+            division_group,
         };
     },
 
@@ -49,10 +49,10 @@ export default {
                 label: city.name,
             }));
         },
-        divisionOption() {
-            return this.divisions.map((division) => ({
-                value: division.id,
-                label: division.name,
+       GroupOption() {
+            return this.division_group.map((group) => ({
+                value: group.id,
+                label: group.name,
             }));
         },
     },
@@ -87,7 +87,7 @@ export default {
                     label="Адрес"
                     name="adres"
                     :value="form.address"
-                    @update:value="(val) => (form.adres = val)"
+                    @update:value="(val) => (form.address = val)"
                     autocomplete="current-adres"
                     :rows="6"
                 />
@@ -99,11 +99,11 @@ export default {
                     placeholder="Выберите город"
                 />
                 <Select
-                    label="Главное подразделение"
-                    name="parent_id"
-                    v-model="form.parent_id"
-                    :options="divisionOption"
-                    placeholder="Выберите главное подразделение"
+                    label="Группа"
+                    name="group_id"
+                    v-model="form.group_id"
+                    :options="GroupOption"
+                    placeholder="Выберите группу подразделение"
                 />
                 <StringInput
                     label="Ссылка"

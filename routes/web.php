@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DivisionGroupController;
 use App\Http\Controllers\EventCalendarController;
 use App\Http\Controllers\DivisionAdminController;
 use App\Http\Controllers\DivisionController;
@@ -42,6 +43,9 @@ Route::middleware('auth')->group(function () {
         ->except(['show']);
 
     Route::resource('/cities', CityController::class)
+        ->except(['show']);
+
+    Route::resource('/division-group', DivisionGroupController::class)
         ->except(['show']);
 
     Route::resource('/divisions', DivisionController::class);

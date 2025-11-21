@@ -56,7 +56,7 @@ export default {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(row, r_index) in data.data" :key="r_index">
+                    <tr v-for="(row, r_index) in data?.data" :key="r_index">
                         <td
                             v-for="(cell, c_index) in columns"
                             :key="c_index"
@@ -94,10 +94,10 @@ export default {
             </table>
 
             <Pagination
-                v-if="data.meta"
-                :total="data.meta.total"
-                :current="data.meta.current_page"
-                :perPage="data.meta.per_page"
+                v-if="data?.meta"
+                :total="data?.meta.total"
+                :current="data?.meta.current_page"
+                :perPage="data?.meta.per_page"
             />
         </div>
     </div>

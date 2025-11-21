@@ -32,6 +32,7 @@ export default {
                 name: division.name,
                 address: division.address,
                 city_id: division.city.id,
+                group_name: division.group.name,
                 url: division.url,
                 shedules: division.shedules,
             }),
@@ -105,6 +106,12 @@ export default {
                         :options="cityOptions"
                         placeholder="Выберите город"
                         :disabled="!isEditing"
+                    />
+                    <StringInput
+                        label="Группа"
+                        name="group_name"
+                        :value="form.group_name"
+                        disabled
                     />
                     <StringInput
                         label="Ссылка"

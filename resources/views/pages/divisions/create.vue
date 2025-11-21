@@ -24,7 +24,7 @@ export default {
     },
 
     data() {
-        const divisions = usePage().props.divisions;
+        const division_group = usePage().props.division_group;
         return {
             cities: usePage().props.cities,
             form: useForm({
@@ -32,10 +32,10 @@ export default {
                 address: "",
                 city_id: "",
                 shedules: {},
-                parent_id: "",
+                group_id: "",
                 url: "",
             }),
-            divisions,
+            division_group,
         };
     },
 
@@ -46,10 +46,10 @@ export default {
                 label: cityData.name,
             }));
         },
-        divisionOption() {
-            return this.divisions.map((division) => ({
-                value: division.id,
-                label: division.name,
+        GroupOption() {
+            return this.division_group.map((group) => ({
+                value: group.id,
+                label: group.name,
             }));
         },
     },
@@ -65,7 +65,6 @@ export default {
 
 <template>
     <AuthenticatedLayout>
-    {{ console.log(cityOptions) }}
         <HorizontalForm
             header="Организации"
             sbm="Отправить"
@@ -95,11 +94,11 @@ export default {
                     placeholder="Выберите город"
                 />
                 <Select
-                    label="Главное подразделение"
-                    name="parent_id"
-                    v-model="form.parent_id"
-                    :options="divisionOption"
-                    placeholder="Выберите главное подразделение"
+                    label="Группа"
+                    name="group_id"
+                    v-model="form.group_id"
+                    :options="GroupOption"
+                    placeholder="Выберите группу подразделение"
                 />
                 <StringInput
                     label="Ссылка"

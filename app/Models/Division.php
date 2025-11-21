@@ -23,7 +23,7 @@ class Division extends Model
         'name',
         'address',
         'city_id',
-        'parent_id',
+        'group_id',
         'url',
     ];
 
@@ -50,17 +50,6 @@ class Division extends Model
         return $this->belongsTo(City::class, 'city_id');
     }
 
-    public function parent(): BelongsTo
-    {
-        return $this->belongsTo(Division::class, 'parent_id');
-    }
-
-    public function childrens(): HasMany
-    {
-        return $this->hasMany(Division::class, 'parent_id');
-    }
-
-
     public function shedules(): HasMany
     {
         return $this->hasMany(DivisionShedule::class, 'division_id');
@@ -84,5 +73,10 @@ class Division extends Model
     public function subscribes(): HasMany
     {
         return $this->hasMany(Subscribe::class, 'division_id');
+    }
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(DivisionGroup::class, 'group_id');
     }
 }

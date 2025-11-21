@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateDivisionRequest;
 use App\Models\City;
 use App\Models\DayOfTheWeek;
 use App\Models\Division;
+use App\Models\DivisionGroup;
 use Inertia\Inertia;
 
 class DivisionController
@@ -36,7 +37,7 @@ class DivisionController
 
         return Inertia::render('pages/divisions/create', [
             'cities' => fn() => City::get(['id', 'name']),
-            'divisions' => fn() => Division::get(['id', 'name']),
+            'division_group' => fn() => DivisionGroup::get(['id', 'name']),
         ]);
     }
 
@@ -49,7 +50,7 @@ class DivisionController
             abort(403);
         }
 
-        $division = Division::create($request->only('name', 'address', 'city_id', 'parent_id', 'url'));
+        $division = Division::create($request->only('name', 'address', 'city_id', 'group_id', 'url'));
 
         foreach ($request->get('shedules') as $day_code => $shedule) {
             $division->shedules()->create([
@@ -89,7 +90,7 @@ class DivisionController
 
         return Inertia::render('pages/divisions/edit', [
             'division' => fn() => getResource($division),
-            'divisions' => fn() => Division::get(['id', 'name']),
+            'division_group' => fn() => DivisionGroup::get(['id', 'name']),
             'cities' => fn() => City::get(['id', 'name']),
         ]);
     }
@@ -103,7 +104,7 @@ class DivisionController
             abort(403);
         }
 
-        $division->update($request->only('name', 'address', 'city_id', 'parent_id', 'url'));
+        $division->update($request->only('name', 'address', 'city_id', 'group_id', 'url'));
 
         $division->shedules()->delete();
         foreach ($request->get('shedules') as $day_code => $shedule) {

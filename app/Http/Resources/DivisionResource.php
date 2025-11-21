@@ -34,16 +34,10 @@ class DivisionResource extends JsonResource
                 ];
             })->collapse(),
             'userCount' => $this->users()->count(),
-            'parent' => [
-                'id' => $this->parent?->id,
-                'name' => $this->parent?->name,
+            'group' => [
+                'id' => $this->group?->id,
+                'name' => $this->group?->name,
             ],
-            'childrens' => $this->childrens->map(function($child) {
-                return [
-                        'id' => $child->id,
-                        'name' => $child->name,
-                ];
-            }),
         ];
 
     }

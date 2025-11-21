@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\City;
 use App\Models\Division;
 use App\Models\DayOfTheWeek;
+use App\Models\DivisionGroup;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
 
@@ -21,7 +22,7 @@ class UpdateDivisionRequest extends FormRequest
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'address' => ['required', 'string', 'min:3'],
             'city_id' => ['required', 'exists:' . City::class . ',id'],
-            'parent_id' => ['nullable', 'exists:' . Division::class . ',id'],
+            'group_id' => ['required', 'exists:' . DivisionGroup::class . ',id'],
             'url' => ['nullable', 'url'],
             'shedules' => ['required', 'array'],
             'shedules.*' => ['nullable', 'array'],

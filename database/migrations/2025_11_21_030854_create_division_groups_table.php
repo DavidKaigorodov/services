@@ -12,10 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('main__frame', function (Blueprint $table) {
+        Schema::create('main__division_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('token');
-            $table->foreignId('division_id')->constrained(new Division()->getTable());
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -25,7 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('glossary__frame_status');
-        Schema::dropIfExists('main__frame');
+        Schema::dropIfExists('main__division_groups');
     }
 };
