@@ -9,7 +9,9 @@ import {
     StringInput,
     Table,
     CheckBox,
+
 } from "@components";
+import List from "../../components/list/List.vue";
 
 const worker = usePage().props.worker.data;
 const division = usePage().props.division.data;
@@ -72,7 +74,7 @@ function onSubmit(e) {
                 </FormGroup>
                 <FormGroup name="services" label="Услуги">
                     <div class="services">
-                        <Table
+                        <List
                             :data="services"
                             :columns="columns"
                             :head="false"
@@ -88,16 +90,10 @@ function onSubmit(e) {
                                     "
                                 />
                             </template>
-                        </Table>
+                        </List>
                     </div>
                 </FormGroup>
             </HorizontalForm>
         </DivisionTab>
     </AuthenticatedLayout>
 </template>
-
-<style lang="sass">
-.form-group.services
-    overflow-y: auto
-    @include scroll()
-</style>

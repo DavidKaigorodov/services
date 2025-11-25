@@ -96,7 +96,7 @@ class WorkerController
 
         return Inertia::render("pages/workers/edit", [
             "worker" => fn() => WorkerResource::make($worker),
-            'services' => fn() => getResource(Service::class),
+            'services' => fn() => Service::get(['id', 'name']),
             "division" => fn() => getResource($worker->division),
         ]);
     }
